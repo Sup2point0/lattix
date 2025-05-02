@@ -10,12 +10,12 @@ import { prefs } from "#scripts/stores";
 import Cell from "#parts/cell.svelte";
 
 interface Props {
-  x?: number;
-  y?: number;
+  x: number;
+  y: number;
   cellsize?: string;
 }
 
-let { x = 5, y = 5, cellsize = "10vh" }: Props = $props();
+let { x, y, cellsize = "10vh" }: Props = $props();
 
 
 let xsize = $derived(5 + $prefs.show.outer * 2);
@@ -26,10 +26,14 @@ let ysize = $derived(5 + $prefs.show.outer * 2);
 
 <div class="lattice-container">
   <div class="empty"></div>
-  <button class="new row">+</button>
+  {#if $prefs.show.add}
+    <button class="new row">+</button>
+  {/if}
   <div class="empty"></div>
 
-  <button class="new column">+</button>
+  {#if $prefs.show.add}
+    <button class="new column">+</button>
+  {/if}
 
   <div class="lattice"
     style:--x={xsize}
@@ -38,9 +42,11 @@ let ysize = $derived(5 + $prefs.show.outer * 2);
   >
     {#if $prefs.show.outer}
       <div class="empty"></div>
+
       {#each { length: x } as _, i}
         <Cell kind="outer" x={i+1} y={0} />
       {/each}
+
       <div class="empty"></div>
     {/if}
 
@@ -48,27 +54,35 @@ let ysize = $derived(5 + $prefs.show.outer * 2);
       {#if $prefs.show.outer}
         <Cell kind="outer" x={0} y={j+1} />
       {/if}
+
       {#each { length: x } as _, i}
         <Cell kind="inner" x={i+1} y={j+1} />
       {/each}
+
       {#if $prefs.show.outer}
-        <Cell kind="outer" x={x+1} y={y+1} />
+        <Cell kind="outer" x={x+1} y={j+1} />
       {/if}
     {/each}
     
     {#if $prefs.show.outer}
       <div class="empty"></div>
+
       {#each { length: x } as _, i}
         <Cell kind="outer" x={i+1} y={y+1} />
       {/each}
+
       <div class="empty"></div>
     {/if}
   </div>
   
-  <button class="new column">+</button>
+  {#if $prefs.show.add}
+    <button class="new column">+</button>
+  {/if}
 
   <div class="empty"></div>
-  <button class="new row">+</button>
+  {#if $prefs.show.add}
+    <button class="new row">+</button>
+  {/if}
   <div class="empty"></div>
 </div>
 

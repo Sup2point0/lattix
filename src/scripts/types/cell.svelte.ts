@@ -3,13 +3,13 @@ import type { int } from "./root";
 
 export class Cell
 {
+  button: HTMLButtonElement | null = null;
   shard: int;
+  
   kind: "inner" | "outer";
   x: int;
   y: int;
   
-  focused: boolean = $state(false);
-
   fixed: boolean = $state(false);
   entered: string | null = $state(null);
   notes: string[] = $state([]);

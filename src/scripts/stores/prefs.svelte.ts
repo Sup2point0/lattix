@@ -8,7 +8,8 @@ export class Prefs
 
 class ShowPrefs
 {
-  outer: boolean = $state(false);
+  outer = $state(true);
+  add = $state(false);
 }
 
 export const prefs = writable(new Prefs());

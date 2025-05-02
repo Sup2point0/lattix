@@ -2,6 +2,8 @@
 
 import "#styles/essence.scss";
 
+import { current } from "#scripts/stores";
+
 import Lattice from "#parts/lattice.svelte";
 
 </script>
@@ -9,7 +11,7 @@ import Lattice from "#parts/lattice.svelte";
 
 <main>
   <div class="layout">
-    <Lattice cellsize="5rem" />
+    <Lattice x={current.lattice_x} y={current.lattice_y} cellsize="5rem" />
   </div>
 </main>
 

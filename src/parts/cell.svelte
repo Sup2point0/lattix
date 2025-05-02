@@ -15,6 +15,8 @@ import { current } from "#scripts/stores";
 
 import { Cell, type int } from "#scripts/types";
 
+import { onMount } from "svelte";
+
 interface Props {
   kind?: "inner" | "outer";
   x: int;
@@ -27,23 +29,52 @@ let { kind = "inner", x, y }: Props = $props();
 total++;
 let cell = new Cell(total, kind, x, y);
 
-let self: HTMLElement;
+let self: HTMLButtonElement;
+
+onMount(() => {
+  current.lattice_cells[x.toString() + y.toString()] = self;
+
+  window?.addEventListener("keydown", e => {
+    if (e.key === "Control") {
+      current.multiselect_enabled = true;
+    }
+  });
+
+  window?.addEventListener("keyup", e => {
+    if (e.key === "Control") {
+      current.multiselect_enabled = false;
+    }
+  })
+})
 
 
 function onclick(e: MouseEvent)
 {
-  cell.focused = true;
-  current.cell = cell;
-  current.cell_button = self;
+  console.log("current =", current.selected_cells);
+  
+  if (!current.multiselect_enabled) {
+    current.selected_cells.clear();
+  }
+
+  current.selected_cells.add(cell.shard);
+  current.selected_cells = current.selected_cells;
+
+  self.classList.add("clicked");
+  setTimeout(() => {
+    self.classList.remove("clicked");
+  }, 30);
 }
 
 function onfocusout()
 {
-  cell.focused = false;
+  if (!current.multiselect_enabled) {
+    current.selected_cells.delete(cell.shard);
+  }
 }
 
 
 const ignored = ["CONTROL", "SHIFT", "ALT", "TAB"];
+const arrows = ["ARROWLEFT", "ARROWRIGHT", "ARROWUP", "ARROWDOWN"];
 const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 const alpha = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "U", "T", "V", "W", "X", "Y", "Z"];
 const punct = [",", ".", "!", "?", "+", "-", "*", "/", "=", "<", ">", "_", "~", "#"];
@@ -56,14 +87,59 @@ function onkeydown(e: KeyboardEvent)
 
   if (ignored.includes(key)) return;
 
-  switch (key) {
-    case "ARROWLEFT":
-      break;
+  if (arrows.includes(key)) {
+    e.preventDefault();
+    let X = x, Y = y;
 
-    default:
-      if (numbers.includes(key) || alpha.includes(key) || punct.includes(key)) {
-        cell.entered = key;
-      }
+    switch (key) {
+      case "ARROWLEFT":
+        if (X === 0) {
+          X = current.lattice_x +1;
+        } else {
+          X--;
+        }
+        break;
+
+      case "ARROWRIGHT":
+        if (X === current.lattice_x +1) {
+          X = 0;
+        } else {
+          X++;
+        }
+        break;
+
+      case "ARROWUP":
+        if (Y === 0) {
+          Y = current.lattice_y +1;
+        } else {
+          Y--;
+        }
+        break;
+
+      case "ARROWDOWN":
+        if (Y === current.lattice_y +1) {
+          Y = 0;
+        } else {
+          Y++;
+        }
+        break;
+    }
+
+    let next = current.lattice_cells[X.toString() + Y.toString()];
+    if (!next) return;
+
+    next.focus();
+    next.click();
+
+    if (e.ctrlKey) {
+
+    }
+    return;
+  }
+
+  if (numbers.includes(key) || alpha.includes(key) || punct.includes(key)) {
+    cell.entered = key;
+    return;
   }
 }
 
@@ -71,8 +147,8 @@ function onkeydown(e: KeyboardEvent)
 
 
 <button class="cell {kind}"
-  class:focused={cell.focused}
   class:fixed={cell.fixed}
+  class:focused={current.selected_cells.has(cell.shard)}
   bind:this={self}
   {onclick}
   {onfocusout}
@@ -82,8 +158,6 @@ function onkeydown(e: KeyboardEvent)
     {#if cell.fixed}
       <span class="fixed"> {cell.fixed} </span>
     {/if}
-
-    <!-- <span class="entered"> {x}.{y} </span> -->
 
     {#if cell.entered}
       <span class="entered"> {cell.entered} </span>
@@ -145,18 +219,22 @@ button.cell:not(.fixed) {
     }
   }
 
-  &:active {
+  &:active, &.clicked {
     .content {
-      transform: scale(0.96);
+      transform: scale(0.97);
     }
   }
 
   &:active, &.focused {
     .content {
       border-style: solid;
-      border-color: $col-red;
+      border-color: $col-purp;
       outline-width: 3.5px;
-      outline-color: color.change($col-red, $alpha: 20%);
+      outline-color: color.change($col-purp, $alpha: 20%);
+    }
+    
+    span.entered {
+      color: $col-purp;
     }
   }
 }

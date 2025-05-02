@@ -1,10 +1,23 @@
-import { Cell } from "#scripts/types";
+import { SvelteSet as Set } from "svelte/reactivity";
+
+import type { int } from "#scripts/types";
 
 
 class CurrentState
 {
-  cell: Cell | null = null;
-  cell_button: HTMLElement | null = null;
+  lattice_x: int = 5;
+  lattice_y: int = 5;
+
+  lattice_cells: Cells = $state({});
+
+  /** Shards of the currently selected cells. */
+  selected_cells: Set<number> = $state(new Set());
+
+  multiselect_enabled = $state(false);
+}
+
+interface Cells {
+  [cords: string]: HTMLButtonElement;
 }
 
 
