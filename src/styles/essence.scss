@@ -2,10 +2,14 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  font-family: 'Sora', system-ui, sans-serif;
 }
 
 :root {
   color-scheme: light dark;
   font-size: 100%;
+}
+
+main * {
+  font-family: var(--font, 'Sora'), system-ui, sans-serif;
+  // outline: 1px solid blue;
 }

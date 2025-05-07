@@ -2,16 +2,40 @@
 
 import "#styles/essence.scss";
 
-import { current } from "#scripts/stores";
+import { current, prefs } from "#scripts/stores";
 
 import Lattice from "#parts/lattice.svelte";
+import Controls from "#parts/controls.svelte";
+
+import { onMount } from "svelte";
+
+
+const modifier_keys = ["Control", "Shift", "Alt"];
+
+onMount(() => {
+  window?.addEventListener("keydown", e => {
+    if (e.key === $prefs.keybinds.multiselect) {
+      current.multiselecting = true;
+    }
+  });
+
+  window?.addEventListener("keyup", e => {
+    if (e.key === $prefs.keybinds.multiselect) {
+      current.multiselecting = false;
+    }
+  })
+})
 
 </script>
 
 
-<main>
+<main
+  style:--font="Sora"
+>
   <div class="layout">
-    <Lattice x={current.lattice_x} y={current.lattice_y} cellsize="5rem" />
+    <Lattice x={current.lattice_x} y={current.lattice_y} />
+
+    <Controls />
   </div>
 </main>
 
@@ -20,10 +44,12 @@ import Lattice from "#parts/lattice.svelte";
 
 main {
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
   padding: 1rem;
   display: flex;
   flex-flow: column nowrap;
+  justify-content: center;
   align-items: center;
   background: var(--col-back);
 }
@@ -31,6 +57,9 @@ main {
 .layout {
   width: max-content;
   padding: 1rem;
+  display: flex;
+  flex-flow: row wrap;
+  gap: 8vw;
 }
 
 </style>

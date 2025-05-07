@@ -1,2 +1,2 @@
 export * from "./root";
-export { Cell } from "./cell.svelte.ts";
+export * from "./cell.svelte.ts";

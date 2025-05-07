@@ -15,6 +15,8 @@ import { current } from "#scripts/stores";
 
 import { Cell, type int } from "#scripts/types";
 
+import { scale } from "svelte/transition";
+import { expoOut } from "svelte/easing";
 import { onMount } from "svelte";
 
 interface Props {
@@ -31,20 +33,9 @@ let cell = new Cell(total, kind, x, y);
 
 let self: HTMLButtonElement;
 
+
 onMount(() => {
   current.lattice_cells[x.toString() + y.toString()] = self;
-
-  window?.addEventListener("keydown", e => {
-    if (e.key === "Control") {
-      current.multiselect_enabled = true;
-    }
-  });
-
-  window?.addEventListener("keyup", e => {
-    if (e.key === "Control") {
-      current.multiselect_enabled = false;
-    }
-  })
 })
 
 
@@ -52,7 +43,7 @@ function onclick(e: MouseEvent)
 {
   console.log("current =", current.selected_cells);
   
-  if (!current.multiselect_enabled) {
+  if (!current.multiselecting) {
     current.selected_cells.clear();
   }
 
@@ -67,7 +58,7 @@ function onclick(e: MouseEvent)
 
 function onfocusout()
 {
-  if (!current.multiselect_enabled) {
+  if (!current.multiselecting) {
     current.selected_cells.delete(cell.shard);
   }
 }
@@ -153,6 +144,7 @@ function onkeydown(e: KeyboardEvent)
   {onclick}
   {onfocusout}
   {onkeydown}
+  transition:scale={{ duration: 500, easing: expoOut }}
 >
   <div class="content">
     {#if cell.fixed}
@@ -186,7 +178,7 @@ button.cell {
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
-  border: 2px solid $col-grey;
+  border: 2px solid $col-grey-light;
   border-radius: 1rem;
   outline: 0px solid color.change($col-blue, $alpha: 20%);
 
@@ -206,12 +198,14 @@ span {
 }
 
 button.cell.outer .content {
-  border: 2px dotted $col-grey;
+  border: 2px dotted $col-grey-light;
 }
 
 
 button.cell:not(.fixed) {
   &:hover, &:focus-visible {
+    cursor: pointer;
+    
     .content {
       border-style: solid;
       border-color: $col-blue;

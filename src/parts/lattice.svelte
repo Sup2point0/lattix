@@ -5,42 +5,51 @@ The grid.
 
 <script lang="ts">
 
-import { prefs } from "#scripts/stores";
+import { current, prefs } from "#scripts/stores";
 
-import Cell from "#parts/cell.svelte";
+import Cell from "#parts/lattice.cell.svelte";
 
 interface Props {
   x: number;
   y: number;
-  cellsize?: string;
+  cellsize?: number;
 }
 
-let { x, y, cellsize = "10vh" }: Props = $props();
+let { x, y, cellsize = $prefs.cells.size }: Props = $props();
 
 
-let xsize = $derived(5 + $prefs.show.outer * 2);
-let ysize = $derived(5 + $prefs.show.outer * 2);
+let expand = $derived(current.editing ? 2 : 0);
+let xsize = $derived(x + expand);
+let ysize = $derived(y + expand);
 
 </script>
 
 
 <div class="lattice-container">
   <div class="empty"></div>
-  {#if $prefs.show.add}
-    <button class="new row">+</button>
+  {#if current.editing}
+    <button class="new row" onclick={() => {
+      current.lattice_y++;
+    }}>
+      +
+    </button>
   {/if}
   <div class="empty"></div>
 
-  {#if $prefs.show.add}
-    <button class="new column">+</button>
+  {#if current.editing}
+    <button class="new column" onclick={() => {
+      current.lattice_x++;
+    }}>
+      +
+    </button>
   {/if}
 
   <div class="lattice"
     style:--x={xsize}
     style:--y={ysize}
-    style:--size={cellsize}
+    style:--size="calc({cellsize} * 100vh / {Math.max(x, y)})"
   >
-    {#if $prefs.show.outer}
+    {#if current.editing}
       <div class="empty"></div>
 
       {#each { length: x } as _, i}
@@ -51,7 +60,7 @@ let ysize = $derived(5 + $prefs.show.outer * 2);
     {/if}
 
     {#each { length: y } as _, j}
-      {#if $prefs.show.outer}
+      {#if current.editing}
         <Cell kind="outer" x={0} y={j+1} />
       {/if}
 
@@ -59,12 +68,12 @@ let ysize = $derived(5 + $prefs.show.outer * 2);
         <Cell kind="inner" x={i+1} y={j+1} />
       {/each}
 
-      {#if $prefs.show.outer}
+      {#if current.editing}
         <Cell kind="outer" x={x+1} y={j+1} />
       {/if}
     {/each}
     
-    {#if $prefs.show.outer}
+    {#if current.editing}
       <div class="empty"></div>
 
       {#each { length: x } as _, i}
@@ -75,13 +84,21 @@ let ysize = $derived(5 + $prefs.show.outer * 2);
     {/if}
   </div>
   
-  {#if $prefs.show.add}
-    <button class="new column">+</button>
+  {#if current.editing}
+    <button class="new column" onclick={() => {
+      current.lattice_x++;
+    }}>
+      +
+    </button>
   {/if}
 
   <div class="empty"></div>
-  {#if $prefs.show.add}
-    <button class="new row">+</button>
+  {#if current.editing}
+    <button class="new row" onclick={() => {
+      current.lattice_y++;
+    }}>
+      +
+    </button>
   {/if}
   <div class="empty"></div>
 </div>
