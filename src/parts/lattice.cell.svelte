@@ -34,6 +34,13 @@ let cell = new Cell(total, kind, x, y);
 let self: HTMLButtonElement;
 
 
+const ignored = ["CONTROL", "SHIFT", "ALT", "TAB"];
+const arrows = ["ARROWLEFT", "ARROWRIGHT", "ARROWUP", "ARROWDOWN"];
+const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+const alpha = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "U", "T", "V", "W", "X", "Y", "Z"];
+const punct = [",", ".", "!", "?", "+", "-", "*", "/", "=", "<", ">", "_", "~", "#"];
+
+
 onMount(() => {
   current.lattice_cells[x.toString() + y.toString()] = self;
 })
@@ -41,7 +48,7 @@ onMount(() => {
 
 function onclick(e: MouseEvent)
 {
-  console.log("current =", current.selected_cells);
+  e.stopPropagation();
   
   if (!current.multiselecting) {
     current.selected_cells.clear();
@@ -62,13 +69,6 @@ function onfocusout()
     current.selected_cells.delete(cell.shard);
   }
 }
-
-
-const ignored = ["CONTROL", "SHIFT", "ALT", "TAB"];
-const arrows = ["ARROWLEFT", "ARROWRIGHT", "ARROWUP", "ARROWDOWN"];
-const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-const alpha = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "U", "T", "V", "W", "X", "Y", "Z"];
-const punct = [",", ".", "!", "?", "+", "-", "*", "/", "=", "<", ">", "_", "~", "#"];
 
 function onkeydown(e: KeyboardEvent)
 {
@@ -205,7 +205,7 @@ button.cell.outer .content {
 button.cell:not(.fixed) {
   &:hover, &:focus-visible {
     cursor: pointer;
-    
+
     .content {
       border-style: solid;
       border-color: $col-blue;

@@ -5,6 +5,7 @@ import type { int } from "#scripts/types";
 
 class CurrentState
 {
+  overlays = new Overlays();
   modkeys = new ModifierKeys();
 
   lattice_x: int = $state(5);
@@ -19,6 +20,11 @@ class CurrentState
   multiselecting = $state(false);
 
   control_tab: string | null = $state(null);
+}
+
+class Overlays {
+  landing: int = $state(3);
+  keybinds: boolean = $state(false);
 }
 
 class ModifierKeys {

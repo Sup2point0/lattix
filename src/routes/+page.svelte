@@ -7,14 +7,12 @@ import { tips } from "#scripts/flavour";
 
 import Lattice from "#parts/lattice.svelte";
 import Controls from "#parts/controls.svelte";
+import Keybinds from "#parts/keybinds.svelte";
 
 import { fade, slide } from "svelte/transition";
 import { expoInOut } from "svelte/easing";
 import { onMount } from "svelte";
 import { base } from "$app/paths";
-
-
-let overlay = $state(3);
 
 
 let timeout: number | null = null;
@@ -23,6 +21,10 @@ onMount(() => {
   window?.addEventListener("keydown", e => {
     if (e.key === $prefs.keybinds.multiselect) {
       current.multiselecting = true;
+    }
+
+    if (e.key === "/") {
+      current.overlays.keybinds = !current.overlays.keybinds;
     }
   });
 
@@ -33,21 +35,28 @@ onMount(() => {
   });
 
   timeout = setTimeout(() => {
-    overlay = 2;
+    current.overlays.landing = 2;
+
     timeout = setTimeout(() => {
-      overlay = 1;
+      current.overlays.landing = 1;
+
       timeout = setTimeout(() => {
-        overlay = 0;
-      }, 200);
-    }, 2000);
-  }, 50);
+        current.overlays.landing = 0;
+      }, 200);  // release
+    }, 2000);  // sustain
+  }, 50);  // attack
 })
 
 </script>
 
 
+<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+<!-- svelte-ignore a11y_click_events_have_key_events -->
 <main
-  style:--font="Sora"
+  style:--font={$prefs.text.font ?? "Sora"}
+  onclick={() => {
+    current.selected_cells.clear();
+  }}
 >
   <div class="layout">
     <Lattice x={current.lattice_x} y={current.lattice_y} />
@@ -56,22 +65,22 @@ onMount(() => {
   </div>
 </main>
 
-{#if overlay}
+{#if current.overlays.landing}
   <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
   <!-- svelte-ignore a11y_click_events_have_key_events -->
   <aside class="overlay-container"
     onclick={() => {
-      overlay = 0;
+      current.overlays.landing = 0;
       if (timeout) clearTimeout(timeout);
     }}
     transition:fade={{ duration: 350 }}
   >
-    {#if overlay > 1}
+    {#if current.overlays.landing > 1}
       <div class="overlay" out:fade={{ duration: 350 }}>
         <div class="upper">
           <img alt="" src="{base}/lattix-icon.svg">
 
-          {#if overlay < 3}
+          {#if current.overlays.landing < 3}
             <div transition:slide={{ duration: 1000, easing: expoInOut, axis: "x" }}>
               <p class="lattix"> lattix </p>
               <p class="caption"> by Sup#2.0 </p>
@@ -85,6 +94,10 @@ onMount(() => {
       </div>
     {/if}
   </aside>
+{/if}
+
+{#if current.overlays.keybinds}
+  <Keybinds />
 {/if}
 
 
