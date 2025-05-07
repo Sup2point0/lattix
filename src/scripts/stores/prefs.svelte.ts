@@ -29,10 +29,10 @@ export class Prefs
 
 class KeyPrefs
 {
-  multiselect: Key = "Control";
+  multiselect: Key = "CONTROL";
 
   /** Modifier key for enabling markmaking when typing into a cell. */
-  mark: Key = "Shift";
+  mark: Key = "SHIFT";
 }
 
 class TextPrefs

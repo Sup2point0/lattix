@@ -5,6 +5,8 @@ An overlay showing the available keybinds.
 
 <script lang="ts">
   
+import { current } from "#scripts/stores";
+
 import { scale } from "svelte/transition";
 import { expoOut } from "svelte/easing";
 
@@ -48,16 +50,44 @@ const keybinds = [
   }, {
     keys: ["CTRL", "ARROW"],
     desc: "select multiple cells while moving"
+  }, {
+    keys: ["SHIFT", "digit"],
+    desc: "make mark"
+  }, {
+    keys: ["SHIFT", "CLICK", null, "H"],
+    desc: "highlight cell"
+  }, {
+    keys: ["SPACE", null, "BACKSPACE"],
+    desc: "clear cell"
+  }, {
+    keys: ["E"],
+    desc: "edit grid"
+  }, {
+    keys: ["R"],
+    desc: "clear grid"
+  }, {
+    keys: ["M"],
+    desc: "toggle marking"
+  }, {
+    keys: ["P"],
+    desc: "open Control Pane"
   },
 ];
 
 </script>
 
 
+<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+<!-- svelte-ignore a11y_click_events_have_key_events -->
 <aside class="keybinds-container"
+  onclick={() => { current.overlays.keybinds = false; }}
   transition:scale={{ duration: 500, easing: expoOut, start: 0.97 }}
 >
-  <div class="keybinds">
+  <!-- svelte-ignore a11y_no_static_element_interactions -->
+  <!-- svelte-ignore a11y_click_events_have_key_events -->
+  <div class="keybinds"
+    onclick={e => e.stopPropagation()}
+  >
     <h2> Keybinds </h2>
     <p> Keybinds to help you ever more optimise your workflow. Hopefully they should be pretty intuitive! </p>
     
@@ -106,11 +136,12 @@ aside.keybinds-container {
   box-shadow: 0 0 8px $col-grey-light;
 
   h2 {
-    padding-bottom: 0.5em;
+    font-weight: 500;
+    padding-bottom: 1em;
   }
 
   table {
-    margin-top: 2rem;
+    margin-top: 3rem;
     font-size: 100%;
     border-collapse: collapse;
   }
@@ -135,13 +166,14 @@ td {
 }
 
 code {
-  padding: 0.25em 0.5em;
+  padding: 0.4em 0.6em;
   margin: 0 0.1em;
   font-family: unset;
   font-size: 90%;
   background: white;
   border: 1px solid $col-grey-light;
   border-radius: 0.5em;
+  box-shadow: 0 0.5px 1px $col-grey-light;
 }
 
 span.separator {

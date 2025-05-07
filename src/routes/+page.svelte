@@ -16,16 +16,28 @@ import { base } from "$app/paths";
 
 
 let timeout: number | null = null;
+let tip = $state("");
 
 onMount(() => {
-  window?.addEventListener("keydown", e => {
-    if (e.key === $prefs.keybinds.multiselect) {
-      current.multiselecting = true;
-    }
+  tip = tips[Math.floor(Math.random() * tips.length)];
 
-    if (e.key === "/") {
-      current.overlays.keybinds = !current.overlays.keybinds;
-    }
+  window?.addEventListener("keydown", e => {
+    switch (e.key.toUpperCase()) {
+      case $prefs.keybinds.multiselect:
+        current.multiselecting = true;
+        e.stopPropagation();
+        break;
+
+      case "ESCAPE":
+        current.overlays.keybinds = false;
+        e.stopPropagation();
+        break;
+      
+      case "/":
+        current.overlays.keybinds = !current.overlays.keybinds;
+        e.stopPropagation();
+        break;
+    }    
   });
 
   window?.addEventListener("keyup", e => {
@@ -89,7 +101,7 @@ onMount(() => {
         </div>
           
         <div class="lower">
-          <p class="tip"> {@html tips[Math.floor(tips.length * Math.random())]} </p>
+          <p class="tip"> {@html tip} </p>
         </div>
       </div>
     {/if}
