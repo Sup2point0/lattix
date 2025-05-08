@@ -24,7 +24,16 @@ onMount(() => {
   window?.addEventListener("keydown", e => {
     switch (e.key.toUpperCase()) {
       case "CONTROL":
+        current.modkeys.ctrl = true;
         current.multiselecting = true;
+        break;
+
+      case "SHIFT":
+        current.modkeys.shift = true;
+        break;
+
+      case "ALT":
+        current.modkeys.alt = true;
         break;
 
       case "ESCAPE":
@@ -41,7 +50,16 @@ onMount(() => {
   window?.addEventListener("keyup", e => {
     switch (e.key.toUpperCase()) {
       case "CONTROL":
+        current.modkeys.ctrl = false;
         current.multiselecting = false;
+        break;
+
+      case "SHIFT":
+        current.modkeys.shift = false;
+        break;
+
+      case "ALT":
+        current.modkeys.alt = false;
         break;
     }
   });

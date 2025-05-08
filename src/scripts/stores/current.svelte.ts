@@ -1,6 +1,6 @@
 import { SvelteSet as Set } from "svelte/reactivity";
 
-import type { int } from "#scripts/types";
+import type { int, Cell } from "#scripts/types";
 
 
 class CurrentState
@@ -14,10 +14,11 @@ class CurrentState
   lattice_cells: Cells = $state({});
 
   /** Shards of the currently selected cells. */
-  selected_cells: Set<number> = $state(new Set());
+  selected_cells: Set<Cell> = $state(new Set());
 
   editing = $state(false);
   multiselecting = $state(false);
+  marking = $state(false);
 
   control_tab: string | null = $state(null);
 }

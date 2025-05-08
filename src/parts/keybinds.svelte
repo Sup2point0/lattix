@@ -51,14 +51,11 @@ const keybinds = [
     keys: ["CTRL", "arrow"],
     desc: "select multiple cells while moving"
   }, {
-    keys: ["⇧", "digit"],
+    keys: ["ALT", "digit"],
     desc: "make mark"
   }, {
-    keys: ["⇧", "click", null, "H"],
+    keys: ["ALT", "click", null, "H"],
     desc: "highlight cell"
-  }, {
-    keys: ["ALT", "click", null, "A"],
-    desc: "highlight all cells with same digit"
   }, {
     keys: ["SPACE", null, "BACKSPACE"],
     desc: "clear cell"
@@ -77,7 +74,10 @@ const keybinds = [
   }, {
     keys: ["P"],
     desc: "open Control Pane"
-  },
+  }, {
+    keys: [],
+    desc: "highlight all cells with same digit"
+  }
 ];
 
 </script>

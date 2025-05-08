@@ -11,10 +11,11 @@ let total = 0;
 
 <script lang="ts">
 
-import { current } from "#scripts/stores";
+import { current, prefs } from "#scripts/stores";
 
 import { Cell, type int } from "#scripts/types";
 
+import { SvelteSet as Set } from "svelte/reactivity";
 import { scale } from "svelte/transition";
 import { expoOut } from "svelte/easing";
 import { onMount } from "svelte";
@@ -54,7 +55,7 @@ function onclick(e: MouseEvent)
     current.selected_cells.clear();
   }
 
-  current.selected_cells.add(cell.shard);
+  current.selected_cells.add(cell);
   current.selected_cells = current.selected_cells;
 
   self.classList.add("clicked");
@@ -66,13 +67,13 @@ function onclick(e: MouseEvent)
 function onfocusout()
 {
   if (!current.multiselecting) {
-    current.selected_cells.delete(cell.shard);
+    current.selected_cells.delete(cell);
   }
 }
 
 function onkeydown(e: KeyboardEvent)
-{
-  if (cell.fixed) return;
+{  
+  if (cell.fixed || !cell.focused) return;
 
   let key = e.key.toUpperCase();
 
@@ -124,13 +125,80 @@ function onkeydown(e: KeyboardEvent)
     return;
   }
 
-  if (key === "BACKSPACE") {
-    cell.entered = null;
+  if (key === " " || key === "BACKSPACE") {
+    for (let each of current.selected_cells) {
+      each.entered = null;
+      each.marks.clear();
+    }
+    return;
   }
 
-  if (numbers.includes(key) || alpha.includes(key) || punct.includes(key)) {
-    cell.entered = key;
+  if (numbers.includes(key) || alpha.includes(key) || punct.includes(key)) {    
+    process_digit(key);
     return;
+  }
+}
+
+/** Handle entering or marking digits in the cell. */
+function process_digit(key: string)
+{
+  if (current.modkeys.alt) {
+    for (let each of current.selected_cells) {
+      each.entered = null;
+      each.marks.add(key);
+    }
+  }
+  else {
+    if ($prefs.marks.auto) {
+      if (current.selected_cells.size === 1) {        
+        /** If marks have been made, add or remove from the marks */
+        if (cell.marks.size) {
+          /** Make the mark the entered only if there's 1 digit and it's the same as the input key */
+          if (cell.marks.size === 1 && cell.marks.has(key)) {
+            cell.entered = cell.marks.values().next().value!;
+            cell.marks.clear();
+          }
+          else {
+            if (cell.marks.has(key)) {
+              cell.marks.delete(key);
+            } else {
+              cell.marks.add(key);
+            }
+          }
+        }
+        /** If a digit has already been entered in this cell, turn it into a mark */
+        else if (cell.entered) {          
+          if (cell.entered === key) {
+            /** Entering same key does nothing */
+          } else {
+            cell.marks = new Set([cell.entered, key]);
+            cell.entered = null;
+          }
+        }
+        /** Otherwise, just input the digit */
+        else {          
+          cell.entered = key;
+        }
+      }
+      else {
+        let added = 0;
+
+        for (let each of current.selected_cells) {
+          each.entered = null;
+          if (!each.marks.has(key)) {
+            each.marks.add(key);
+            added++;
+          }
+        }
+
+        /** If all of the selected cells already had the input digit, delete it from them instead */
+        if (added) return;
+
+        for (let each of current.selected_cells) {
+          each.marks.delete(key);
+        }
+      }
+    }
   }
 }
 
@@ -139,7 +207,7 @@ function onkeydown(e: KeyboardEvent)
 
 <button class="cell {kind}"
   class:fixed={cell.fixed}
-  class:focused={current.selected_cells.has(cell.shard)}
+  class:focused={cell.focused}
   bind:this={self}
   {onclick}
   {onfocusout}
@@ -148,11 +216,15 @@ function onkeydown(e: KeyboardEvent)
 >
   <div class="content">
     {#if cell.fixed}
-      <span class="fixed"> {cell.fixed} </span>
+      <div class="fixed"> {cell.fixed} </div>
     {/if}
 
     {#if cell.entered}
-      <span class="entered"> {cell.entered} </span>
+      <div class="entered"> {cell.entered} </div>
+    {:else}
+      {#if cell.marks.size}
+        <div class="marks"> {@html [...cell.marks].sort().join("&ZeroWidthSpace;")} </div>
+      {/if}
     {/if}
   </div>
 </button>
@@ -183,17 +255,24 @@ button.cell {
   outline: 0px solid color.change($col-blue, $alpha: 20%);
 
   transition: all 0.1s ease-out;
-}
 
-span {
-  &.fixed {
-    font-size: calc(var(--size) * 0.5);
-    color: var(--col-text);
-  }
+  div {
+    max-width: 100%;
+    
+    &.fixed {
+      font-size: calc(var(--size) * 0.5);
+      color: var(--col-text);
+    }
 
-  &.entered {
-    font-size: calc(var(--size) * 0.5);
-    color: $col-blue;
+    &.entered {
+      font-size: calc(var(--size) * 0.5);
+      color: $col-blue;
+    }
+
+    &.marks {
+      font-size: calc(var(--size) * 0.25);
+      color: $col-blue;
+    }
   }
 }
 
@@ -227,7 +306,7 @@ button.cell:not(.fixed) {
       outline-color: color.change($col-purp, $alpha: 20%);
     }
     
-    span.entered {
+    .entered, .marks {
       color: $col-purp;
     }
   }

@@ -3,15 +3,14 @@ import { writable } from "svelte/store";
 import type { Scalar, Key } from "#scripts/types";
 
 
-type Theme = "light" | "dark" | "bubblegum";
+type Theme = "Light" | "Dark" | "Bubblegum";
 type Font = "Sora" | "Lora" | "Sniglet";
-type MarkMaking = "always" | "auto" | "never";
-type MarkAlignment = "center" | "top-left" | "top-right";
+type MarkAlignment = "CENTER" | "TOP-LEFT" | "TOP-RIGHT";
 
 
 export class Prefs
 {
-  theme: Theme = $state("light");
+  theme: Theme = $state("Light");
 
   text: TextPrefs = new TextPrefs();
 
@@ -34,13 +33,13 @@ class TextPrefs
 class MarkPrefs
 {
   /**
-   * If disabled, typing a digit replaces the digit(s) in that cell.
+   * If disabled, marks must be added with ALT + digit.
    *
    * If enabled, typing a digit either adds it to or removes it from the cell. If multiple digits have been added to a cell, they become marks.
    */
-  making: MarkMaking = $state("auto");
+  auto: boolean = $state(true);
 
-  align: MarkAlignment = $state("center");
+  align: MarkAlignment = $state("CENTER");
 
   size: Scalar = $state(0.5);
 
