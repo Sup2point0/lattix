@@ -23,9 +23,8 @@ onMount(() => {
 
   window?.addEventListener("keydown", e => {
     switch (e.key.toUpperCase()) {
-      case $prefs.keybinds.multiselect:
+      case "CONTROL":
         current.multiselecting = true;
-        e.stopPropagation();
         break;
 
       case "ESCAPE":
@@ -35,14 +34,15 @@ onMount(() => {
       
       case "/":
         current.overlays.keybinds = !current.overlays.keybinds;
-        e.stopPropagation();
         break;
     }    
   });
 
   window?.addEventListener("keyup", e => {
-    if (e.key === $prefs.keybinds.multiselect) {
-      current.multiselecting = false;
+    switch (e.key.toUpperCase()) {
+      case "CONTROL":
+        current.multiselecting = false;
+        break;
     }
   });
 

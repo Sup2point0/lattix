@@ -121,11 +121,11 @@ function onkeydown(e: KeyboardEvent)
 
     next.focus();
     next.click();
-
-    if (e.ctrlKey) {
-
-    }
     return;
+  }
+
+  if (key === "BACKSPACE") {
+    cell.entered = null;
   }
 
   if (numbers.includes(key) || alpha.includes(key) || punct.includes(key)) {

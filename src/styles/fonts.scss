@@ -1,0 +1,13 @@
+@font-face {
+  font-family: 'Monaspace Neon';
+  src:
+    url('/fonts/monaspace-neon.ttf') format('truetype'),
+}
+
+@mixin font-ui {
+  font-family: var(--font, 'Sora'), system-ui, sans-serif;
+}
+
+@mixin font-code {
+  font-family: 'Monaspace Neon';
+}

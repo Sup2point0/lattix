@@ -13,9 +13,6 @@ export class Prefs
 {
   theme: Theme = $state("light");
 
-  /** Settings for keyboard shortcuts and modifier keys. */
-  keybinds: KeyPrefs = new KeyPrefs();
-
   text: TextPrefs = new TextPrefs();
 
   /** Settings for pencil marks (little digits for noting possible values). */
@@ -25,14 +22,6 @@ export class Prefs
 
   /** Gap between main grid and outer lanes. */
   outer_gap: Scalar = $state(0.5);
-}
-
-class KeyPrefs
-{
-  multiselect: Key = "CONTROL";
-
-  /** Modifier key for enabling markmaking when typing into a cell. */
-  mark: Key = "SHIFT";
 }
 
 class TextPrefs

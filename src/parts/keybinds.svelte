@@ -17,45 +17,48 @@ const keybinds = [
     desc: "select multiple cells"
   }, {
     keys: [
-      "UP", null,
-      "LEFT", null,
-      "DOWN", null,
-      "RIGHT"
+      "↑", null,
+      "←", null,
+      "↓", null,
+      "→"
     ],
     desc: "move in grid"
   }, {
     keys: [
       "HOME", null,
-      "ALT", "LEFT"
+      "ALT", "←"
     ],
     desc: "jump to left edge of grid"
   }, {
     keys: [
       "END", null,
-      "ALT", "RIGHT"
+      "ALT", "→"
     ],
     desc: "jump to cell furthest right"
   }, {
     keys: [
-      "SHIFT", "HOME", null,
-      "ALT", "UP"
+      "⇧", "HOME", null,
+      "ALT", "↑"
     ],
     desc: "jump to cell furthest up"
   }, {
     keys: [
-      "SHIFT", "END", null,
-      "ALT", "DOWN"
+      "⇧", "END", null,
+      "ALT", "↓"
     ],
     desc: "jump to cell furthest down"
   }, {
-    keys: ["CTRL", "ARROW"],
+    keys: ["CTRL", "arrow"],
     desc: "select multiple cells while moving"
   }, {
-    keys: ["SHIFT", "digit"],
+    keys: ["⇧", "digit"],
     desc: "make mark"
   }, {
-    keys: ["SHIFT", "CLICK", null, "H"],
+    keys: ["⇧", "click", null, "H"],
     desc: "highlight cell"
+  }, {
+    keys: ["ALT", "click", null, "A"],
+    desc: "highlight all cells with same digit"
   }, {
     keys: ["SPACE", null, "BACKSPACE"],
     desc: "clear cell"
@@ -68,6 +71,9 @@ const keybinds = [
   }, {
     keys: ["M"],
     desc: "toggle marking"
+  }, {
+    keys: ["N"],
+    desc: "show/hide marks"
   }, {
     keys: ["P"],
     desc: "open Control Pane"
@@ -99,7 +105,7 @@ const keybinds = [
               {#if key === null}
                 <span class="separator">/</span>
               {:else}
-                <code> {key} </code>
+                <code> {@html key} </code>
               {/if}
             {/each}
           </th>
@@ -168,7 +174,7 @@ td {
 code {
   padding: 0.4em 0.6em;
   margin: 0 0.1em;
-  font-family: unset;
+  @include font-code;
   font-size: 90%;
   background: white;
   border: 1px solid $col-grey-light;
@@ -177,7 +183,7 @@ code {
 }
 
 span.separator {
-  padding: 0 0.25em;
+  padding: 0 0.5em;
   color: $col-grey-dark;
 }
 
