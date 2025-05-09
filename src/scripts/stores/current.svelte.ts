@@ -19,6 +19,7 @@ class CurrentState
   editing = $state(false);
   multiselecting = $state(false);
   marking = $state(false);
+  show_marks = $state(true);
 
   control_tab: string | null = $state(null);
 }
@@ -32,6 +33,9 @@ class ModifierKeys {
   ctrl: boolean = $state(false);
   shift: boolean = $state(false);
   alt: boolean = $state(false);
+
+  any: boolean = $derived(this.ctrl || this.shift || this.alt);
+  none: boolean = $derived(!this.any);
 }
 
 interface Cells {

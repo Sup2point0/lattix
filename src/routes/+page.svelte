@@ -3,9 +3,11 @@
 import "#styles/essence.scss";
 
 import { current, prefs } from "#scripts/stores";
+import { set_keybinds } from "#scripts/keybinds";
 import { tips } from "#scripts/flavour";
 
 import Lattice from "#parts/lattice.svelte";
+import Modkeys from "#parts/modkeys.svelte";
 import Controls from "#parts/controls.svelte";
 import Keybinds from "#parts/keybinds.svelte";
 
@@ -21,48 +23,7 @@ let tip = $state("");
 onMount(() => {
   tip = tips[Math.floor(Math.random() * tips.length)];
 
-  window?.addEventListener("keydown", e => {
-    switch (e.key.toUpperCase()) {
-      case "CONTROL":
-        current.modkeys.ctrl = true;
-        current.multiselecting = true;
-        break;
-
-      case "SHIFT":
-        current.modkeys.shift = true;
-        break;
-
-      case "ALT":
-        current.modkeys.alt = true;
-        break;
-
-      case "ESCAPE":
-        current.overlays.keybinds = false;
-        e.stopPropagation();
-        break;
-      
-      case "/":
-        current.overlays.keybinds = !current.overlays.keybinds;
-        break;
-    }    
-  });
-
-  window?.addEventListener("keyup", e => {
-    switch (e.key.toUpperCase()) {
-      case "CONTROL":
-        current.modkeys.ctrl = false;
-        current.multiselecting = false;
-        break;
-
-      case "SHIFT":
-        current.modkeys.shift = false;
-        break;
-
-      case "ALT":
-        current.modkeys.alt = false;
-        break;
-    }
-  });
+  set_keybinds(window);
 
   timeout = setTimeout(() => {
     current.overlays.landing = 2;
@@ -89,7 +50,11 @@ onMount(() => {
   }}
 >
   <div class="layout">
-    <Lattice x={current.lattice_x} y={current.lattice_y} />
+    <div class="left">
+      <Lattice x={current.lattice_x} y={current.lattice_y} />
+
+      <Modkeys />
+    </div>
 
     <Controls />
   </div>
@@ -147,10 +112,19 @@ main {
 
 .layout {
   width: max-content;
+  height: 100%;
   padding: 1rem;
   display: flex;
   flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
   gap: 8vw;
+
+  .left {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 3rem;
+  }
 }
 
 aside.overlay-container {
