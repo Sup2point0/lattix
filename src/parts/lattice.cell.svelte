@@ -47,6 +47,15 @@ onMount(() => {
 })
 
 
+/** Trigger a press animation for the cell. */
+function animate_press()
+{
+  self.classList.add("clicked");
+  setTimeout(() => {
+    self.classList.remove("clicked");
+  }, 30);
+}
+
 function onclick(e: MouseEvent)
 {
   e.stopPropagation();
@@ -58,10 +67,7 @@ function onclick(e: MouseEvent)
   current.selected_cells.add(cell);
   current.selected_cells = current.selected_cells;
 
-  self.classList.add("clicked");
-  setTimeout(() => {
-    self.classList.remove("clicked");
-  }, 30);
+  animate_press();
 }
 
 function onfocusout()
@@ -126,6 +132,8 @@ function onkeydown(e: KeyboardEvent)
   }
 
   if (key === " " || key === "BACKSPACE") {
+    animate_press();
+    e.stopPropagation();
     for (let each of current.selected_cells) {
       each.entered = null;
       each.marks.clear();
@@ -134,6 +142,7 @@ function onkeydown(e: KeyboardEvent)
   }
 
   if (numbers.includes(key) || alpha.includes(key) || punct.includes(key)) {    
+    animate_press();
     process_digit(key);
     return;
   }
@@ -143,61 +152,100 @@ function onkeydown(e: KeyboardEvent)
 function process_digit(key: string)
 {
   if (current.modkeys.alt) {
-    for (let each of current.selected_cells) {
-      each.entered = null;
-      each.marks.add(key);
+    if (current.selected_cells.size === 1) {
+      alt_single(key);
+    } else {
+      mark_multi(key);
     }
   }
   else {
     if ($prefs.marks.auto) {
       if (current.selected_cells.size === 1) {        
-        /** If marks have been made, add or remove from the marks */
-        if (cell.marks.size) {
-          /** Make the mark the entered only if there's 1 digit and it's the same as the input key */
-          if (cell.marks.size === 1 && cell.marks.has(key)) {
-            cell.entered = cell.marks.values().next().value!;
-            cell.marks.clear();
-          }
-          else {
-            if (cell.marks.has(key)) {
-              cell.marks.delete(key);
-            } else {
-              cell.marks.add(key);
-            }
-          }
-        }
-        /** If a digit has already been entered in this cell, turn it into a mark */
-        else if (cell.entered) {          
-          if (cell.entered === key) {
-            /** Entering same key does nothing */
-          } else {
-            cell.marks = new Set([cell.entered, key]);
-            cell.entered = null;
-          }
-        }
-        /** Otherwise, just input the digit */
-        else {          
-          cell.entered = key;
-        }
+        noalt_auto_single(key);
+      } else {
+        mark_multi(key);
       }
-      else {
-        let added = 0;
+    }
+    else {
+      noalt_manual(key);
+    }
+  }
+}
 
-        for (let each of current.selected_cells) {
-          each.entered = null;
-          if (!each.marks.has(key)) {
-            each.marks.add(key);
-            added++;
-          }
-        }
+function alt_single(key: string)
+{
+  if (cell.marks.has(key)) {
+    cell.marks.delete(key);
+  } else {
+    cell.marks.add(key);
+  }
+}
 
-        /** If all of the selected cells already had the input digit, delete it from them instead */
-        if (added) return;
-
-        for (let each of current.selected_cells) {
-          each.marks.delete(key);
-        }
+/** Handle ambiguous digit input when a *single* cell is selected and auto-marking is enabled. */
+function noalt_auto_single(key: string)
+{
+  /** If marks have been made, add or remove from the marks */
+  if (cell.marks.size) {
+    /** Make the mark the entered only if there's 1 digit and it's the same as the input key */
+    if (cell.marks.size === 1 && cell.marks.has(key)) {
+      cell.entered = cell.marks.values().next().value!;
+      cell.marks.clear();
+    }
+    else {
+      if (cell.marks.has(key)) {
+        cell.marks.delete(key);
+      } else {
+        cell.marks.add(key);
       }
+    }
+  }
+  /** If a digit has already been entered in this cell, turn it into a mark */
+  else if (cell.entered) {          
+    if (cell.entered === key) {
+      /** Entering same key does nothing */
+    } else {
+      cell.marks = new Set([cell.entered, key]);
+      cell.entered = null;
+    }
+  }
+  /** Otherwise, just input the digit */
+  else {          
+    cell.entered = key;
+  }
+}
+
+/** Handle ambiguous digit input when *multiple* cells are selected and auto-marking is enabled. */
+function mark_multi(key: string)
+{
+  let added = 0;
+
+  for (let each of current.selected_cells) {
+    each.entered = null;
+    if (!each.marks.has(key)) {
+      each.marks.add(key);
+      added++;
+    }
+  }
+
+  /** If all of the selected cells already had the input digit, delete it from them instead */
+  if (added) return;
+
+  for (let each of current.selected_cells) {
+    each.marks.delete(key);
+  }
+}
+
+/** Handle ambiguous digit input when auto-marking is disabled. */
+function noalt_manual(key: string)
+{
+  if (current.selected_cells.size === 1) {
+    cell.entered = key;
+    cell.marks.clear();
+  }
+  else {
+    for (let each of current.selected_cells) {
+      each.entered = key;
+      each.marks.clear();
     }
   }
 }
@@ -252,7 +300,10 @@ button.cell {
   align-items: center;
   border: 2px solid $col-grey-light;
   border-radius: 1rem;
-  outline: 0px solid color.change($col-blue, $alpha: 20%);
+  // split for compatibility with older browsers
+  outline-width: 0px;
+  outline-style: solid;
+  outline-color: color.change($col-blue, $alpha: 20%);
 
   transition: all 0.1s ease-out;
 

@@ -25,16 +25,20 @@ let ysize = $derived(y + expand);
 </script>
 
 
-<div class="lattice-container">
-  <div class="empty"></div>
+<div class="lattice-container"
+  style:gap={current.editing ? "1rem" : "0"}
+>
   {#if current.editing}
+    <div class="empty"></div>
+
     <button class="new row" onclick={() => {
       current.lattice_y++;
     }}>
       +
     </button>
+
+    <div class="empty"></div>
   {/if}
-  <div class="empty"></div>
 
   {#if current.editing}
     <button class="new column" onclick={() => {
@@ -92,15 +96,17 @@ let ysize = $derived(y + expand);
     </button>
   {/if}
 
-  <div class="empty"></div>
   {#if current.editing}
+    <div class="empty"></div>
+
     <button class="new row" onclick={() => {
       current.lattice_y++;
     }}>
       +
     </button>
+
+    <div class="empty"></div>
   {/if}
-  <div class="empty"></div>
 </div>
 
 
@@ -110,7 +116,6 @@ let ysize = $derived(y + expand);
   width: max-content;
   display: grid;
   grid-template-columns: repeat(3, auto);
-  gap: 1rem;
 }
 
 .lattice {
