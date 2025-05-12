@@ -12,14 +12,16 @@ let marks = $prefs.marks;
 
 <h2> Marks </h2>
 
-<label>
-  <section>
-    <h4> Auto-Marking </h4>
-    <p> Entering more than 1 digit into a cell automatically turns them into marks. </p>
-  </section>
+<div>
+  <label>
+    <section>
+      <h4> Auto-Marking </h4>
+      <p> Entering more than 1 digit into a cell automatically turns them into marks. </p>
+    </section>
 
-  <Toggle bind:value={marks.auto} />
-</label>
+    <Toggle bind:value={marks.auto} />
+  </label>
+</div>
 
 
 <style lang="scss">

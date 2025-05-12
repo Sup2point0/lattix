@@ -63,6 +63,7 @@ function cycle_options()
   outline-width: 0px;
   outline-style: solid;
   outline-color: color.change($col-blue, $alpha: 20%);
+  box-shadow: 0 0.5px 1px $col-grey-light;
   
   transition: all 0.1s ease-out;
 

@@ -43,7 +43,7 @@ class TextPrefs
 {
   font: Font = $state(Font.SORA);
 
-  text_size: Scalar = $state(0.5);
+  size: Scalar = $state(0.5);
 }
 
 class MarkPrefs

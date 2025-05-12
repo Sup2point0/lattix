@@ -7,11 +7,14 @@ h2 {
 }
 
 label {
+  padding-top: 2rem;
+  margin-top: 2rem;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: start;
   gap: 1rem;
+  border-top: 1px solid $col-grey-light;
 
   &:hover {
     cursor: pointer;
@@ -22,6 +25,11 @@ section {
   h4 {
     padding-bottom: 0.5em;
     font-weight: 500;
+    transition: all 0.1s ease-out;
+
+    label:hover & {
+      color: $col-blue;
+    }
   }
 
   p {
