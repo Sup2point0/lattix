@@ -1,7 +1,7 @@
 import { SvelteSet as Set } from "svelte/reactivity";
 
+import { ControlTab } from "#parts/controls/controls.svelte";
 import type { int, Cell } from "#scripts/types";
-import type { ControlTab } from "#parts/controls/controls.svelte";
 
 
 class CurrentState
@@ -29,7 +29,7 @@ class CurrentState
   show_marks = $state(true);
 
   show_controls: boolean = $state(true);
-  control_tab: ControlTab | null = $state(0);
+  control_tab: ControlTab = $state(ControlTab.CORE);
 }
 
 class Overlays {

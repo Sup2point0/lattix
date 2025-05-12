@@ -7,7 +7,11 @@ The right controls pane for configuring options.
   
 export enum ControlTab
 {
-  CORE = 0, TEXT, MARKS, CELLS
+  CORE = "Controls",
+  TEXT = "Text",
+  MARKS = "Marks",
+  CELLS = "Cells",
+  STATS = "Stats",
 }
 
 </script>
@@ -20,7 +24,8 @@ import Tab from "./tab.svelte";
 import Core from "./tabs/core.svelte";
 import Text from "./tabs/text.svelte";
 import Marks from "./tabs/marks.svelte";
-import Cells from "./tabs/text.svelte";
+import Cells from "./tabs/cells.svelte";
+import Stats from "./tabs/stats.svelte";
 
 </script>
 
@@ -35,14 +40,15 @@ import Cells from "./tabs/text.svelte";
       <Marks />
     {:else if current.control_tab === ControlTab.CELLS}
       <Cells />
+    {:else if current.control_tab === ControlTab.STATS}
+      <Stats />
     {/if}
   </form>
   
   <nav>
-    <Tab tab={ControlTab.CORE} text="Controls" />
-    <Tab tab={ControlTab.TEXT} text="Text" />
-    <Tab tab={ControlTab.MARKS} text="Marks" />
-    <Tab tab={ControlTab.CELLS} text="Cells" />
+    {#each Object.values(ControlTab) as tab}
+      <Tab tab={tab} text={tab} />
+    {/each}
   </nav>
 </div>
 
@@ -66,6 +72,7 @@ nav {
 }
 
 form {
+  min-width: 20vw;
   padding: 1rem;
 }
 
