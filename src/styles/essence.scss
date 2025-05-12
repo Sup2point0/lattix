@@ -12,6 +12,10 @@
   font-size: 100%;
 }
 
+body {
+  font-size: var(--font-size, 100%);
+}
+
 body * {
   @include font-ui;
 }

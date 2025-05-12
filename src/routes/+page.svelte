@@ -5,6 +5,7 @@ import "#styles/essence.scss";
 import { current, prefs } from "#scripts/stores";
 import { set_keybinds } from "#scripts/keybinds";
 import { tips } from "#scripts/flavour";
+import { FontSizes } from "#scripts/config";
 
 import Lattice from "#parts/lattice.svelte";
 import Modkeys from "#parts/modkeys.svelte";
@@ -15,6 +16,13 @@ import { fade, slide } from "svelte/transition";
 import { expoInOut } from "svelte/easing";
 import { onMount } from "svelte";
 import { base } from "$app/paths";
+
+
+// set on `<body>` so font is globally set
+$effect(() => {
+  document.body.style.setProperty("--font", $prefs.text.font);
+  document.body.style.setProperty("--font-size", FontSizes[$prefs.text.font]);
+});
 
 
 let timeout: number | null = null;
@@ -44,7 +52,6 @@ onMount(() => {
 <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <main
-  style:--font={$prefs.text.font ?? "Sora"}
   onclick={() => {
     current.selected_cells.clear();
   }}

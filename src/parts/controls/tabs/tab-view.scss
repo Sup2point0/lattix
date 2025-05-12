@@ -11,6 +11,11 @@ label {
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: start;
+  gap: 1rem;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 section {

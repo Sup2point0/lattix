@@ -3,14 +3,30 @@ import { writable } from "svelte/store";
 import type { Scalar, Key } from "#scripts/types";
 
 
-type Theme = "Light" | "Dark" | "Bubblegum";
-type Font = "Sora" | "Lora" | "Sniglet";
-type MarkAlignment = "CENTER" | "TOP-LEFT" | "TOP-RIGHT";
+export enum Theme {
+  LIGHT = "light",
+  DARK = "dark",
+  BUBBLEGUM = "bubblegum",
+}
+
+export enum Font
+{
+  SORA = "Sora",
+  LORA = "Lora",
+  SNIGLET = "Sniglet",
+}
+
+enum MarkAlignment
+{
+  CENTER = 0,
+  TOP_LEFT,
+  TOP_RIGHT,
+}
 
 
 export class Prefs
 {
-  theme: Theme = $state("Light");
+  theme: Theme = $state(Theme.LIGHT);
 
   text: TextPrefs = new TextPrefs();
 
@@ -25,7 +41,7 @@ export class Prefs
 
 class TextPrefs
 {
-  font: Font = $state("Sora");
+  font: Font = $state(Font.SORA);
 
   text_size: Scalar = $state(0.5);
 }
@@ -39,7 +55,7 @@ class MarkPrefs
    */
   auto: boolean = $state(true);
 
-  align: MarkAlignment = $state("CENTER");
+  align: MarkAlignment = $state(0);
 
   size: Scalar = $state(0.5);
 
