@@ -76,29 +76,6 @@ button {
       border-color: $col-purp
     }
   }
-
-  // &::after {
-  //   content: '';
-  //   width: $size;
-  //   aspect-ratio: 1;
-  //   display: block;
-  //   position: absolute;
-  //   top: 0;
-  //   left: 0;
-  //   // top: $size * 0.25 * 0.5;
-  //   // left: $size * 0.25 * 0.5;
-  //   z-index: -1;
-  //   background: $col-blue;
-  //   border-radius: 100%;
-  //   opacity: 0;
-  //   transition: opacity 0.1s ease-out;
-  // }
-
-  // &.active {
-  //   &::after {
-  //     opacity: 1;
-  //   }
-  // }
 }
 
 </style>

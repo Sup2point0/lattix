@@ -17,7 +17,7 @@ export enum ControlTab
 import { current } from "#src/scripts/stores";
 
 import Tab from "./tab.svelte";
-import Core from "./tabs/text.svelte";
+import Core from "./tabs/core.svelte";
 import Text from "./tabs/text.svelte";
 import Marks from "./tabs/marks.svelte";
 import Cells from "./tabs/text.svelte";

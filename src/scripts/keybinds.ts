@@ -13,7 +13,13 @@ export function set_keybinds(window: Window)
     }
 
     switch (key) {
+      case "CONTROL":
+        current.multiselecting = true;
+        e.stopPropagation();
+        break;
+      
       case "ALT":
+        current.marking = true;        
         e.stopPropagation();
         break;
 
@@ -59,6 +65,14 @@ export function set_keybinds(window: Window)
     current.held_keys.delete(key);
 
     switch (key) {
+      case "CONTROL":
+        current.multiselecting = false;
+        break;
+
+      case "ALT":
+        current.marking = false;
+        break;
+      
       case "N":
         current.show_marks = true;
         break;
