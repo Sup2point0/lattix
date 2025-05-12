@@ -16,8 +16,6 @@ import { current, prefs } from "#scripts/stores";
 import { Cell, type int } from "#scripts/types";
 
 import { SvelteSet as Set } from "svelte/reactivity";
-import { scale } from "svelte/transition";
-import { expoOut } from "svelte/easing";
 import { onMount } from "svelte";
 
 interface Props {
@@ -151,7 +149,7 @@ function onkeydown(e: KeyboardEvent)
 /** Handle entering or marking digits in the cell. */
 function process_digit(key: string)
 {
-  if (current.modkeys.alt) {
+  if (current.held_keys.has("ALT")) {
     if (current.selected_cells.size === 1) {
       alt_single(key);
     } else {
@@ -260,7 +258,6 @@ function noalt_manual(key: string)
   {onclick}
   {onfocusout}
   {onkeydown}
-  transition:scale={{ duration: 500, easing: expoOut }}
 >
   <div class="content">
     {#if cell.fixed}
@@ -270,7 +267,7 @@ function noalt_manual(key: string)
     {#if cell.entered}
       <div class="entered"> {cell.entered} </div>
     {:else}
-      {#if cell.marks.size}
+      {#if current.show_marks && cell.marks.size}
         <div class="marks"> {@html [...cell.marks].sort().join("&ZeroWidthSpace;")} </div>
       {/if}
     {/if}
@@ -345,7 +342,7 @@ button.cell:not(.fixed) {
 
   &:active, &.clicked {
     .content {
-      transform: scale(0.97);
+      transform: scale(97%);
     }
   }
 

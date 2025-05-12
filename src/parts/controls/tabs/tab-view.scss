@@ -1,0 +1,25 @@
+@use 'src/styles/colours' as *;
+
+
+h2 {
+  font-weight: 500;
+  padding-bottom: 1em;
+}
+
+label {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: start;
+}
+
+section {
+  h4 {
+    padding-bottom: 0.5em;
+    font-weight: 500;
+  }
+
+  p {
+    color: $col-grey-dark;
+  }
+}

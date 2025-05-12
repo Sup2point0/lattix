@@ -1,4 +1,4 @@
-<!-- @component ControlTab
+<!-- @component Tab
 
 A tab in the controls pane.
 -->
@@ -6,9 +6,10 @@ A tab in the controls pane.
 <script lang="ts">
   
 import { current } from "#scripts/stores";
+import type { ControlTab } from "./controls.svelte";
 
 interface Props {
-  tab: string;
+  tab: ControlTab;
   text: string;
 }
 
