@@ -6,7 +6,13 @@ import type { int, Cell } from "#scripts/types";
 class CurrentState
 {
   overlays = new Overlays();
-  modkeys = new ModifierKeys();
+
+  held_keys: Set<string> = new Set();
+  any_modkeys: boolean = $derived(
+    this.held_keys.has("CONTROL") ||
+    this.held_keys.has("ALT") ||
+    this.held_keys.has("SHIFT")
+  );
 
   lattice_x: int = $state(5);
   lattice_y: int = $state(5);
@@ -14,28 +20,20 @@ class CurrentState
   lattice_cells: Cells = $state({});
 
   /** Shards of the currently selected cells. */
-  selected_cells: Set<Cell> = $state(new Set());
+  selected_cells: Set<Cell> = new Set();
 
   editing = $state(false);
-  multiselecting = $state(false);
+  multiselecting = $derived(this.held_keys.has("CONTROL"));
   marking = $state(false);
   show_marks = $state(true);
 
+  show_controls: boolean = $state(true);
   control_tab: string | null = $state(null);
 }
 
 class Overlays {
   landing: int = $state(3);
   keybinds: boolean = $state(false);
-}
-
-class ModifierKeys {
-  ctrl: boolean = $state(false);
-  shift: boolean = $state(false);
-  alt: boolean = $state(false);
-
-  any: boolean = $derived(this.ctrl || this.shift || this.alt);
-  none: boolean = $derived(!this.any);
 }
 
 interface Cells {

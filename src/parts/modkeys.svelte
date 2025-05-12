@@ -11,15 +11,15 @@ import { current } from "#scripts/stores";
 
 
 <ul class="modkeys">
-  {#if current.modkeys.ctrl}
+  {#if current.held_keys.has("CONTROL")}
     <li class="status" id="ctrl"> CTRL </li>
   {/if}
 
-  {#if current.modkeys.alt}
+  {#if current.held_keys.has("ALT")}
     <li class="status" id="alt"> ALT </li>
   {/if}
 
-  {#if current.modkeys.shift}
+  {#if current.held_keys.has("SHIFT")}
     <li class="status" id="shift"> SHIFT </li>
   {/if}
 </ul>

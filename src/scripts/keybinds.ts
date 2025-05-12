@@ -5,19 +5,15 @@ export function set_keybinds(window: Window)
 {
   window?.addEventListener("keydown", e => {
     let key = e.key.toUpperCase();
+    if (current.held_keys.has(key)) {
+      e.stopPropagation();
+      return;
+    } else {
+      current.held_keys.add(key);
+    }
 
     switch (key) {
-      case "CONTROL":
-        current.modkeys.ctrl = true;
-        current.multiselecting = true;
-        break;
-
-      case "SHIFT":
-        current.modkeys.shift = true;
-        break;
-
       case "ALT":
-        current.modkeys.alt = true;
         e.stopPropagation();
         break;
 
@@ -33,7 +29,7 @@ export function set_keybinds(window: Window)
         break;
     }
 
-    if (current.modkeys.any) return;
+    if (current.any_modkeys) return;
 
     switch (key) {
       case "E":
@@ -41,29 +37,29 @@ export function set_keybinds(window: Window)
         break;
 
       case "R":
+        alert("This feature hasn’t been implemented yet!");
+        break;
+
+      case "M":
+        alert("This feature hasn’t been implemented yet!");
+        break;
+
+      case "N":
         current.show_marks = false;
+        break;
+
+      case "P":
+        current.show_controls = true;
         break;
     }
   });
 
   window?.addEventListener("keyup", e => {
     let key = e.key.toUpperCase();
+    current.held_keys.delete(key);
 
     switch (key) {
-      case "CONTROL":
-        current.modkeys.ctrl = false;
-        current.multiselecting = false;
-        break;
-
-      case "SHIFT":
-        current.modkeys.shift = false;
-        break;
-
-      case "ALT":
-        current.modkeys.alt = false;
-        break;
-
-      case "R":
+      case "N":
         current.show_marks = true;
         break;
     }
