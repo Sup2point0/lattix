@@ -57,7 +57,7 @@ const keybinds = [
     keys: ["ALT", "click", null, "H"],
     desc: "highlight cell"
   }, {
-    keys: ["SPACE", null, "BACKSPACE"],
+    keys: ["SPACE", null, "BACKSPACE", null, "DELETE"],
     desc: "clear cell"
   }, {
     keys: ["E"],

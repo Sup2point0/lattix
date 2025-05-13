@@ -129,7 +129,7 @@ function onkeydown(e: KeyboardEvent)
     return;
   }
 
-  if (key === " " || key === "BACKSPACE") {
+  if (key === " " || key === "BACKSPACE" || key === "DELETE") {
     animate_press();
     e.stopPropagation();
     for (let each of current.selected_cells) {
