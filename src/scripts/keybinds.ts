@@ -1,6 +1,76 @@
 import { current } from "#scripts/stores";
 
 
+export const keybinds = [
+  {
+    keys: ["CTRL", "click"],
+    desc: "select multiple cells"
+  }, {
+    keys: [
+      "↑", null,
+      "←", null,
+      "↓", null,
+      "→"
+    ],
+    desc: "move in grid"
+  }, {
+    keys: [
+      "HOME", null,
+      "ALT", "←"
+    ],
+    desc: "jump to left edge of grid"
+  }, {
+    keys: [
+      "END", null,
+      "ALT", "→"
+    ],
+    desc: "jump to cell furthest right"
+  }, {
+    keys: [
+      "⇧", "HOME", null,
+      "ALT", "↑"
+    ],
+    desc: "jump to cell furthest up"
+  }, {
+    keys: [
+      "⇧", "END", null,
+      "ALT", "↓"
+    ],
+    desc: "jump to cell furthest down"
+  }, {
+    keys: ["CTRL", "arrow"],
+    desc: "select multiple cells while moving"
+  }, {
+    keys: ["ALT", "digit"],
+    desc: "make mark"
+  }, {
+    keys: ["ALT", "click", null, "H"],
+    desc: "highlight cell"
+  }, {
+    keys: ["SPACE", null, "BACKSPACE", null, "DELETE"],
+    desc: "clear cell"
+  }, {
+    keys: ["E"],
+    desc: "edit grid"
+  }, {
+    keys: ["R"],
+    desc: "clear grid"
+  }, {
+    keys: ["M"],
+    desc: "toggle marking"
+  }, {
+    keys: ["N"],
+    desc: "show/hide marks"
+  }, {
+    keys: ["P"],
+    desc: "open Control Pane"
+  }, {
+    keys: [],
+    desc: "highlight all cells with same digit"
+  }
+];
+
+
 export function set_keybinds(window: Window)
 {
   window?.addEventListener("keydown", e => {

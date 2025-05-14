@@ -33,6 +33,12 @@ onMount(() => {
 
   set_keybinds(window);
 
+  window.addEventListener("mouseup", () => {    
+    if (current.dragselecting) {
+      current.dragselecting = false;
+    }
+  });
+
   timeout = setTimeout(() => {
     current.overlays.landing = 2;
 
@@ -52,7 +58,7 @@ onMount(() => {
 <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <main
-  onclick={() => {
+  onmousedown={() => {
     current.selected_cells.clear();
   }}
 >

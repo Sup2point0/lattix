@@ -24,11 +24,25 @@ export class Cell
 
   /** The digits marked in the cell. */
   marks: Set<string> = $state(new Set());
-
+  
   constructor(shard: int, kind: "inner" | "outer", x: int, y: int) {
+    this.button = self;
     this.shard = shard;
     this.kind = kind;
     this.x = x;
     this.y = y;
+  }
+
+  /** Select the cell. */
+  select()
+  {
+    if (!current.multiselecting && !current.dragselecting) {
+      current.selected_cells.clear();
+      current.dragselecting = false;
+    }
+
+    current.selected_cells.add(this);
+    current.selected_cells = current.selected_cells;
+    current.dragselecting = true;
   }
 }

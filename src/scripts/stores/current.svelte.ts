@@ -23,10 +23,16 @@ class CurrentState
   /** Shards of the currently selected cells. */
   selected_cells: Set<Cell> = new Set();
 
-  editing = $state(false);
+  /** When enabled, hovering over a cell selects it (no click is needed). */
+  dragselecting = $state(false);
+
+  /** When enabled, selecting a cell does not deselect other cells. */
   multiselecting = $derived(this.held_keys.has("CONTROL"));
+
+  /** When enabled, typing digits always makes a mark instead of entering the digit. */
   marking = $state(false);
   show_marks = $state(true);
+  editing = $state(false);
 
   show_controls: boolean = $state(true);
   control_tab: ControlTab = $state(ControlTab.CORE);
@@ -38,7 +44,7 @@ class Overlays {
 }
 
 interface Cells {
-  [cords: string]: HTMLButtonElement;
+  [cords: string]: Cell;
 }
 
 

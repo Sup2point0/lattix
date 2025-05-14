@@ -41,8 +41,9 @@ const punct = [",", ".", "!", "?", "+", "-", "*", "/", "=", "<", ">", "_", "~", 
 
 
 onMount(() => {
-  current.lattice_cells[x.toString() + y.toString()] = self;
-})
+  cell.button = self;
+  current.lattice_cells[x.toString() + y.toString()] = cell;
+});
 
 
 /** Trigger a press animation for the cell. */
@@ -54,25 +55,26 @@ function animate_press()
   }, 30);
 }
 
+/** If dragselecting, select the cell. */
+function onmouseenter(e: MouseEvent)
+{  
+  if (current.dragselecting) {
+    onmousedown(e);
+  }
+}
+
+/** Select the cell. */
+function onmousedown(e: MouseEvent)
+{
+  e.stopPropagation();
+  animate_press();
+  cell.select();
+}
+
 function onclick(e: MouseEvent)
 {
   e.stopPropagation();
-  
-  if (!current.multiselecting) {
-    current.selected_cells.clear();
-  }
-
-  current.selected_cells.add(cell);
-  current.selected_cells = current.selected_cells;
-
-  animate_press();
-}
-
-function onfocusout()
-{
-  if (!current.multiselecting) {
-    current.selected_cells.delete(cell);
-  }
+  self.focus();
 }
 
 function onkeydown(e: KeyboardEvent)
@@ -124,8 +126,8 @@ function onkeydown(e: KeyboardEvent)
     let next = current.lattice_cells[X.toString() + Y.toString()];
     if (!next) return;
 
-    next.focus();
-    next.click();
+    next.button.focus();
+    next.select();
     return;
   }
 
@@ -149,7 +151,7 @@ function onkeydown(e: KeyboardEvent)
 /** Handle entering or marking digits in the cell. */
 function process_digit(key: string)
 {
-  if (current.held_keys.has("ALT")) {
+  if (current.marking) {
     if (current.selected_cells.size === 1) {
       alt_single(key);
     } else {
@@ -255,8 +257,9 @@ function noalt_manual(key: string)
   class:fixed={cell.fixed}
   class:focused={cell.focused}
   bind:this={self}
+  {onmouseenter}
+  {onmousedown}
   {onclick}
-  {onfocusout}
   {onkeydown}
 >
   <div class="content">
@@ -300,7 +303,7 @@ button.cell {
   // split for compatibility with older browsers
   outline-width: 0px;
   outline-style: solid;
-  outline-color: color.change($col-blue, $alpha: 20%);
+  outline-color: transparent;
 
   transition: all 0.1s ease-out;
 
@@ -334,28 +337,32 @@ button.cell:not(.fixed) {
     cursor: pointer;
 
     .content {
-      border-style: solid;
       border-color: $col-blue;
       outline-width: 3.5px;
+      outline-color: color.change($col-blue, $alpha: 20%);
     }
   }
 
   &:active, &.clicked {
     .content {
-      transform: scale(97%);
-    }
-  }
-
-  &:active, &.focused {
-    .content {
-      border-style: solid;
       border-color: $col-purp;
       outline-width: 3.5px;
       outline-color: color.change($col-purp, $alpha: 20%);
-    }
+      transform: scale(97%);
     
-    .entered, .marks {
-      color: $col-purp;
+      .entered, .marks {
+        color: $col-purp;
+      }
+    }
+  }
+}
+
+button.cell.focused {
+  &, &:hover, &:active {
+    .content {
+      border-color: $col-purp;
+      outline-width: 3.5px;
+      outline-color: color.change($col-purp, $alpha: 20%);
     }
   }
 }

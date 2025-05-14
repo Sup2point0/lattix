@@ -27,23 +27,28 @@ import Marks from "./tabs/marks.svelte";
 import Cells from "./tabs/cells.svelte";
 import Stats from "./tabs/stats.svelte";
 
+import { scale } from "svelte/transition";
+import { expoOut } from "svelte/easing";
+
 </script>
 
 
 <div class="controls-container">
-  <form>
-    {#if current.control_tab === ControlTab.CORE}
-      <Core />
-    {:else if current.control_tab === ControlTab.TEXT}
-      <Text />
-    {:else if current.control_tab === ControlTab.MARKS}
-      <Marks />
-    {:else if current.control_tab === ControlTab.CELLS}
-      <Cells />
-    {:else if current.control_tab === ControlTab.STATS}
-      <Stats />
-    {/if}
-  </form>
+  {#key current.control_tab}
+    <form in:scale={{ duration: 500, easing: expoOut, start: 0.97 }}>
+      {#if current.control_tab === ControlTab.CORE}
+        <Core />
+      {:else if current.control_tab === ControlTab.TEXT}
+        <Text />
+      {:else if current.control_tab === ControlTab.MARKS}
+        <Marks />
+      {:else if current.control_tab === ControlTab.CELLS}
+        <Cells />
+      {:else if current.control_tab === ControlTab.STATS}
+        <Stats />
+      {/if}
+    </form>
+  {/key}
   
   <nav>
     {#each Object.values(ControlTab) as tab}
