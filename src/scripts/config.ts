@@ -14,6 +14,7 @@ export enum ThemeCol
   PURP = "purp",
   PINK = "pink",
   RED = "red",
+  ORANGE = "orange",
   GREEN = "green",
   
   GREY_LIGHT = "grey-light",

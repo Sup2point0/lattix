@@ -18,7 +18,7 @@ export class Cell
   focused: boolean = $derived(current.selected_cells.has(this));
   
   /** Whether the cell ctonains digit pre-provided by the puzzle. */
-  fixed: boolean = $state(false);
+  fixed: string | null = $state(null);
 
   /** The single digit currently entered in the cell. */
   entered: string | null = $state(null);
