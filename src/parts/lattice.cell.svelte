@@ -255,7 +255,7 @@ function noalt_manual(key: string)
 
 <button
   class="{kind}"
-  class:fixed={cell.fixed}
+  class:fixed={cell.fixed !== null}
   class:focused={cell.focused}
   class:highlight={cell.highlight}
   bind:this={self}
