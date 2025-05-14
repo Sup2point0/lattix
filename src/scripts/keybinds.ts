@@ -3,9 +3,6 @@ import { current } from "#scripts/stores";
 
 export const keybinds = [
   {
-    keys: ["CTRL", "click"],
-    desc: "select multiple cells"
-  }, {
     keys: [
       "↑", null,
       "←", null,
@@ -38,6 +35,9 @@ export const keybinds = [
     ],
     desc: "jump to cell furthest down"
   }, {
+    keys: ["CTRL", "click"],
+    desc: "select multiple cells"
+  }, {
     keys: ["CTRL", "arrow"],
     desc: "select multiple cells while moving"
   }, {
@@ -50,19 +50,19 @@ export const keybinds = [
     keys: ["ALT", "click", null, "H"],
     desc: "highlight cell"
   }, {
-    keys: ["ALT", null, "E"],
+    keys: ["ALT", "E"],
     desc: "edit grid"
   }, {
-    keys: ["ALT", null, "R"],
+    keys: ["ALT", "R"],
     desc: "clear grid"
   }, {
-    keys: ["ALT", null, "M"],
+    keys: ["ALT", "M"],
     desc: "toggle marking"
   }, {
-    keys: ["ALT", null, "N"],
+    keys: ["ALT", "N"],
     desc: "show/hide marks"
   }, {
-    keys: ["ALT", null, "P"],
+    keys: ["ALT", "P"],
     desc: "open Control Pane"
   }, {
     keys: [],
