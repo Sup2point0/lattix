@@ -26,7 +26,6 @@ export class Cell
   marks: Set<string> = $state(new Set());
   
   constructor(shard: int, kind: "inner" | "outer", x: int, y: int) {
-    this.button = self;
     this.shard = shard;
     this.kind = kind;
     this.x = x;
