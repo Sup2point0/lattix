@@ -141,6 +141,13 @@ function onkeydown(e: KeyboardEvent)
     return;
   }
 
+  if (current.held_keys.has("ALT") && key === "H") {
+    animate_press();
+    highlight_multi();
+    current.selected_cells.clear();
+    return;
+  }
+
   if (numbers.includes(key) || alpha.includes(key) || punct.includes(key)) {    
     animate_press();
     process_digit(key);
@@ -247,6 +254,25 @@ function noalt_manual(key: string)
       each.entered = key;
       each.marks.clear();
     }
+  }
+}
+
+/** Handle highlighting multiple cells. */
+function highlight_multi()
+{
+  let added = 0;
+
+  for (let each of current.selected_cells) {
+    if (each.highlight !== $prefs.cols.highlight) {
+      each.highlight = $prefs.cols.highlight;
+      added++;
+    }
+  }
+
+  if (added) return;
+
+  for (let each of current.selected_cells) {
+    each.highlight = null;
   }
 }
 

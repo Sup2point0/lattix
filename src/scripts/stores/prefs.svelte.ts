@@ -1,6 +1,7 @@
 import { writable } from "svelte/store";
 
-import type { Scalar } from "#scripts/types";
+import { ThemeCol } from "../config";
+import type { Scalar } from "../types";
 
 
 export enum Theme {
@@ -42,6 +43,8 @@ export class Prefs
 class ColPrefs
 {
   theme: Theme = $state(Theme.LIGHT);
+
+  highlight: ThemeCol = $state(ThemeCol.PINK);
 }
 
 class TextPrefs

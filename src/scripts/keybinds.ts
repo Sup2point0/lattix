@@ -47,7 +47,7 @@ export const keybinds = [
     keys: ["ALT", "digit"],
     desc: "make mark"
   }, {
-    keys: ["ALT", "click", null, "H"],
+    keys: ["ALT", "click", null, "ALT", "H"],
     desc: "highlight cell"
   }, {
     keys: ["ALT", "E"],

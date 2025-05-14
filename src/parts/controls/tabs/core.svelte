@@ -49,7 +49,7 @@ import ColourOptions from "#parts/ui/options.cols.svelte";
         ),
         (value) => {
           for (let cell of current.selected_cells) {
-            cell.highlight = value
+            cell.highlight = value;
           }
         }
       }
