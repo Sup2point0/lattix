@@ -8,6 +8,7 @@ The right controls pane for configuring options.
 export enum ControlTab
 {
   CORE = "Controls",
+  COLS = "Colours",
   TEXT = "Text",
   MARKS = "Marks",
   CELLS = "Cells",
@@ -22,33 +23,40 @@ import { current } from "#src/scripts/stores";
 
 import Tab from "./tab.svelte";
 import Core from "./tabs/core.svelte";
+import Cols from "./tabs/cols.svelte";
 import Text from "./tabs/text.svelte";
 import Marks from "./tabs/marks.svelte";
 import Cells from "./tabs/cells.svelte";
 import Stats from "./tabs/stats.svelte";
 
-import { scale } from "svelte/transition";
+import { slide, scale } from "svelte/transition";
 import { expoOut } from "svelte/easing";
 
 </script>
 
 
 <div class="controls-container">
-  {#key current.control_tab}
-    <form in:scale={{ duration: 500, easing: expoOut, start: 0.97 }}>
-      {#if current.control_tab === ControlTab.CORE}
-        <Core />
-      {:else if current.control_tab === ControlTab.TEXT}
-        <Text />
-      {:else if current.control_tab === ControlTab.MARKS}
-        <Marks />
-      {:else if current.control_tab === ControlTab.CELLS}
-        <Cells />
-      {:else if current.control_tab === ControlTab.STATS}
-        <Stats />
-      {/if}
-    </form>
-  {/key}
+  {#if current.show_controls}
+    <div transition:slide={{ duration: 500, easing: expoOut, axis: "x" }}>
+    {#key current.control_tab}
+      <form in:scale={{ duration: 500, easing: expoOut, start: 0.97 }}>
+        {#if current.control_tab === ControlTab.CORE}
+          <Core />
+        {:else if current.control_tab === ControlTab.COLS}
+          <Cols />
+        {:else if current.control_tab === ControlTab.TEXT}
+          <Text />
+        {:else if current.control_tab === ControlTab.MARKS}
+          <Marks />
+        {:else if current.control_tab === ControlTab.CELLS}
+          <Cells />
+        {:else if current.control_tab === ControlTab.STATS}
+          <Stats />
+        {/if}
+      </form>
+    {/key}
+    </div>
+  {/if}
   
   <nav>
     {#each Object.values(ControlTab) as tab}
@@ -65,7 +73,6 @@ import { expoOut } from "svelte/easing";
   display: flex;
   flex-flow: row nowrap;
   align-items: stretch;
-  gap: 1rem;
 }
 
 nav {
@@ -79,6 +86,7 @@ nav {
 form {
   min-width: 20vw;
   padding: 1rem;
+  margin-right: 1rem;
 }
 
 </style>

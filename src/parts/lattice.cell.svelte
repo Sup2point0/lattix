@@ -363,6 +363,10 @@ button.cell.focused {
       border-color: $col-purp;
       outline-width: 3.5px;
       outline-color: color.change($col-purp, $alpha: 20%);
+
+      .entered, .marks {
+        color: $col-purp;
+      }
     }
   }
 }
