@@ -1,6 +1,6 @@
 import { writable } from "svelte/store";
 
-import type { Scalar, Key } from "#scripts/types";
+import type { Scalar } from "#scripts/types";
 
 
 export enum Theme {
@@ -39,7 +39,8 @@ export class Prefs
   outer_gap: Scalar = $state(0.5);
 }
 
-class ColPrefs{
+class ColPrefs
+{
   theme: Theme = $state(Theme.LIGHT);
 }
 

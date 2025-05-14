@@ -114,7 +114,7 @@ section {
   display: flex;
   flex-flow: column nowrap;
   align-items: start;
-  gap: 1rem;
+  gap: 0.5rem;
   border-top: 1px solid $col-grey-light;
 }
 

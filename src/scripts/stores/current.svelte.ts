@@ -1,14 +1,14 @@
 import { SvelteSet as Set } from "svelte/reactivity";
 
 import { ControlTab } from "#scripts/config";
-import type { int, Cell } from "#scripts/types";
+import type { int, Key, Cell } from "#scripts/types";
 
 
 class CurrentState
 {
   overlays = new Overlays();
 
-  held_keys: Set<string> = new Set();
+  held_keys: Set<Key> = new Set();
   any_modkeys: boolean = $derived(
     this.held_keys.has("CONTROL") ||
     this.held_keys.has("ALT") ||
