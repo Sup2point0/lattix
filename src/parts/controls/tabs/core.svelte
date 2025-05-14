@@ -3,6 +3,8 @@
 import { current } from "#scripts/stores";
 
 import Tool from "#parts/ui/tool.svelte";
+import ColourOptions from "#parts/ui/options.cols.svelte";
+    import { ThemeCol } from "#src/scripts/config";
 
 
 </script>
@@ -34,6 +36,33 @@ import Tool from "#parts/ui/tool.svelte";
       text="Edit Grid"
       text_active="Editing Grid"
       bind:value={current.editing}
+    />
+  </section>
+
+  <section>
+    <ColourOptions
+      bind:value={
+        () => (
+          (current.selected_cells.size === 1) && current.selected_cells.values().next().value!.highlight
+          || null
+        ),
+        (value) => {
+          for (let cell of current.selected_cells) {
+            cell.highlight = value
+          }
+        }
+      }
+      cols={[
+        null,
+        // ThemeCol.PURP,
+        ThemeCol.PINK,
+        ThemeCol.RED,
+        ThemeCol.GREEN,
+        ThemeCol.BLUE,
+        // ThemeCol.GREY_LIGHT,
+        ThemeCol.GREY_DARK,
+      ]}
+      disabled={current.selected_cells.size === 0}
     />
   </section>
 </div>

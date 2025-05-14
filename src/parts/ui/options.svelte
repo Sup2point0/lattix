@@ -37,8 +37,8 @@ function cycle_options()
   {#each options as option}
     <button class:selected={value === option}
       onclick={e => {
-        value = option;
         e.stopPropagation();
+        value = option;
       }}
     >
       {option}
@@ -57,7 +57,7 @@ function cycle_options()
   display: flex;
   flex-flow: row nowrap;
   align-items: stretch;
-  gap: 0.2rem;
+  gap: 0.4rem;
   border: 1px solid $col-grey-light;
   border-radius: 0.5rem;
   outline-width: 0px;
@@ -85,7 +85,7 @@ button {
   &:not(.selected) {
     &:hover, &:focus-visible {
       cursor: pointer;
-      background: color.change($col-grey-light, $alpha: 40%);
+      background: color.change($col-grey-light, $alpha: 50%);
     }
 
     &:active {

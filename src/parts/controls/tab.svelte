@@ -6,7 +6,7 @@ A tab in the controls pane.
 <script lang="ts">
   
 import { current } from "#scripts/stores";
-import type { ControlTab } from "./controls.svelte";
+import type { ControlTab } from "#scripts/config";
 
 interface Props {
   tab: ControlTab;

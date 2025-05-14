@@ -1,6 +1,6 @@
 import { SvelteSet as Set } from "svelte/reactivity";
 
-import { ControlTab } from "#parts/controls/controls.svelte";
+import { ControlTab } from "#scripts/config";
 import type { int, Cell } from "#scripts/types";
 
 

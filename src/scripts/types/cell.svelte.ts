@@ -1,6 +1,7 @@
 import { SvelteSet as Set } from "svelte/reactivity";
 
 import { current } from "../stores";
+import type { ThemeCol } from "../config";
 import type { int } from "./root";
 
 
@@ -24,6 +25,9 @@ export class Cell
 
   /** The digits marked in the cell. */
   marks: Set<string> = $state(new Set());
+
+  /** The highlight colour of the cell. */
+  highlight: ThemeCol | null = $state(null);
   
   constructor(shard: int, kind: "inner" | "outer", x: int, y: int) {
     this.shard = shard;
@@ -33,7 +37,7 @@ export class Cell
   }
 
   /** Select the cell. */
-  select()
+  select(click = true)
   {
     if (!current.multiselecting && !current.dragselecting) {
       current.selected_cells.clear();
@@ -42,6 +46,9 @@ export class Cell
 
     current.selected_cells.add(this);
     current.selected_cells = current.selected_cells;
-    current.dragselecting = true;
+    
+    if (click) {
+      current.dragselecting = true;
+    }
   }
 }

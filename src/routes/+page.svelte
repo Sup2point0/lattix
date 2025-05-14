@@ -28,6 +28,8 @@ $effect(() => {
 let timeout: number | null = null;
 let tip = $state("");
 
+$inspect(current.selected_cells);
+
 onMount(() => {
   tip = tips[Math.floor(Math.random() * tips.length)];
 
@@ -58,8 +60,10 @@ onMount(() => {
 <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <main
-  onmousedown={() => {
-    current.selected_cells.clear();
+  onmousedown={e => {
+    if (document.elementFromPoint(e.clientX, e.clientY)?.tagName !== "BUTTON") {
+      current.selected_cells.clear();
+    }
   }}
 >
   <div class="layout">

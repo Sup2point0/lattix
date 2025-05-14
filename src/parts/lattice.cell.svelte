@@ -126,8 +126,8 @@ function onkeydown(e: KeyboardEvent)
     let next = current.lattice_cells[X.toString() + Y.toString()];
     if (!next) return;
 
-    next.button.focus();
-    next.select();
+    next.button?.focus();
+    next.select(false);
     return;
   }
 
@@ -253,14 +253,17 @@ function noalt_manual(key: string)
 </script>
 
 
-<button class="cell {kind}"
+<button
+  class="{kind}"
   class:fixed={cell.fixed}
   class:focused={cell.focused}
+  class:highlight={cell.highlight}
   bind:this={self}
   {onmouseenter}
   {onmousedown}
   {onclick}
   {onkeydown}
+  style:--col="var(--col-{cell.highlight})"
 >
   <div class="content">
     {#if cell.fixed}
@@ -283,7 +286,7 @@ function noalt_manual(key: string)
 @use 'sass:color';
 
 
-button.cell {
+button {
   width: var(--size, 5rem);
   aspect-ratio: 1;
   background: none;
@@ -298,7 +301,9 @@ button.cell {
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
-  border: 2px solid $col-grey-light;
+  
+  background: color-mix(in oklch, var(--col, none), transparent 92%);
+  border: 2px solid var(--col, $col-grey-light);
   border-radius: 1rem;
   // split for compatibility with older browsers
   outline-width: 0px;
@@ -327,12 +332,12 @@ button.cell {
   }
 }
 
-button.cell.outer .content {
+button.outer .content {
   border: 2px dotted $col-grey-light;
 }
 
 
-button.cell:not(.fixed) {
+button:not(.fixed) {
   &:hover, &:focus-visible {
     cursor: pointer;
 
@@ -357,8 +362,8 @@ button.cell:not(.fixed) {
   }
 }
 
-button.cell.focused {
-  &, &:hover, &:active {
+button.focused {
+  &, &:hover, &:focus-visible, &:active {
     .content {
       border-color: $col-purp;
       outline-width: 3.5px;
@@ -367,6 +372,29 @@ button.cell.focused {
       .entered, .marks {
         color: $col-purp;
       }
+    }
+  }
+}
+
+button.highlight {
+  &:not(.focused) {
+    .content {
+      .entered, .marks {
+        color: var(--col);
+      }
+    }
+
+    &:hover, &:focus-visible {
+      .content {
+        border-color: var(--col, $col-purp);
+        outline-color: color-mix(in oklch, var(--col, $col-blue), transparent 80%);
+      }
+    }
+  }
+
+  &.focused {
+    .content {
+      background: color.change($col-purp, $alpha: 8%);
     }
   }
 }

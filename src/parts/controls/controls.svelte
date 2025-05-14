@@ -3,23 +3,10 @@
 The right controls pane for configuring options.
 -->
 
-<script module lang="ts">
-  
-export enum ControlTab
-{
-  CORE = "Controls",
-  COLS = "Colours",
-  TEXT = "Text",
-  MARKS = "Marks",
-  CELLS = "Cells",
-  STATS = "Stats",
-}
-
-</script>
-
 <script lang="ts">
 
 import { current } from "#src/scripts/stores";
+import { ControlTab } from "#scripts/config";
 
 import Tab from "./tab.svelte";
 import Core from "./tabs/core.svelte";
