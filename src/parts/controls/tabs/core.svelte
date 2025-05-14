@@ -1,10 +1,11 @@
 <script lang="ts">
 
 import { current } from "#scripts/stores";
+import { ThemeCol } from "#scripts/config";
 
 import Tool from "#parts/ui/tool.svelte";
+import Clicky from "#parts/ui/clicky.svelte";
 import ColourOptions from "#parts/ui/options.cols.svelte";
-    import { ThemeCol } from "#src/scripts/config";
 
 
 </script>
@@ -57,6 +58,7 @@ import ColourOptions from "#parts/ui/options.cols.svelte";
         // ThemeCol.PURP,
         ThemeCol.PINK,
         ThemeCol.RED,
+        ThemeCol.ORANGE,
         ThemeCol.GREEN,
         ThemeCol.BLUE,
         // ThemeCol.GREY_LIGHT,
@@ -64,6 +66,39 @@ import ColourOptions from "#parts/ui/options.cols.svelte";
       ]}
       disabled={current.selected_cells.size === 0}
     />
+  </section>
+
+  <section>
+    <Clicky text="Clear Cells" action={() => {
+      if (window.confirm("Clear all entered and marked digits?")) {
+        for (let cell of Object.values(current.lattice_cells)) {
+          cell.entered = null;
+          cell.marks.clear();
+        }
+      }
+    }} />
+    <Clicky text="Clear Marks Only" action={() => {
+      if (window.confirm("Clear all marked digits?")) {
+        for (let cell of Object.values(current.lattice_cells)) {
+          cell.marks.clear();
+        }
+      }
+    }} />
+    <Clicky text="Clear All" action={() => {
+      if (window.confirm("Clear all digits from the grid?")) {
+        for (let cell of Object.values(current.lattice_cells)) {
+          cell.fixed = null;
+          cell.entered = null;
+          cell.marks.clear();
+          cell.highlight = null;
+        }
+      }
+    }} />
+    <Clicky text="New" action={() => {
+      if (window.confirm("Reset the grid?")) {
+        alert("This feature hasn’t been implemented yet!");
+      }
+    }} />
   </section>
 </div>
 
