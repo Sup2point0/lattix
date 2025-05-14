@@ -65,6 +65,7 @@ button {
 
     &:active {
       background: $col-purp;
+      border-color: $col-purp;
     }
   }
 }

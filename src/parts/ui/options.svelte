@@ -85,12 +85,11 @@ button {
   &:not(.selected) {
     &:hover, &:focus-visible {
       cursor: pointer;
-      background: $col-grey-light;
+      background: color.change($col-grey-light, $alpha: 40%);
     }
 
     &:active {
-      color: white;
-      background: $col-purp;
+      background: $col-grey-light;
     }
   }
 
