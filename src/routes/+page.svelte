@@ -3,7 +3,7 @@
 import "#styles/essence.scss";
 
 import { current, prefs } from "#scripts/stores";
-import { set_keybinds } from "#scripts/keybinds";
+import { set_keybinds, onbeforeunload } from "#scripts/keybinds";
 import { tips } from "#scripts/flavour";
 import { FontSizes } from "#scripts/config";
 
@@ -27,8 +27,6 @@ $effect(() => {
 
 let timeout: number | null = null;
 let tip = $state("");
-
-$inspect(current.selected_cells);
 
 onMount(() => {
   tip = tips[Math.floor(Math.random() * tips.length)];
@@ -56,6 +54,8 @@ onMount(() => {
 
 </script>
 
+
+<svelte:window {onbeforeunload} />
 
 <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 <!-- svelte-ignore a11y_click_events_have_key_events -->

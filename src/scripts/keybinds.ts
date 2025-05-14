@@ -156,3 +156,16 @@ function keyup(e: KeyboardEvent)
       break;
   }
 }
+
+
+export function onbeforeunload(e: Event): boolean
+{
+  for (let cell of Object.values(current.lattice_cells)) {
+    if (cell.fixed || cell.entered || cell.marks.size) {
+      e.preventDefault();
+      return true;
+    }
+  }
+
+  return false;
+}
