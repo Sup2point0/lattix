@@ -26,7 +26,7 @@ enum MarkAlignment
 
 export class Prefs
 {
-  theme: Theme = $state(Theme.LIGHT);
+  cols: ColPrefs = new ColPrefs();
 
   text: TextPrefs = new TextPrefs();
 
@@ -37,6 +37,10 @@ export class Prefs
 
   /** Gap between main grid and outer lanes. */
   outer_gap: Scalar = $state(0.5);
+}
+
+class ColPrefs{
+  theme: Theme = $state(Theme.LIGHT);
 }
 
 class TextPrefs

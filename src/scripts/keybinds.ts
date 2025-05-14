@@ -41,28 +41,28 @@ export const keybinds = [
     keys: ["CTRL", "arrow"],
     desc: "select multiple cells while moving"
   }, {
+    keys: ["SPACE", null, "BACKSPACE", null, "DELETE"],
+    desc: "clear cell"
+  }, {
     keys: ["ALT", "digit"],
     desc: "make mark"
   }, {
     keys: ["ALT", "click", null, "H"],
     desc: "highlight cell"
   }, {
-    keys: ["SPACE", null, "BACKSPACE", null, "DELETE"],
-    desc: "clear cell"
-  }, {
-    keys: ["E"],
+    keys: ["ALT", null, "E"],
     desc: "edit grid"
   }, {
-    keys: ["R"],
+    keys: ["ALT", null, "R"],
     desc: "clear grid"
   }, {
-    keys: ["M"],
+    keys: ["ALT", null, "M"],
     desc: "toggle marking"
   }, {
-    keys: ["N"],
+    keys: ["ALT", null, "N"],
     desc: "show/hide marks"
   }, {
-    keys: ["P"],
+    keys: ["ALT", null, "P"],
     desc: "open Control Pane"
   }, {
     keys: [],
@@ -73,79 +73,86 @@ export const keybinds = [
 
 export function set_keybinds(window: Window)
 {
-  window?.addEventListener("keydown", e => {
-    let key = e.key.toUpperCase();
-    if (current.held_keys.has(key)) {
+  window?.addEventListener("keydown", keydown);
+  window?.addEventListener("keyup", keyup);
+}
+
+
+function keydown(e: KeyboardEvent)
+{
+  let key = e.key.toUpperCase();
+  if (current.held_keys.has(key)) {
+    e.stopPropagation();
+    return;
+  } else {
+    current.held_keys.add(key);
+  }
+
+  switch (key) {
+    case "CONTROL":
+      current.multiselecting = true;
       e.stopPropagation();
-      return;
-    } else {
-      current.held_keys.add(key);
-    }
+      break;
+    
+    case "ALT":
+      current.marking = true;        
+      e.stopPropagation();
+      break;
 
-    switch (key) {
-      case "CONTROL":
-        current.multiselecting = true;
+    case "ESCAPE":
+      if (current.overlays.keybinds) {
+        current.overlays.keybinds = false;
         e.stopPropagation();
-        break;
-      
-      case "ALT":
-        current.marking = true;        
-        e.stopPropagation();
-        break;
+      }
+      break;
+  }
 
-      case "ESCAPE":
-        if (current.overlays.keybinds) {
-          current.overlays.keybinds = false;
-          e.stopPropagation();
-        }
-        break;
-      
-      case "/":
-        current.overlays.keybinds = !current.overlays.keybinds;
-        break;
-    }
+  if (!current.held_keys.has("ALT")) return;
 
-    if (current.any_modkeys) return;
+  switch (key) {
+    case "/":
+      current.overlays.keybinds = !current.overlays.keybinds;
+      break;
+    
+    case "E":
+      current.editing = !current.editing;
+      break;
 
-    switch (key) {
-      case "E":
-        current.editing = !current.editing;
-        break;
+    case "R":
+      alert("This feature hasn’t been implemented yet!");
+      break;
 
-      case "R":
-        alert("This feature hasn’t been implemented yet!");
-        break;
+    case "M":
+      alert("This feature hasn’t been implemented yet!");
+      break;
 
-      case "M":
-        alert("This feature hasn’t been implemented yet!");
-        break;
+    case "N":
+      current.show_marks = false;
+      break;
 
-      case "N":
-        current.show_marks = false;
-        break;
+    case "P":
+      current.show_controls = !current.show_controls;
+      break;
+  }
+}
 
-      case "P":
-        current.show_controls = true;
-        break;
-    }
-  });
 
-  window?.addEventListener("keyup", e => {
-    let key = e.key.toUpperCase();
-    current.held_keys.delete(key);
+function keyup(e: KeyboardEvent)
+{
+  let key = e.key.toUpperCase();
+  current.held_keys.delete(key);
 
-    switch (key) {
-      case "CONTROL":
-        current.multiselecting = false;
-        break;
+  switch (key) {
+    case "CONTROL":
+      current.multiselecting = false;
+      break;
 
-      case "ALT":
-        current.marking = false;
-        break;
-      
-      case "N":
-        current.show_marks = true;
-        break;
-    }
-  });
+    case "ALT":
+      current.marking = false;
+      break;
+    
+    case "N":
+      current.show_marks = true;
+      break;
+  }
 }
