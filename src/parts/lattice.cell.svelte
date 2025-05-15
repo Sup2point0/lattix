@@ -12,7 +12,7 @@ let total = 0;
 <script lang="ts">
 
 import { current, prefs } from "#scripts/stores";
-
+import { Keys } from "#scripts/config";
 import { Cell, type int } from "#scripts/types";
 
 import { SvelteSet as Set } from "svelte/reactivity";
@@ -33,27 +33,11 @@ let cell = new Cell(total, kind, x, y);
 let self: HTMLButtonElement;
 
 
-const ignored = ["CONTROL", "SHIFT", "ALT", "TAB"];
-const arrows = ["ARROWLEFT", "ARROWRIGHT", "ARROWUP", "ARROWDOWN"];
-const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-const alpha = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "U", "T", "V", "W", "X", "Y", "Z"];
-const punct = [",", ".", "!", "?", "+", "-", "*", "/", "=", "<", ">", "_", "~", "#"];
-
-
 onMount(() => {
   cell.button = self;
   current.lattice_cells[x.toString() + y.toString()] = cell;
 });
-
-
-/** Trigger a press animation for the cell. */
-function animate_press()
-{
-  self.classList.add("clicked");
-  setTimeout(() => {
-    self.classList.remove("clicked");
-  }, 30);
-}
+ 
 
 /** If dragselecting, select the cell. */
 function onmouseenter(e: MouseEvent)
@@ -67,8 +51,8 @@ function onmouseenter(e: MouseEvent)
 function onmousedown(e: MouseEvent)
 {
   e.stopPropagation();
-  animate_press();
   cell.select();
+  cell.animate_press();
 }
 
 function onclick(e: MouseEvent)
@@ -83,10 +67,12 @@ function onkeydown(e: KeyboardEvent)
 
   let key = e.key.toUpperCase();
 
-  if (ignored.includes(key)) return;
+  if (Keys.Ignored.includes(key)) return;
 
-  if (arrows.includes(key)) {
+  if (Keys.Arrows.includes(key)) {
     e.preventDefault();
+    if (current.dragselecting) return;
+
     let X = x, Y = y;
 
     switch (key) {
@@ -132,9 +118,9 @@ function onkeydown(e: KeyboardEvent)
   }
 
   if (key === " " || key === "BACKSPACE" || key === "DELETE") {
-    animate_press();
     e.stopPropagation();
     for (let each of current.selected_cells) {
+      each.animate_press();
       each.entered = null;
       each.marks.clear();
     }
@@ -142,14 +128,16 @@ function onkeydown(e: KeyboardEvent)
   }
 
   if (current.held_keys.has("ALT") && key === "H") {
-    animate_press();
+    current.selected_cells.forEach(each => each.animate_press());
     highlight_multi();
     current.selected_cells.clear();
     return;
   }
 
-  if (numbers.includes(key) || alpha.includes(key) || punct.includes(key)) {    
-    animate_press();
+  if (
+    Keys.Numbers.includes(key) || Keys.Alpha.includes(key) || Keys.Punct.includes(key)
+  ) {  
+    current.selected_cells.forEach(each => each.animate_press());
     process_digit(key);
     return;
   }

@@ -20,7 +20,7 @@ class CurrentState
 
   lattice_cells: Cells = $state({});
 
-  /** Shards of the currently selected cells. */
+  /** The currently selected cells. */
   selected_cells: Set<Cell> = new Set();
 
   /** When enabled, hovering over a cell selects it (no click is needed). */

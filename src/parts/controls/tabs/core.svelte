@@ -1,7 +1,7 @@
 <script lang="ts">
 
 import { current } from "#scripts/stores";
-import { ThemeCol } from "#scripts/config";
+import { HighlightCols } from "#scripts/config";
 
 import Tool from "#parts/ui/tool.svelte";
 import Clicky from "#parts/ui/clicky.svelte";
@@ -53,17 +53,7 @@ import ColourOptions from "#parts/ui/options.cols.svelte";
           }
         }
       }
-      cols={[
-        null,
-        // ThemeCol.PURP,
-        ThemeCol.PINK,
-        ThemeCol.RED,
-        ThemeCol.ORANGE,
-        ThemeCol.GREEN,
-        ThemeCol.BLUE,
-        // ThemeCol.GREY_LIGHT,
-        ThemeCol.GREY_DARK,
-      ]}
+      cols={[null].concat(HighlightCols)}
       disabled={current.selected_cells.size === 0}
     />
   </section>

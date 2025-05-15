@@ -51,4 +51,13 @@ export class Cell
       current.dragselecting = true;
     }
   }
+
+  /** Trigger a press animation. */
+  animate_press()
+  {
+    this.button?.classList.add("clicked");
+    setTimeout(() => {
+      this.button?.classList.remove("clicked");
+    }, 30);
+  }
 }
