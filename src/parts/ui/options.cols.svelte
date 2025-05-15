@@ -26,7 +26,7 @@ function cycle_options()
   if (disabled) return;
 
   let idx = value ? ((cols.indexOf(value) +1) % cols.length) : 0;
-  return cols[idx];
+  value = cols[idx];
 }
 
 </script>
