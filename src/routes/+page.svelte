@@ -11,6 +11,7 @@ import Lattice from "#parts/lattice.svelte";
 import Modkeys from "#parts/modkeys.svelte";
 import Controls from "#parts/controls/controls.svelte";
 import Keybinds from "#parts/keybinds.svelte";
+import Toasts from "#parts/toasts.svelte";
 
 import { fade, slide } from "svelte/transition";
 import { expoInOut } from "svelte/easing";
@@ -50,7 +51,7 @@ onMount(() => {
       }, 200);  // release
     }, 2000);  // sustain
   }, 50);  // attack
-})
+});
 
 </script>
 
@@ -76,6 +77,8 @@ onMount(() => {
     <Controls />
   </div>
 </main>
+
+<Toasts />
 
 {#if current.overlays.landing}
   <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->

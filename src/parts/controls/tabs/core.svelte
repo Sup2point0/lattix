@@ -65,6 +65,8 @@ import ColourOptions from "#parts/ui/options.cols.svelte";
           cell.entered = null;
           cell.marks.clear();
         }
+
+        current.add_toast({ text: "Cleared All" });
       }
     }} />
     <Clicky text="Clear Marks Only" action={() => {
@@ -72,17 +74,12 @@ import ColourOptions from "#parts/ui/options.cols.svelte";
         for (let cell of Object.values(current.lattice_cells)) {
           cell.marks.clear();
         }
+
+        current.add_toast({ text: "Cleared Marks" });
       }
     }} />
     <Clicky text="Clear All" action={() => {
-      if (window.confirm("Clear all digits from the grid?")) {
-        for (let cell of Object.values(current.lattice_cells)) {
-          cell.fixed = null;
-          cell.entered = null;
-          cell.marks.clear();
-          cell.highlight = null;
-        }
-      }
+      current.add_toast({ text: String(Math.random()) });
     }} />
     <Clicky text="New" action={() => {
       if (window.confirm("Reset the grid?")) {

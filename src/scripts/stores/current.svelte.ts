@@ -6,8 +6,6 @@ import type { int, Key, Cell } from "#scripts/types";
 
 class CurrentState
 {
-  overlays = new Overlays();
-
   held_keys: Set<Key> = new Set();
   any_modkeys: boolean = $derived(
     this.held_keys.has("CONTROL") ||
@@ -36,6 +34,26 @@ class CurrentState
 
   show_controls: boolean = $state(true);
   control_tab: ControlTab = $state(ControlTab.CORE);
+
+  overlays = new Overlays();
+  toasts: Toast[] = $state([]);
+  toast_count: int = 0;
+  clear_toasts: int = 0;
+
+  add_toast(toast: Partial<Toast>)
+  {
+    this.toast_count++;
+    toast.id = this.toast_count;
+    this.toasts.push(toast as Toast);
+
+    if (this.clear_toasts) {
+      clearTimeout(this.clear_toasts);
+    }
+
+    this.clear_toasts = setTimeout(() => {
+      this.toasts.splice(0);
+    }, 5000);
+  }
 }
 
 class Overlays {
@@ -45,6 +63,11 @@ class Overlays {
 
 interface Cells {
   [cords: string]: Cell;
+}
+
+interface Toast {
+  id: int;
+  text: string;
 }
 
 
