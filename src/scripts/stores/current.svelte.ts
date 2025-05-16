@@ -7,7 +7,7 @@ import type { int, Key, Cell } from "#scripts/types";
 class CurrentState
 {
   lattice: Lattice = new Lattice();
-  
+
   held_keys: Set<Key> = new Set();
   any_modkeys: boolean = $derived(
     this.held_keys.has("CONTROL") ||
@@ -51,7 +51,10 @@ class CurrentState
 }
 
 class Lattice {
+  /** The width of the grid, excluding outer cells. */
   x: int = $state(5);
+
+  /** The height of the grid, excluding outer cells. */
   y: int = $state(5);
 
   cells: Cells = $state({});

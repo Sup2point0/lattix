@@ -306,11 +306,11 @@ function highlight_multi()
 
 
 <button
+  bind:this={self}
   class="{kind}"
-  class:fixed={cell.fixed !== null}
   class:focused={cell.focused}
   class:highlight={cell.highlight}
-  bind:this={self}
+  disabled={!current.editing && (kind === "outer" || cell.fixed !== null) || undefined}
   {onmouseenter}
   {onmousedown}
   {onclick}
@@ -384,12 +384,8 @@ button {
   }
 }
 
-button.outer .content {
-  border: 2px dotted $col-grey-light;
-}
 
-
-button:not(.fixed) {
+button {
   &:hover, &:focus-visible {
     cursor: pointer;
 
@@ -448,6 +444,16 @@ button.highlight {
     .content {
       background: color.change($col-purp, $alpha: 8%);
     }
+  }
+}
+
+button.outer {
+  .content {
+    border: 2px dotted $col-grey-light;
+  }
+
+  &[disabled] .content {
+    border-color: transparent;
   }
 }
 

@@ -9,18 +9,9 @@ import { current, prefs } from "#scripts/stores";
 
 import Cell from "#parts/lattice.cell.svelte";
 
-interface Props {
-  x: number;
-  y: number;
-  cellsize?: number;
-}
 
-let { x, y, cellsize = $prefs.cells.size }: Props = $props();
-
-
-let expand = $derived(current.editing ? 2 : 0);
-let xsize = $derived(x + expand);
-let ysize = $derived(y + expand);
+let x = $derived(current.lattice.x +2);
+let y = $derived(current.lattice.y +2);
 
 </script>
 
@@ -30,81 +21,53 @@ let ysize = $derived(y + expand);
 >
   {#if current.editing}
     <div class="empty"></div>
-
-    <button class="new row" onclick={() => {
-      current.lattice.y++;
-    }}>
-      +
-    </button>
-
+    <button class="new row" onclick={() => { current.lattice.y++; }}> + </button>
     <div class="empty"></div>
   {/if}
 
   {#if current.editing}
-    <button class="new column" onclick={() => {
-      current.lattice.x++;
-    }}>
-      +
-    </button>
+    <button class="new column" onclick={() => { current.lattice.x++; }}> + </button>
   {/if}
 
   <div class="lattice"
-    style:--x={xsize}
-    style:--y={ysize}
-    style:--size="calc({cellsize} * 100vh / {Math.max(x, y)})"
+    style:--x={x}
+    style:--y={y}
+    style:--size="calc({$prefs.cells.size} * 1.2 * 100vh / {Math.max(x, y)})"
   >
-    {#if current.editing}
-      <div class="empty"></div>
+    <div class="empty"></div>
 
-      {#each { length: x } as _, i}
-        <Cell kind="outer" x={i+1} y={0} />
-      {/each}
+    {#each { length: current.lattice.x } as _, i}
+      <Cell kind="outer" x={i+1} y={0} />
+    {/each}
 
-      <div class="empty"></div>
-    {/if}
+    <div class="empty"></div>
 
-    {#each { length: y } as _, j}
-      {#if current.editing}
+    {#each { length: current.lattice.y } as _, j}
         <Cell kind="outer" x={0} y={j+1} />
-      {/if}
 
-      {#each { length: x } as _, i}
+      {#each { length: current.lattice.x } as _, i}
         <Cell kind="inner" x={i+1} y={j+1} />
       {/each}
 
-      {#if current.editing}
         <Cell kind="outer" x={x+1} y={j+1} />
-      {/if}
     {/each}
     
-    {#if current.editing}
-      <div class="empty"></div>
+    <div class="empty"></div>
 
-      {#each { length: x } as _, i}
-        <Cell kind="outer" x={i+1} y={y+1} />
-      {/each}
+    {#each { length: current.lattice.x } as _, i}
+      <Cell kind="outer" x={i+1} y={y+1} />
+    {/each}
 
-      <div class="empty"></div>
-    {/if}
+    <div class="empty"></div>
   </div>
   
   {#if current.editing}
-    <button class="new column" onclick={() => {
-      current.lattice.x++;
-    }}>
-      +
-    </button>
+    <button class="new column" onclick={() => { current.lattice.x++; }}> + </button>
   {/if}
 
   {#if current.editing}
     <div class="empty"></div>
-
-    <button class="new row" onclick={() => {
-      current.lattice.y++;
-    }}>
-      +
-    </button>
-
+    <button class="new row" onclick={() => { current.lattice.y++; }}> + </button>
     <div class="empty"></div>
   {/if}
 </div>

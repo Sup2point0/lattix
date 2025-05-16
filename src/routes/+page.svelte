@@ -69,7 +69,7 @@ onMount(() => {
 >
   <div class="layout">
     <div class="left">
-      <Lattice x={current.lattice.x} y={current.lattice.y} />
+      <Lattice />
 
       <Modkeys />
     </div>
