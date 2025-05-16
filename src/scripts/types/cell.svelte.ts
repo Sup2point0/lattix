@@ -15,7 +15,7 @@ export class Cell
   y: int;
 
   /** Whether the cell is focused. */
-  focused: boolean = $derived(current.selected_cells.has(this));
+  focused: boolean = $derived(current.lattice.selected.has(this));
   
   /** Whether the cell ctonains digit pre-provided by the puzzle. */
   fixed: string | null = $state(null);
@@ -40,12 +40,12 @@ export class Cell
   select(click = true)
   {
     if (!current.multiselecting && !current.dragselecting) {
-      current.selected_cells.clear();
+      current.lattice.selected.clear();
       current.dragselecting = false;
     }
 
-    current.selected_cells.add(this);
-    current.selected_cells = current.selected_cells;
+    current.lattice.selected.add(this);
+    current.lattice.selected = current.lattice.selected;
     
     if (click) {
       current.dragselecting = true;

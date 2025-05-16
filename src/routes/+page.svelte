@@ -63,13 +63,13 @@ onMount(() => {
 <main
   onmousedown={e => {
     if (document.elementFromPoint(e.clientX, e.clientY)?.tagName !== "BUTTON") {
-      current.selected_cells.clear();
+      current.lattice.selected.clear();
     }
   }}
 >
   <div class="layout">
     <div class="left">
-      <Lattice x={current.lattice_x} y={current.lattice_y} />
+      <Lattice x={current.lattice.x} y={current.lattice.y} />
 
       <Modkeys />
     </div>

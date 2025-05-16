@@ -32,7 +32,7 @@ let ysize = $derived(y + expand);
     <div class="empty"></div>
 
     <button class="new row" onclick={() => {
-      current.lattice_y++;
+      current.lattice.y++;
     }}>
       +
     </button>
@@ -42,7 +42,7 @@ let ysize = $derived(y + expand);
 
   {#if current.editing}
     <button class="new column" onclick={() => {
-      current.lattice_x++;
+      current.lattice.x++;
     }}>
       +
     </button>
@@ -90,7 +90,7 @@ let ysize = $derived(y + expand);
   
   {#if current.editing}
     <button class="new column" onclick={() => {
-      current.lattice_x++;
+      current.lattice.x++;
     }}>
       +
     </button>
@@ -100,7 +100,7 @@ let ysize = $derived(y + expand);
     <div class="empty"></div>
 
     <button class="new row" onclick={() => {
-      current.lattice_y++;
+      current.lattice.y++;
     }}>
       +
     </button>

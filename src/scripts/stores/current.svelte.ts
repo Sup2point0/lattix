@@ -6,20 +6,14 @@ import type { int, Key, Cell } from "#scripts/types";
 
 class CurrentState
 {
+  lattice: Lattice = new Lattice();
+  
   held_keys: Set<Key> = new Set();
   any_modkeys: boolean = $derived(
     this.held_keys.has("CONTROL") ||
     this.held_keys.has("ALT") ||
     this.held_keys.has("SHIFT")
   );
-
-  lattice_x: int = $state(5);
-  lattice_y: int = $state(5);
-
-  lattice_cells: Cells = $state({});
-
-  /** The currently selected cells. */
-  selected_cells: Set<Cell> = new Set();
 
   /** When enabled, hovering over a cell selects it (no click is needed). */
   dragselecting = $state(false);
@@ -54,6 +48,14 @@ class CurrentState
       this.toasts.splice(0);
     }, 5000);
   }
+}
+
+class Lattice {
+  x: int = $state(5);
+  y: int = $state(5);
+
+  cells: Cells = $state({});
+  selected: Set<Cell> = new Set();
 }
 
 class Overlays {

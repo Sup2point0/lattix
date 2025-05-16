@@ -14,7 +14,7 @@ import ColourOptions from "#parts/ui/options.cols.svelte";
   <label style:flex-wrap="wrap">
     <section>
       <h4> Default Highlight Colour </h4>
-      <p> The default colour to pick when using <code>ALT</code> <code>click</code> or <code>ALT</code> <code>H</code> </p>
+      <p> The default colour to pick when using ALT+click or ALT+H </p>
     </section>
 
     <ColourOptions bind:value={$prefs.cols.highlight} cols={HighlightCols} />

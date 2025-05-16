@@ -44,24 +44,24 @@ import ColourOptions from "#parts/ui/options.cols.svelte";
     <ColourOptions
       bind:value={
         () => (
-          (current.selected_cells.size === 1) && current.selected_cells.values().next().value!.highlight
+          (current.lattice.selected.size === 1) && current.lattice.selected.values().next().value!.highlight
           || null
         ),
         (value) => {
-          for (let cell of current.selected_cells) {
+          for (let cell of current.lattice.selected) {
             cell.highlight = value;
           }
         }
       }
       cols={[null].concat(HighlightCols)}
-      disabled={current.selected_cells.size === 0}
+      disabled={current.lattice.selected.size === 0}
     />
   </section>
 
   <section>
     <Clicky text="Clear Cells" action={() => {
       if (window.confirm("Clear all entered and marked digits?")) {
-        for (let cell of Object.values(current.lattice_cells)) {
+        for (let cell of Object.values(current.lattice.cells)) {
           cell.entered = null;
           cell.marks.clear();
         }
@@ -71,7 +71,7 @@ import ColourOptions from "#parts/ui/options.cols.svelte";
     }} />
     <Clicky text="Clear Marks Only" action={() => {
       if (window.confirm("Clear all marked digits?")) {
-        for (let cell of Object.values(current.lattice_cells)) {
+        for (let cell of Object.values(current.lattice.cells)) {
           cell.marks.clear();
         }
 

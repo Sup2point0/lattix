@@ -52,7 +52,7 @@ function cycle_options()
       disabled={disabled || undefined}
       onclick={e => {
         value = col;
-        current.selected_cells.clear();
+        current.lattice.selected.clear();
         e.stopPropagation();
       }}
       style:--col="var(--col-{col})"

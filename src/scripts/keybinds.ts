@@ -160,7 +160,7 @@ function keyup(e: KeyboardEvent)
 
 export function onbeforeunload(e: Event): boolean
 {
-  for (let cell of Object.values(current.lattice_cells)) {
+  for (let cell of Object.values(current.lattice.cells)) {
     if (cell.fixed || cell.entered || cell.marks.size) {
       e.preventDefault();
       return true;
