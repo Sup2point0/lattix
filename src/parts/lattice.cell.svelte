@@ -13,6 +13,7 @@ let total = 0;
 
 import { current, prefs } from "#scripts/stores";
 import { Keys } from "#scripts/config";
+import { interp3 } from "#scripts/utils";
 import { Cell } from "#scripts/types";
 import type { int, Key } from "#scripts/types";
 
@@ -342,6 +343,11 @@ function highlight_multi()
   {onclick}
   {onkeydown}
   style:--col="var(--col-{cell.highlight})"
+  style:--text-size={interp3($prefs.text.size, {
+    lower: 0.75,
+    preset: 1,
+    upper: 1.5,
+  })}
 >
   <div class="content">
     {#if cell.fixed}
@@ -394,17 +400,17 @@ button {
     max-width: 100%;
     
     &.fixed {
-      font-size: calc(var(--size) * 0.5);
+      font-size: calc(0.5 * var(--size) * var(--text-size, 1));
       color: var(--col-text);
     }
 
     &.entered {
-      font-size: calc(var(--size) * 0.5);
+      font-size: calc(0.5 * var(--size) * var(--text-size, 1));
       color: $col-blue;
     }
 
     &.marks {
-      font-size: calc(var(--size) * 0.25);
+      font-size: calc(0.25 * var(--size) * var(--text-size));
       color: $col-blue;
     }
   }
