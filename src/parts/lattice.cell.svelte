@@ -54,7 +54,7 @@ function onmousedown(e: MouseEvent)
   e.stopPropagation();
   cell.animate_press();
   
-  if (current.multiselecting && cell.focused) {
+  if (current.multiselecting && cell.selected) {
     current.lattice.selected.delete(cell);
   } else {
     cell.select();
@@ -332,7 +332,7 @@ function highlight_multi()
   class:fixed={cell.fixed !== null}
   class:highlight={cell.highlight}
   class:editing={current.editing}
-  class:focused={cell.focused}
+  class:selected={cell.selected}
   {onmouseenter}
   {onmousedown}
   {onclick}
@@ -432,7 +432,7 @@ button {
   }
 }
 
-button.focused {
+button.selected {
   &, &:hover, &:focus-visible, &:active {
     .content {
       border-color: $col-purp;
@@ -447,7 +447,7 @@ button.focused {
 }
 
 button.highlight {
-  &:not(.focused) {
+  &:not(.selected) {
     .content {
       .entered, .marks {
         color: var(--col);
@@ -462,7 +462,7 @@ button.highlight {
     }
   }
 
-  &.focused {
+  &.selected {
     .content {
       background: color.change($col-purp, $alpha: 8%);
     }

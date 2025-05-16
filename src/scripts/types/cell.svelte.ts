@@ -14,8 +14,8 @@ export class Cell
   x: int;
   y: int;
 
-  /** Whether the cell is focused. */
-  focused: boolean = $derived(current.lattice.selected.has(this));
+  /** Whether the cell is selected. */
+  selected: boolean = $derived(current.lattice.selected.has(this));
   
   /** Whether the cell ctonains digit pre-provided by the puzzle. */
   fixed: string | null = $state(null);
