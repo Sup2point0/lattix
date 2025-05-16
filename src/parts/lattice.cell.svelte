@@ -17,7 +17,7 @@ import { Cell } from "#scripts/types";
 import type { int, Key } from "#scripts/types";
 
 import { SvelteSet as Set } from "svelte/reactivity";
-import { onMount } from "svelte";
+import { onMount, untrack } from "svelte";
 
 interface Props {
   kind?: "inner" | "outer";
@@ -34,9 +34,13 @@ let cell = new Cell(total, kind, x, y);
 let self: HTMLButtonElement;
 
 
-onMount(() => {
+$effect(() => {
   cell.button = self;
-  current.lattice.cells[x.toString() + y.toString()] = cell;
+
+  let cord = x.toString() + y.toString();
+  untrack(() => {
+    current.lattice.cells[cord] = cell;
+  });
 });
  
 
