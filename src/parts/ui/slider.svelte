@@ -14,15 +14,29 @@ interface Props {
 let { value = $bindable(), min = 0, max = 1 }: Props = $props();
 
 
+let track: HTMLButtonElement | null = null;
+let left: number;
+let width: number;
+
 let dragging = $state(false);
+
+
+function onmousedown()
+{
+  dragging = true;
+  if (track) {
+    ({ left , width } = track.getBoundingClientRect());
+  }
+}
 
 function onmousemove(e: MouseEvent)
 {
-  if (!dragging) return;
+  if (!(dragging && track && left && width)) return;
 
-  value += e.movementX * 0.002;
+  value = (e.clientX - left) / width;
+
   if (value < 0) value = 0;
-  else if (value > 1) value = 1;
+  else if (value > 1) value = 1;  
 }
 
 </script>
@@ -34,13 +48,16 @@ function onmousemove(e: MouseEvent)
 />
 
 <div class="slider-container">
-  <button class="back"
-    aria-label="slider"
-    onmousedown={() => { dragging = true; }}>
+  <button
+    bind:this={track}
+    class="track"
+    aria-label="slider-track"
+    {onmousedown}>
   </button>
-  <button class="knob"
+  <button
+    class="knob"
     aria-label="slider-knob"
-    onmousedown={() => { dragging = true; }}
+    {onmousedown}
     style:--scale={value / (max - min)}
   ></button>
 </div>
@@ -61,7 +78,7 @@ $height: 0.8rem;
   align-items: center;
 }
 
-button.back {
+button.track {
   width: 100%;
   height: $height;
   background: $col-grey-light;
@@ -77,7 +94,7 @@ button.knob {
   height: $height;
   aspect-ratio: 1;
   position: absolute;
-  left: calc(var(--scale, 20%) * 100%);
+  left: calc(2% + var(--scale, 50%) * 96%);
   // background: $col-blue;
   background: white;
   border: 1px solid $col-blue;
@@ -85,19 +102,20 @@ button.knob {
   outline-width: 0px;
   outline-style: solid;
   outline-color: color.change($col-blue, $alpha: 20%);
-  transform: scale(150%);
+  transform: translateX(-50%) scale(150%);
   transition: all 0.1s ease-out;
 
-  &:hover, button.back:hover ~ & {
+  &:hover, button.track:hover ~ & {
     cursor: ew-resize;
     outline-width: 2px;
   }
 
-  &:active, button.back:active ~ & {
+  &:active, button.track:active ~ & {
     cursor: ew-resize;
     border-color: $col-purp;
     outline-width: 2px;
     outline-color: color.change($col-purp, $alpha: 20%);
+    transform: translateX(-50%) scale(140%);
   }
 }
 
