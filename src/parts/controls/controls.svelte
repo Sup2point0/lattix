@@ -72,8 +72,10 @@ nav {
 
 form {
   min-width: 20vw;
+  max-height: 80vh;
   padding: 1rem;
   margin-right: 1rem;
+  overflow-y: auto;
 }
 
 </style>

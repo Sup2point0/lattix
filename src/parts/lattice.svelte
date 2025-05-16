@@ -6,6 +6,7 @@ The grid.
 <script lang="ts">
 
 import { current, prefs } from "#scripts/stores";
+import { interp3 } from "#scripts/utils";
 
 import Cell from "#parts/lattice.cell.svelte";
 
@@ -32,7 +33,9 @@ let y = $derived(current.lattice.y +2);
   <div class="lattice"
     style:--x={x}
     style:--y={y}
-    style:--size="calc({$prefs.cells.size} * 1.2 * 100vh / {Math.max(x, y)})"
+    style:--size="calc(0.7 * 100vh / {Math.max(x, y)})"
+    style:--cell-gap={
+      interp3($prefs.cells.gap, { lower: 0, preset: 1, upper: 2 })}
   >
     <div class="empty"></div>
 
@@ -85,7 +88,8 @@ let y = $derived(current.lattice.y +2);
   padding: 1rem;
   display: grid;
   grid-template-columns: repeat(var(--x), 1fr);
-  gap: 1rem;
+  gap: calc(1px + 1rem * var(--cell-gap, 1));
+  border-collapse: collapse;
 }
 
 button.new {

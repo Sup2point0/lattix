@@ -140,7 +140,7 @@ main {
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
-  gap: 4vw;
+  gap: 2vw;
 
   .left {
     display: flex;

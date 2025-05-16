@@ -78,13 +78,13 @@ class CellPrefs
   gap: Scalar = $state(0.5);
 
   /** Gap between main grid and outer lanes. */
-  outer_gap: Scalar = $state(0.5);x
+  outer_gap: Scalar = $state(0.5);
 
   /** border-radius of cells. */
   rounding: Scalar = $state(0.5);
 
   /** Opacity of cell outlines. */
-  opacity: Scalar = $state(0.5);
+  opacity: Scalar = $state(0.25);
 }
 
 export const prefs = writable(new Prefs());

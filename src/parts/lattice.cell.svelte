@@ -343,11 +343,14 @@ function highlight_multi()
   {onclick}
   {onkeydown}
   style:--col="var(--col-{cell.highlight})"
-  style:--text-size={interp3($prefs.text.size, {
-    lower: 0.75,
-    preset: 1,
-    upper: 1.5,
-  })}
+  style:--cell-size={
+    interp3($prefs.cells.size, { lower: 0.75, preset: 1, upper: 1.5 })}
+  style:--cell-rounding={
+    interp3($prefs.cells.rounding, { lower: 0, preset: 1, upper: 2.5 })}
+  style:--cell-opacity={
+    interp3($prefs.cells.opacity, { lower: 1, preset: 0.75, upper: 0 })}
+  style:--text-size={
+    interp3($prefs.text.size, { lower: 0.75, preset: 1, upper: 1.5 })}
 >
   <div class="content">
     {#if cell.fixed}
@@ -371,7 +374,7 @@ function highlight_multi()
 
 
 button {
-  width: var(--size, 5rem);
+  width: calc(var(--size) * var(--cell-size, 1));
   aspect-ratio: 1;
   background: none;
   border: none;
@@ -387,8 +390,10 @@ button {
   align-items: center;
   
   background: color-mix(in oklch, var(--col, none), transparent 92%);
-  border: 2px solid var(--col, $col-grey-light);
-  border-radius: 1rem;
+  border: 2px solid var(--col,
+    color-mix(in oklch, black, transparent calc(100% * var(--cell-opacity, 50%)))
+  );
+  border-radius: calc(0.2 * var(--size) * var(--cell-rounding, 1));
   // split for compatibility with older browsers
   outline-width: 0px;
   outline-style: solid;
@@ -410,7 +415,7 @@ button {
     }
 
     &.marks {
-      font-size: calc(0.25 * var(--size) * var(--text-size));
+      font-size: calc(0.25 * var(--size) * var(--text-size, 1));
       color: $col-blue;
     }
   }
