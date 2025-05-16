@@ -52,8 +52,13 @@ function onmouseenter(e: MouseEvent)
 function onmousedown(e: MouseEvent)
 {
   e.stopPropagation();
-  cell.select();
   cell.animate_press();
+  
+  if (current.multiselecting && cell.focused) {
+    current.lattice.selected.delete(cell);
+  } else {
+    cell.select();
+  }
 }
 
 function onclick(e: MouseEvent)
