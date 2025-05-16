@@ -117,35 +117,36 @@ function onkeydown(e: KeyboardEvent)
 function arrow_move(key: string): Cell
 {
   let X = x, Y = y;
+  let move_outer = (current.editing || $prefs.cells.nav_outer) ? 1 : 0;
 
   switch (key) {
     case "ARROWLEFT":
-      if (X === 0) {
-        X = current.lattice.x +1;
+      if (X === 1 - move_outer) {
+        X = current.lattice.x + move_outer;
       } else {
         X--;
       }
       break;
 
     case "ARROWRIGHT":
-      if (X === current.lattice.x +1) {
-        X = 0;
+      if (X === current.lattice.x + move_outer) {
+        X = 1 - move_outer;
       } else {
         X++;
       }
       break;
 
     case "ARROWUP":
-      if (Y === 0) {
-        Y = current.lattice.y +1;
+      if (Y === 1 - move_outer) {
+        Y = current.lattice.y + move_outer;
       } else {
         Y--;
       }
       break;
 
     case "ARROWDOWN":
-      if (Y === current.lattice.y +1) {
-        Y = 0;
+      if (Y === current.lattice.y + move_outer) {
+        Y = 1 - move_outer;
       } else {
         Y++;
       }
@@ -159,22 +160,23 @@ function arrow_move(key: string): Cell
 function arrow_jump(key: string): Cell
 {  
   let X = x, Y = y;
+  let jump_outer = (current.editing || $prefs.cells.nav_outer) ? 1 : 0;
 
   switch (key) {
     case "ARROWLEFT":
-      X = 0;
+      X = 1 - jump_outer;
       break;
 
     case "ARROWRIGHT":
-      X = current.lattice.x +1;
+      X = current.lattice.x + jump_outer;
       break;
 
     case "ARROWUP":
-      Y = 0;
+      Y = 1 - jump_outer;
       break;
 
     case "ARROWDOWN":
-      Y = current.lattice.y +1;
+      Y = current.lattice.y + jump_outer;
       break;
   }
 
@@ -308,9 +310,10 @@ function highlight_multi()
 <button
   bind:this={self}
   class="{kind}"
-  class:focused={cell.focused}
+  class:fixed={cell.fixed !== null}
   class:highlight={cell.highlight}
-  disabled={!current.editing && (kind === "outer" || cell.fixed !== null) || undefined}
+  class:editing={current.editing}
+  class:focused={cell.focused}
   {onmouseenter}
   {onmousedown}
   {onclick}
@@ -318,6 +321,7 @@ function highlight_multi()
   style:--col="var(--col-{cell.highlight})"
 >
   <div class="content">
+    {cell.x}-{cell.y}
     {#if cell.fixed}
       <div class="fixed"> {cell.fixed} </div>
     {/if}
@@ -449,11 +453,11 @@ button.highlight {
 
 button.outer {
   .content {
-    border: 2px dotted $col-grey-light;
+    border-color: transparent;
   }
 
-  &[disabled] .content {
-    border-color: transparent;
+  &.editing .content {
+    border: 2px dotted $col-grey-light;
   }
 }
 

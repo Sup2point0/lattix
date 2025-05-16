@@ -35,9 +35,6 @@ export class Prefs
   marks: MarkPrefs = new MarkPrefs();
 
   cells: CellPrefs = new CellPrefs();
-
-  /** Gap between main grid and outer lanes. */
-  outer_gap: Scalar = $state(0.5);
 }
 
 class ColPrefs
@@ -57,7 +54,7 @@ class TextPrefs
 class MarkPrefs
 {
   /**
-   * If disabled, marks must be added with ALT + digit.
+   * If disabled, marks can only be added with ALT + digit.
    *
    * If enabled, typing a digit either adds it to or removes it from the cell. If multiple digits have been added to a cell, they become marks.
    */
@@ -72,10 +69,16 @@ class MarkPrefs
 
 class CellPrefs
 {
+  /** If enabled, navigating the grid with arrow keys will also move to outer cells. */
+  nav_outer: boolean = $state(false);
+
   size: Scalar = $state(0.5);
 
   /** Space between cells. */
   gap: Scalar = $state(0.5);
+
+  /** Gap between main grid and outer lanes. */
+  outer_gap: Scalar = $state(0.5);x
 
   /** border-radius of cells. */
   rounding: Scalar = $state(0.5);

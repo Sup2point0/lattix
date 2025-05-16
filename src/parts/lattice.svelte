@@ -49,13 +49,13 @@ let y = $derived(current.lattice.y +2);
         <Cell kind="inner" x={i+1} y={j+1} />
       {/each}
 
-        <Cell kind="outer" x={x+1} y={j+1} />
+        <Cell kind="outer" x={x-1} y={j+1} />
     {/each}
     
     <div class="empty"></div>
 
     {#each { length: current.lattice.x } as _, i}
-      <Cell kind="outer" x={i+1} y={y+1} />
+      <Cell kind="outer" x={i+1} y={y-1} />
     {/each}
 
     <div class="empty"></div>

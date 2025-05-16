@@ -1,15 +1,25 @@
 <script lang="ts">
 
+import { prefs } from "#scripts/stores";
+
+import Toggle from "#parts/ui/toggle.svelte";
+
+
+let cells = $prefs.cells;
+
 </script>
 
 
-<h2> Stats </h2>
+<h2> Cells </h2>
 
 <div>
   <label>
     <section>
-      <h4> Coming soon! </h4>
+      <h4> Outer Navigation </h4>
+      <p> Arrow keys can navigate to outer cells. </p>
     </section>
+
+    <Toggle bind:value={cells.nav_outer} />
   </label>
 </div>
 
