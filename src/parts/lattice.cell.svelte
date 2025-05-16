@@ -35,7 +35,7 @@ let self: HTMLButtonElement;
 
 onMount(() => {
   cell.button = self;
-  current.lattice_cells[x.toString() + y.toString()] = cell;
+  current.lattice.cells[x.toString() + y.toString()] = cell;
 });
  
 
@@ -73,43 +73,13 @@ function onkeydown(e: KeyboardEvent)
     e.preventDefault();
     if (current.dragselecting) return;
 
-    let X = x, Y = y;
-
-    switch (key) {
-      case "ARROWLEFT":
-        if (X === 0) {
-          X = current.lattice_x +1;
-        } else {
-          X--;
-        }
-        break;
-
-      case "ARROWRIGHT":
-        if (X === current.lattice_x +1) {
-          X = 0;
-        } else {
-          X++;
-        }
-        break;
-
-      case "ARROWUP":
-        if (Y === 0) {
-          Y = current.lattice_y +1;
-        } else {
-          Y--;
-        }
-        break;
-
-      case "ARROWDOWN":
-        if (Y === current.lattice_y +1) {
-          Y = 0;
-        } else {
-          Y++;
-        }
-        break;
+    let next: Cell;
+    if (current.held_keys.has("ALT")) {
+      next = arrow_jump(key);
+    } else {
+      next = arrow_move(key);
     }
 
-    let next = current.lattice_cells[X.toString() + Y.toString()];
     if (!next) return;
 
     next.button?.focus();
@@ -119,7 +89,7 @@ function onkeydown(e: KeyboardEvent)
 
   if (key === " " || key === "BACKSPACE" || key === "DELETE") {
     e.stopPropagation();
-    for (let each of current.selected_cells) {
+    for (let each of current.lattice.selected) {
       each.animate_press();
       each.entered = null;
       each.marks.clear();
@@ -128,26 +98,94 @@ function onkeydown(e: KeyboardEvent)
   }
 
   if (current.held_keys.has("ALT") && key === "H") {
-    current.selected_cells.forEach(each => each.animate_press());
+    current.lattice.selected.forEach(each => each.animate_press());
     highlight_multi();
-    current.selected_cells.clear();
+    current.lattice.selected.clear();
     return;
   }
 
   if (
     Keys.Numbers.includes(key) || Keys.Alpha.includes(key) || Keys.Punct.includes(key)
   ) {  
-    current.selected_cells.forEach(each => each.animate_press());
+    current.lattice.selected.forEach(each => each.animate_press());
     process_digit(key);
     return;
   }
+}
+
+/** Handle moving in the grid with the arrow keys. */
+function arrow_move(key: string): Cell
+{
+  let X = x, Y = y;
+
+  switch (key) {
+    case "ARROWLEFT":
+      if (X === 0) {
+        X = current.lattice.x +1;
+      } else {
+        X--;
+      }
+      break;
+
+    case "ARROWRIGHT":
+      if (X === current.lattice.x +1) {
+        X = 0;
+      } else {
+        X++;
+      }
+      break;
+
+    case "ARROWUP":
+      if (Y === 0) {
+        Y = current.lattice.y +1;
+      } else {
+        Y--;
+      }
+      break;
+
+    case "ARROWDOWN":
+      if (Y === current.lattice.y +1) {
+        Y = 0;
+      } else {
+        Y++;
+      }
+      break;
+  }
+
+  return current.lattice.cells[X.toString() + Y.toString()];
+}
+
+/** Handle jump moving in the grid with the arrow keys. */
+function arrow_jump(key: string): Cell
+{  
+  let X = x, Y = y;
+
+  switch (key) {
+    case "ARROWLEFT":
+      X = 0;
+      break;
+
+    case "ARROWRIGHT":
+      X = current.lattice.x +1;
+      break;
+
+    case "ARROWUP":
+      Y = 0;
+      break;
+
+    case "ARROWDOWN":
+      Y = current.lattice.y +1;
+      break;
+  }
+
+  return current.lattice.cells[X.toString() + Y.toString()];
 }
 
 /** Handle entering or marking digits in the cell. */
 function process_digit(key: string)
 {
   if (current.marking) {
-    if (current.selected_cells.size === 1) {
+    if (current.lattice.selected.size === 1) {
       alt_single(key);
     } else {
       mark_multi(key);
@@ -155,7 +193,7 @@ function process_digit(key: string)
   }
   else {
     if ($prefs.marks.auto) {
-      if (current.selected_cells.size === 1) {        
+      if (current.lattice.selected.size === 1) {        
         noalt_auto_single(key);
       } else {
         mark_multi(key);
@@ -214,7 +252,7 @@ function mark_multi(key: string)
 {
   let added = 0;
 
-  for (let each of current.selected_cells) {
+  for (let each of current.lattice.selected) {
     each.entered = null;
     if (!each.marks.has(key)) {
       each.marks.add(key);
@@ -225,7 +263,7 @@ function mark_multi(key: string)
   /** If all of the selected cells already had the input digit, delete it from them instead */
   if (added) return;
 
-  for (let each of current.selected_cells) {
+  for (let each of current.lattice.selected) {
     each.marks.delete(key);
   }
 }
@@ -233,12 +271,12 @@ function mark_multi(key: string)
 /** Handle ambiguous digit input when auto-marking is disabled. */
 function noalt_manual(key: string)
 {
-  if (current.selected_cells.size === 1) {
+  if (current.lattice.selected.size === 1) {
     cell.entered = key;
     cell.marks.clear();
   }
   else {
-    for (let each of current.selected_cells) {
+    for (let each of current.lattice.selected) {
       each.entered = key;
       each.marks.clear();
     }
@@ -250,7 +288,7 @@ function highlight_multi()
 {
   let added = 0;
 
-  for (let each of current.selected_cells) {
+  for (let each of current.lattice.selected) {
     if (each.highlight !== $prefs.cols.highlight) {
       each.highlight = $prefs.cols.highlight;
       added++;
@@ -259,7 +297,7 @@ function highlight_multi()
 
   if (added) return;
 
-  for (let each of current.selected_cells) {
+  for (let each of current.lattice.selected) {
     each.highlight = null;
   }
 }
