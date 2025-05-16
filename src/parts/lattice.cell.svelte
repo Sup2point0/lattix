@@ -92,8 +92,7 @@ function onkeydown(e: KeyboardEvent)
     e.stopPropagation();
     for (let each of current.lattice.selected) {
       each.animate_press();
-      each.entered = null;
-      each.marks.clear();
+      each.enter(null);
     }
     return;
   }
@@ -229,8 +228,7 @@ function noalt_auto_single(key: Key)
   if (cell.marks.size) {
     /** Make the mark the entered only if there's 1 digit and it's the same as the input key */
     if (cell.marks.size === 1 && cell.marks.has(key)) {
-      cell.entered = cell.marks.values().next().value!;
-      cell.marks.clear();
+      cell.enter(cell.marks.values().next().value!);
     }
     else {
       if (cell.marks.has(key)) {
@@ -251,7 +249,7 @@ function noalt_auto_single(key: Key)
   }
   /** Otherwise, just input the digit */
   else {          
-    cell.entered = key;
+    cell.enter(key);
   }
 }
 
@@ -279,15 +277,8 @@ function mark_multi(key: Key)
 /** Handle ambiguous digit input when auto-marking is disabled. */
 function noalt_manual(key: Key)
 {
-  if (current.lattice.selected.size === 1) {
-    cell.entered = key;
-    cell.marks.clear();
-  }
-  else {
-    for (let each of current.lattice.selected) {
-      each.entered = key;
-      each.marks.clear();
-    }
+  for (let each of current.lattice.selected) {
+    each.enter(key);
   }
 }
 

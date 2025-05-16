@@ -61,6 +61,13 @@ export class Cell
     }, 30);
   }
 
+  enter(digit: Key | null)
+  {
+    this.fixed = null;
+    this.entered = digit;
+    this.marks.clear();
+  }
+
   fix(digit: Key | null)
   {
     this.fixed = digit;
