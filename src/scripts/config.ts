@@ -4,7 +4,7 @@ export class Keys
   static Arrows = ["ARROWLEFT", "ARROWRIGHT", "ARROWUP", "ARROWDOWN"];
   static Numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
   static Alpha = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "U", "T", "V", "W", "X", "Y", "Z"];
-  static Punct = [",", ".", "!", "?", "+", "-", "*", "/", "=", "<", ">", "_", "~", "#"];
+  static Punct = [",", ".", "!", "?", "+", "-", "*", "/", "=", "<", ">", "_", "~", "#", "$", "%"];
 }
 
 export enum ControlTab

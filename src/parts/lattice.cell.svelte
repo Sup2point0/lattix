@@ -13,7 +13,8 @@ let total = 0;
 
 import { current, prefs } from "#scripts/stores";
 import { Keys } from "#scripts/config";
-import { Cell, type int } from "#scripts/types";
+import { Cell } from "#scripts/types";
+import type { int, Key } from "#scripts/types";
 
 import { SvelteSet as Set } from "svelte/reactivity";
 import { onMount } from "svelte";
@@ -63,7 +64,7 @@ function onclick(e: MouseEvent)
 
 function onkeydown(e: KeyboardEvent)
 {  
-  if (cell.fixed || !cell.focused) return;
+  if (cell.fixed && !current.editing) return;
 
   let key = e.key.toUpperCase();
 
@@ -114,7 +115,7 @@ function onkeydown(e: KeyboardEvent)
 }
 
 /** Handle moving in the grid with the arrow keys. */
-function arrow_move(key: string): Cell
+function arrow_move(key: Key): Cell
 {
   let X = x, Y = y;
   let move_outer = (current.editing || $prefs.cells.nav_outer) ? 1 : 0;
@@ -157,7 +158,7 @@ function arrow_move(key: string): Cell
 }
 
 /** Handle jump moving in the grid with the arrow keys. */
-function arrow_jump(key: string): Cell
+function arrow_jump(key: Key): Cell
 {  
   let X = x, Y = y;
   let jump_outer = (current.editing || $prefs.cells.nav_outer) ? 1 : 0;
@@ -184,8 +185,13 @@ function arrow_jump(key: string): Cell
 }
 
 /** Handle entering or marking digits in the cell. */
-function process_digit(key: string)
+function process_digit(key: Key)
 {
+  if (current.editing) {    
+    fix_multi(key);
+    return;
+  }
+
   if (current.marking) {
     if (current.lattice.selected.size === 1) {
       alt_single(key);
@@ -207,7 +213,7 @@ function process_digit(key: string)
   }
 }
 
-function alt_single(key: string)
+function alt_single(key: Key)
 {
   if (cell.marks.has(key)) {
     cell.marks.delete(key);
@@ -217,7 +223,7 @@ function alt_single(key: string)
 }
 
 /** Handle ambiguous digit input when a *single* cell is selected and auto-marking is enabled. */
-function noalt_auto_single(key: string)
+function noalt_auto_single(key: Key)
 {
   /** If marks have been made, add or remove from the marks */
   if (cell.marks.size) {
@@ -250,7 +256,7 @@ function noalt_auto_single(key: string)
 }
 
 /** Handle ambiguous digit input when *multiple* cells are selected and auto-marking is enabled. */
-function mark_multi(key: string)
+function mark_multi(key: Key)
 {
   let added = 0;
 
@@ -271,7 +277,7 @@ function mark_multi(key: string)
 }
 
 /** Handle ambiguous digit input when auto-marking is disabled. */
-function noalt_manual(key: string)
+function noalt_manual(key: Key)
 {
   if (current.lattice.selected.size === 1) {
     cell.entered = key;
@@ -282,6 +288,23 @@ function noalt_manual(key: string)
       each.entered = key;
       each.marks.clear();
     }
+  }
+}
+
+/** Handle digit input while editing the fixed grid. */
+function fix_multi(key: Key)
+{
+  let added = 0;
+
+  for (let each of current.lattice.selected) {
+    each.fix(key);
+    added++;
+  }
+
+  if (added) return;
+
+  for (let each of current.lattice.selected) {
+    each.fix(null);
   }
 }
 
@@ -321,7 +344,6 @@ function highlight_multi()
   style:--col="var(--col-{cell.highlight})"
 >
   <div class="content">
-    {cell.x}-{cell.y}
     {#if cell.fixed}
       <div class="fixed"> {cell.fixed} </div>
     {/if}

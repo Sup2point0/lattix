@@ -2,7 +2,7 @@ import { SvelteSet as Set } from "svelte/reactivity";
 
 import { current } from "../stores";
 import type { ThemeCol } from "../config";
-import type { int } from "./root";
+import type { int, Key } from "./root";
 
 
 export class Cell
@@ -59,5 +59,12 @@ export class Cell
     setTimeout(() => {
       this.button?.classList.remove("clicked");
     }, 30);
+  }
+
+  fix(digit: Key | null)
+  {
+    this.fixed = digit;
+    this.entered = null;
+    this.marks.clear();
   }
 }

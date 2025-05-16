@@ -145,7 +145,7 @@ main {
   .left {
     display: flex;
     flex-flow: column nowrap;
-    gap: 3rem;
+    gap: 1rem;
   }
 }
 
