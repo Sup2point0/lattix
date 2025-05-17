@@ -68,7 +68,7 @@ aside.keybinds-container {
   height: 80%;
   padding: 3rem 5rem;
   overflow-y: auto;
-  background: light-dark(white, black);
+  background: white;
   border-radius: 1rem;
   box-shadow: 0 0 8px $col-grey-light;
 

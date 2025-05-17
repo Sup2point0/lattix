@@ -151,7 +151,7 @@ aside.overlay-container {
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
-  background: light-dark(white, black);
+  background: white;
 }
 
 .overlay {
