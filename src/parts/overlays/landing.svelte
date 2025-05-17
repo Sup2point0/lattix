@@ -26,10 +26,10 @@ onMount(() => {
       timeout = setTimeout(() => {
         current.overlays.landing = 2;  // reveal title
         timeout = setTimeout(() => {
-          // current.overlays.landing = 1;  // hide overlay
-          // timeout = setTimeout(() => {
-          //   current.overlays.landing = 0;  // reveal window
-          // }, 200);
+          current.overlays.landing = 1;  // hide overlay
+          timeout = setTimeout(() => {
+            current.overlays.landing = 0;  // reveal window
+          }, 200);
         }, 2000);  // hide overlay
       }, 500);  // reveal title
     }, 1);  // trigger svg transitions
