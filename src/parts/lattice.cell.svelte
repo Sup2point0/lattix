@@ -58,18 +58,17 @@ function onmousedown(e: MouseEvent)
 {
   e.stopPropagation();
   cell.animate_press();
-  
-  if (current.multiselecting && cell.selected) {
-    current.lattice.selected.delete(cell);
-  } else {
-    cell.select();
-  }
+  cell.select();
 }
 
 function onclick(e: MouseEvent)
 {
   e.stopPropagation();
-  self.focus();
+  if (current.multiselecting && cell.selected) {
+    current.lattice.selected.delete(cell);
+  } else {
+    self.focus();
+  }
 }
 
 function onkeydown(e: KeyboardEvent)

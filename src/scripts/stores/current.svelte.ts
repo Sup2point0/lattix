@@ -62,7 +62,9 @@ class Lattice {
 }
 
 class Overlays {
-  landing: int = $state(3);
+  /** Stage of the landing overlay animation. */
+  landing: int = $state(5);
+  
   keybinds: boolean = $state(false);
 }
 
