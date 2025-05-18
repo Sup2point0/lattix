@@ -7,6 +7,7 @@ An overlay showing the available keybinds.
   
 import { current } from "#scripts/stores";
 import { keybinds } from "#scripts/keybinds";
+import { Overlay } from "#scripts/config";
 
 import { scale } from "svelte/transition";
 import { expoOut } from "svelte/easing";
@@ -17,7 +18,7 @@ import { expoOut } from "svelte/easing";
 <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <aside class="keybinds-container"
-  onclick={() => { current.overlays.keybinds = false; }}
+  onclick={() => { current.overlay = null; }}
   transition:scale={{ duration: 500, easing: expoOut, start: 0.97 }}
 >
   <!-- svelte-ignore a11y_no_static_element_interactions -->

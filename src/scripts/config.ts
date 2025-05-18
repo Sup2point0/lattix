@@ -7,6 +7,13 @@ export class Keys
   static Punct = [",", ".", "!", "?", "+", "-", "*", "/", "=", "<", ">", "_", "~", "#", "$", "%"];
 }
 
+export enum Overlay
+{
+  ABOUT,
+  CHANGELOG,
+  KEYBINDS,
+}
+
 export enum ControlTab
 {
   CORE = "Controls",

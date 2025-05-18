@@ -12,7 +12,7 @@ import Controls from "#parts/controls/controls.svelte";
 import Toasts from "#parts/toasts.svelte";
 
 import Landing from "#parts/overlays/landing.svelte";
-import Keybinds from "#parts/keybinds.svelte";
+import Overlay from "#src/parts/overlays/overlay.svelte";
 
 import { onMount } from "svelte";
 
@@ -61,12 +61,10 @@ onMount(() => {
 
 <Toasts />
 
-{#if current.overlays.landing}
-  <Landing />
-{/if}
+<Overlay />
 
-{#if current.overlays.keybinds}
-  <Keybinds />
+{#if current.landing}
+  <Landing />
 {/if}
 
 

@@ -1,6 +1,6 @@
 import { SvelteSet as Set } from "svelte/reactivity";
 
-import { ControlTab } from "#scripts/config";
+import { ControlTab, Overlay } from "#scripts/config";
 import type { int, Key, Cell } from "#scripts/types";
 
 
@@ -28,8 +28,13 @@ class CurrentState
 
   show_controls: boolean = $state(true);
   control_tab: ControlTab = $state(ControlTab.CORE);
+  
+  /** Stage of the landing overlay animation. */
+  landing: int = $state(5);
 
-  overlays = new Overlays();
+  /** The currently shown overlay window. */
+  overlay: Overlay | null = $state(null);
+  
   toasts: Toast[] = $state([]);
   toast_count: int = 0;
   clear_toasts: int = 0;
@@ -59,13 +64,6 @@ class Lattice {
 
   cells: Cells = $state({});
   selected: Set<Cell> = new Set();
-}
-
-class Overlays {
-  /** Stage of the landing overlay animation. */
-  landing: int = $state(5);
-  
-  keybinds: boolean = $state(false);
 }
 
 interface Cells {

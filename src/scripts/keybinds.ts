@@ -1,4 +1,5 @@
-import { current } from "#scripts/stores";
+import { current } from "./stores";
+import { Overlay } from "./config";
 
 
 export const keybinds = [
@@ -100,8 +101,8 @@ function keydown(e: KeyboardEvent)
       break;
 
     case "ESCAPE":
-      if (current.overlays.keybinds) {
-        current.overlays.keybinds = false;
+      if (current.overlay) {
+        current.overlay = null;
         e.stopPropagation();
       }
       break;
@@ -110,8 +111,8 @@ function keydown(e: KeyboardEvent)
   if (!current.held_keys.has("ALT")) return;
 
   switch (key) {
-    case "/":
-      current.overlays.keybinds = !current.overlays.keybinds;
+    case "/":      
+      current.overlay = (current.overlay === Overlay.KEYBINDS) ? null : Overlay.KEYBINDS;      
       break;
     
     case "E":

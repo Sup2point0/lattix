@@ -20,15 +20,15 @@ onMount(() => {
   tip = tips[Math.floor(Math.random() * tips.length)];
 
   timeout = setTimeout(() => {
-    current.overlays.landing = 4;  // trigger svg animations
+    current.landing = 4;  // trigger svg animations
     timeout = setTimeout(() => {
-      current.overlays.landing = 3;  // trigger svg transitions
+      current.landing = 3;  // trigger svg transitions
       timeout = setTimeout(() => {
-        current.overlays.landing = 2;  // reveal title
+        current.landing = 2;  // reveal title
         timeout = setTimeout(() => {
-          current.overlays.landing = 1;  // hide overlay
+          current.landing = 1;  // hide overlay
           timeout = setTimeout(() => {
-            current.overlays.landing = 0;  // reveal window
+            current.landing = 0;  // reveal window
           }, 200);
         }, 2000);  // hide overlay
       }, 500);  // reveal title
@@ -43,17 +43,17 @@ onMount(() => {
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <aside class="overlay-container"
   onclick={() => {
-    current.overlays.landing = 0;
+    current.landing = 0;
     if (timeout) clearTimeout(timeout);
   }}
   transition:fade={{ duration: 350 }}
 >
-  {#if current.overlays.landing > 1}
+  {#if current.landing > 1}
     <div class="overlay" out:fade={{ duration: 350 }}>
       <div class="upper">
         <!-- <img alt="" src="{base}/lattix-icon.svg"> -->
           
-        {#if current.overlays.landing < 3}
+        {#if current.landing < 3}
           <div class="title"
             transition:slide={{ duration: 1200, easing: expoInOut, axis: "x" }}
           >
@@ -62,8 +62,8 @@ onMount(() => {
           </div>
         {/if}
 
-        <div class="icon-anim-container" class:trans={current.overlays.landing < 4}>
-          {#if current.overlays.landing < 5}
+        <div class="icon-anim-container" class:trans={current.landing < 4}>
+          {#if current.landing < 5}
             <div class="icon-part top">
               <svg width="8rem" height="8rem" viewBox="0 0 2598 2598"
                 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden">
@@ -128,7 +128,7 @@ onMount(() => {
       
       <!-- CSS animation instead of Svelte transition here to avoid reflowing layout -->
       <div class="lower">
-        <p class="tip" class:reveal={current.overlays.landing < 3}>
+        <p class="tip" class:reveal={current.landing < 3}>
           {@html tip}
         </p>
       </div>
