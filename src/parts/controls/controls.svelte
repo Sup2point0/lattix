@@ -76,6 +76,7 @@ form {
   padding: 1rem;
   margin-right: 1rem;
   overflow-y: auto;
+  scrollbar-width: thin;
 }
 
 </style>
