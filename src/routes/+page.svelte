@@ -9,8 +9,9 @@ import { FontSizes } from "#scripts/config";
 import Lattice from "#parts/lattice.svelte";
 import Modkeys from "#parts/modkeys.svelte";
 import Controls from "#parts/controls/controls.svelte";
-import Toasts from "#parts/toasts.svelte";
 
+import Corner from "#parts/corner.svelte";
+import Toasts from "#parts/toasts.svelte";
 import Landing from "#parts/overlays/landing.svelte";
 import Overlay from "#src/parts/overlays/overlay.svelte";
 
@@ -59,9 +60,12 @@ onMount(() => {
   </div>
 </main>
 
+<Corner />
 <Toasts />
 
-<Overlay />
+{#if current.overlay}
+  <Overlay />
+{/if}
 
 {#if current.landing}
   <Landing />

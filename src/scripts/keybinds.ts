@@ -4,6 +4,9 @@ import { Overlay } from "./config";
 
 export const keybinds = [
   {
+    keys: ["ALT", "/"],
+    desc: "view keybinds"
+  }, {
     keys: [
       "↑", null,
       "←", null,
@@ -66,9 +69,12 @@ export const keybinds = [
     keys: ["ALT", "P"],
     desc: "open Control Pane"
   }, {
+    keys: ["ALT", "Q"],
+    desc: "view changelog"
+  }, {
     keys: [],
     desc: "highlight all cells with same digit"
-  }
+  },
 ];
 
 
@@ -112,7 +118,7 @@ function keydown(e: KeyboardEvent)
 
   switch (key) {
     case "/":      
-      current.overlay = (current.overlay === Overlay.KEYBINDS) ? null : Overlay.KEYBINDS;      
+      current.overlay = (current.overlay === Overlay.KEYBINDS) ? null : Overlay.KEYBINDS;
       break;
     
     case "E":
@@ -134,6 +140,9 @@ function keydown(e: KeyboardEvent)
     case "P":
       current.show_controls = !current.show_controls;
       break;
+
+    case "Q":
+      current.overlay = (current.overlay === Overlay.CHANGELOG) ? null : Overlay.CHANGELOG;
   }
 }
 

@@ -42,7 +42,7 @@ import { expoOut } from "svelte/easing";
 aside {
   position: fixed;
   right: 2rem;
-  bottom: 2rem;
+  bottom: 1rem;
   display: flex;
   flex-flow: column nowrap;
   align-items: end;

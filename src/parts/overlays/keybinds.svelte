@@ -10,54 +10,33 @@ import { keybinds } from "#scripts/keybinds";
 </script>
 
 
-<!-- svelte-ignore a11y_no_static_element_interactions -->
-<!-- svelte-ignore a11y_click_events_have_key_events -->
-<div class="keybinds"
-  onclick={e => e.stopPropagation()}
->
-  <h2> Keybinds </h2>
-  <p> Keybinds to help you ever more optimise your workflow. Hopefully they should be pretty intuitive! </p>
-  
-  <table><tbody>
-    {#each keybinds as keybind}
-      <tr>
-        <th>
-          {#each keybind.keys as key}
-            {#if key === null}
-              <span class="separator">/</span>
-            {:else}
-              <code> {@html key} </code>
-            {/if}
-          {/each}
-        </th>
-        <td> {keybind.desc} </td>
-      </tr>
-    {/each}
-  </tbody></table>
-</div>
+<h1> Keybinds </h1>
+<p> Keybinds to help you ever more optimise your workflow. Hopefully they should be pretty intuitive! </p>
+
+<table><tbody>
+  {#each keybinds as keybind}
+    <tr>
+      <th>
+        {#each keybind.keys as key}
+          {#if key === null}
+            <span class="separator">/</span>
+          {:else}
+            <code> {@html key} </code>
+          {/if}
+        {/each}
+      </th>
+      <td> {keybind.desc} </td>
+    </tr>
+  {/each}
+</tbody></table>
 
 
 <style lang="scss">
 
-.keybinds {
-  width: 80%;
-  height: 80%;
-  padding: 3rem 5rem;
-  overflow-y: auto;
-  background: white;
-  border-radius: 1rem;
-  box-shadow: 0 0 8px $col-grey-light;
-
-  h2 {
-    font-weight: 500;
-    padding-bottom: 1em;
-  }
-
-  table {
-    margin-top: 3rem;
-    font-size: 100%;
-    border-collapse: collapse;
-  }
+table {
+  margin-top: 3rem;
+  font-size: 100%;
+  border-collapse: collapse;
 }
 
 tr {

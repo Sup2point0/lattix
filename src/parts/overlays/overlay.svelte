@@ -9,9 +9,10 @@ import { current } from "#scripts/stores";
 import { Overlay } from "#scripts/config";
 
 import Keybinds from "./keybinds.svelte";
+import Changelog from "./changelog.svelte";
 
 import { scale } from "svelte/transition";
-import { expoOut } from "svelte/easing";
+import { expoOut, quartOut } from "svelte/easing";
 
 </script>
 
@@ -22,9 +23,20 @@ import { expoOut } from "svelte/easing";
   onclick={() => { current.overlay = null; }}
   transition:scale={{ duration: 500, easing: expoOut, start: 0.97 }}
 >
-  {#if current.overlay === Overlay.KEYBINDS}
-    <Keybinds />
-  {/if}
+  {#key current.overlay}
+    <!-- svelte-ignore a11y_no_static_element_interactions -->
+    <!-- svelte-ignore a11y_click_events_have_key_events -->
+    <div class="overlay-content"
+      onclick={e => e.stopPropagation()}
+      in:scale={{ duration: 500, easing: quartOut, start: 0.97 }}
+    >
+      {#if current.overlay === Overlay.KEYBINDS}
+        <Keybinds />
+      {:else if current.overlay === Overlay.CHANGELOG}
+        <Changelog />
+      {/if}
+    </div>
+  {/key}
 </aside>
 
 
@@ -41,6 +53,21 @@ aside.overlay-container {
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
+}
+
+.overlay-content {
+  width: 80%;
+  height: 80%;
+  padding: 3rem 5rem;
+  overflow-y: auto;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 0 8px $col-grey-light;
+
+  :global(h1) {
+      font-weight: 500;
+      padding-bottom: 1em;
+  }
 }
 
 </style>
