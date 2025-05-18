@@ -5,64 +5,39 @@ An overlay showing the available keybinds.
 
 <script lang="ts">
   
-import { current } from "#scripts/stores";
 import { keybinds } from "#scripts/keybinds";
-import { Overlay } from "#scripts/config";
-
-import { scale } from "svelte/transition";
-import { expoOut } from "svelte/easing";
 
 </script>
 
 
-<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
 <!-- svelte-ignore a11y_click_events_have_key_events -->
-<aside class="keybinds-container"
-  onclick={() => { current.overlay = null; }}
-  transition:scale={{ duration: 500, easing: expoOut, start: 0.97 }}
+<div class="keybinds"
+  onclick={e => e.stopPropagation()}
 >
-  <!-- svelte-ignore a11y_no_static_element_interactions -->
-  <!-- svelte-ignore a11y_click_events_have_key_events -->
-  <div class="keybinds"
-    onclick={e => e.stopPropagation()}
-  >
-    <h2> Keybinds </h2>
-    <p> Keybinds to help you ever more optimise your workflow. Hopefully they should be pretty intuitive! </p>
-    
-    <table><tbody>
-      {#each keybinds as keybind}
-        <tr>
-          <th>
-            {#each keybind.keys as key}
-              {#if key === null}
-                <span class="separator">/</span>
-              {:else}
-                <code> {@html key} </code>
-              {/if}
-            {/each}
-          </th>
-          <td> {keybind.desc} </td>
-        </tr>
-      {/each}
-    </tbody></table>
-  </div>
-</aside>
+  <h2> Keybinds </h2>
+  <p> Keybinds to help you ever more optimise your workflow. Hopefully they should be pretty intuitive! </p>
+  
+  <table><tbody>
+    {#each keybinds as keybind}
+      <tr>
+        <th>
+          {#each keybind.keys as key}
+            {#if key === null}
+              <span class="separator">/</span>
+            {:else}
+              <code> {@html key} </code>
+            {/if}
+          {/each}
+        </th>
+        <td> {keybind.desc} </td>
+      </tr>
+    {/each}
+  </tbody></table>
+</div>
 
 
 <style lang="scss">
-
-aside.keybinds-container {
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 10;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-items: center;
-}
 
 .keybinds {
   width: 80%;
