@@ -14,7 +14,18 @@ import Clicky from "#parts/ui/clicky.svelte";
 
 
 <aside>
-  <Clicky text="?" action={() => { current.overlay = Overlay.CHANGELOG }} />
+  <Clicky text="?" action={() => { current.overlay = Overlay.CHANGELOG }}>
+    <span class="material-symbols-rounded" style="
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      font-size: 1.25rem;
+      transform: translateX(-50%) translateY(-50%);
+    ">
+      page_info
+    </span>
+    <div style:padding="0.75em 0.25em"></div>
+  </Clicky>
 </aside>
 
 

@@ -8,15 +8,20 @@ A button which runs a callback when clicked.
 interface Props {
   text: string;
   action: () => void;
+  children?: any;
 }
 
-let { text, action }: Props = $props();
+let { text, action, children }: Props = $props();
 
 </script>
 
 
 <button onclick={action}>
-  {text}
+  {#if children}
+    {@render children()}
+  {:else}
+    {text}
+  {/if}
 </button>
 
 
@@ -26,6 +31,7 @@ let { text, action }: Props = $props();
 
 button {
   padding: 0.5em 1em;
+  position: relative;
   background: none;
   border: 1px solid $col-grey-light;
   border-radius: 0.5rem;

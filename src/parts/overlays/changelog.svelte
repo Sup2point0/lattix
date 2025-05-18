@@ -5,7 +5,6 @@ The overlay showing the changelog.
 
 <script lang="ts">
 
-// import Content from "./changelog.svx";
 import Content from "../../../changelog.md";
 
 </script>
