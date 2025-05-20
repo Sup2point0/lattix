@@ -21,6 +21,9 @@ Transposing and rotating the grid. I can see it being quite difficult to impleme
 ### *Fix*
 Modifier keys will no longer hang when you switch windows while holding them, like when using `ALT` `TAB`.
 
+### *Fix*
+Outer grid cells are now correctly disabled when you’re not editing the grid.
+
 
 ## 18 May 2025
 

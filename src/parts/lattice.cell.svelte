@@ -337,6 +337,7 @@ function highlight_multi()
   class:highlight={cell.highlight}
   class:editing={current.editing}
   class:selected={cell.selected}
+  disabled={(kind === "outer" && !current.editing && !cell.entered && !cell.marks.size && !cell.fixed) ? true : undefined}
   {onmouseenter}
   {onmousedown}
   {onclick}
@@ -380,7 +381,7 @@ button {
   outline: none;
 }
 
-.content {
+button .content {
   width: 100%;
   height: 100%;
   display: flex;
@@ -421,7 +422,7 @@ button {
 }
 
 
-button {
+button:not(.outer[disabled]) {
   &:hover, &:focus-visible {
     cursor: pointer;
 
@@ -446,7 +447,7 @@ button {
   }
 }
 
-button.selected {
+button:not(.outer[disabled]).selected {
   &, &:hover, &:focus-visible, &:active {
     .content {
       border-color: $col-purp;
