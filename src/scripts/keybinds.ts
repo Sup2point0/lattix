@@ -85,12 +85,12 @@ export function set_keybinds(window: Window)
 }
 
 
-function keydown(e: KeyboardEvent)
+export function keydown(e: KeyboardEvent): boolean
 {
   let key = e.key.toUpperCase();
   if (current.held_keys.has(key)) {
     e.stopPropagation();
-    return;
+    return false;
   } else {
     current.held_keys.add(key);
   }
@@ -99,51 +99,54 @@ function keydown(e: KeyboardEvent)
     case "CONTROL":
       current.multiselecting = true;
       e.stopPropagation();
-      break;
+      return true;
     
     case "ALT":
       current.marking = true;        
       e.stopPropagation();
-      break;
+      return true;
 
     case "ESCAPE":
       if (current.overlay) {
         current.overlay = null;
         e.stopPropagation();
       }
-      break;
+      return true;
   }
 
-  if (!current.held_keys.has("ALT")) return;
+  if (!e.altKey) return false;
 
   switch (key) {
     case "/":      
       current.overlay = (current.overlay === Overlay.KEYBINDS) ? null : Overlay.KEYBINDS;
-      break;
+      return true;
     
     case "E":
       current.editing = !current.editing;
-      break;
+      return true;
 
     case "R":
       alert("This feature hasn’t been implemented yet!");
-      break;
+      return true;
 
     case "M":
       alert("This feature hasn’t been implemented yet!");
-      break;
+      return true;
 
     case "N":
       current.show_marks = false;
-      break;
+      return true;
 
     case "P":
       current.show_controls = !current.show_controls;
-      break;
+      return true;
 
     case "Q":
       current.overlay = (current.overlay === Overlay.CHANGELOG) ? null : Overlay.CHANGELOG;
+      return true;
   }
+
+  return false;
 }
 
 
@@ -155,15 +158,15 @@ function keyup(e: KeyboardEvent)
   switch (key) {
     case "CONTROL":
       current.multiselecting = false;
-      break;
+      return true;
 
     case "ALT":
       current.marking = false;
-      break;
+      return true;
     
     case "N":
       current.show_marks = true;
-      break;
+      return true;
   }
 }
 

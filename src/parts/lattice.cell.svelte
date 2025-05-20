@@ -12,13 +12,14 @@ let total = 0;
 <script lang="ts">
 
 import { current, prefs } from "#scripts/stores";
+import * as keybinds from "#scripts/keybinds";
 import { Keys } from "#scripts/config";
 import { interp3 } from "#scripts/utils";
 import { Cell } from "#scripts/types";
 import type { int, Key } from "#scripts/types";
 
 import { SvelteSet as Set } from "svelte/reactivity";
-import { onMount, untrack } from "svelte";
+import { untrack } from "svelte";
 
 interface Props {
   kind?: "inner" | "outer";
@@ -33,10 +34,12 @@ total++;
 let cell = new Cell(total, kind, x, y);
 
 let self: HTMLButtonElement;
+let input: HTMLTextAreaElement;
 
 
 $effect(() => {
   cell.button = self;
+  cell.input = input;
 
   let cord = x.toString() + y.toString();
   untrack(() => {
@@ -45,7 +48,7 @@ $effect(() => {
 });
  
 
-/** If dragselecting, select the cell. */
+/** If dragselecting, select the cell by simulating a `mousedown`. */
 function onmouseenter(e: MouseEvent)
 {  
   if (current.dragselecting) {
@@ -53,7 +56,6 @@ function onmouseenter(e: MouseEvent)
   }
 }
 
-/** Select the cell. */
 function onmousedown(e: MouseEvent)
 {
   e.stopPropagation();
@@ -67,7 +69,7 @@ function onclick(e: MouseEvent)
   if (current.multiselecting && cell.selected) {
     current.lattice.selected.delete(cell);
   } else {
-    self.focus();
+    input.focus();
   }
 }
 
@@ -84,7 +86,7 @@ function onkeydown(e: KeyboardEvent)
     if (current.dragselecting) return;
 
     let next: Cell;
-    if (current.held_keys.has("ALT")) {
+    if (e.altKey) {
       next = arrow_jump(key);
     } else {
       next = arrow_move(key);
@@ -106,7 +108,7 @@ function onkeydown(e: KeyboardEvent)
     return;
   }
 
-  if (current.held_keys.has("ALT") && key === "H") {
+  if (e.altKey && key === "H") {
     current.lattice.selected.forEach(each => each.animate_press());
     highlight_multi();
     current.lattice.selected.clear();
@@ -115,7 +117,10 @@ function onkeydown(e: KeyboardEvent)
 
   if (
     Keys.Numbers.includes(key) || Keys.Alpha.includes(key) || Keys.Punct.includes(key)
-  ) {  
+  ) {
+    let was_keybind = keybinds.keydown(e);
+    if (was_keybind) return;
+
     current.lattice.selected.forEach(each => each.animate_press());
     process_digit(key);
     return;
@@ -330,6 +335,12 @@ function highlight_multi()
 </script>
 
 
+<textarea
+  bind:this={input}
+  tabindex="-1"
+  {onkeydown}
+></textarea>
+
 <button
   bind:this={self}
   class="{kind}"
@@ -492,6 +503,15 @@ button.outer {
   &.editing .content {
     border: 2px dotted $col-grey-light;
   }
+}
+
+
+textarea {
+  position: fixed;
+  left: -2px;
+  width: 0;
+  resize: none;
+  opacity: 0;
 }
 
 </style>

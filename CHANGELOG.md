@@ -15,6 +15,9 @@ Copying the table to Markdown. Cuz why not!
 ### **Feat**
 Transposing and rotating the grid. I can see it being quite difficult to implement... might need a refactor coming up.
 
+### *Fix*
+Clicking on a cell then pressing `TAB` doesn’t jump to the next cell – it only does so on the second press.
+
 
 ## 20 May 2025
 

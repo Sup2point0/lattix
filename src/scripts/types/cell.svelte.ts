@@ -7,8 +7,9 @@ import type { int, Key } from "./root";
 
 export class Cell
 {
-  button: HTMLButtonElement | null = null;
   shard: int;
+  button: HTMLButtonElement | null = null;
+  input: HTMLTextAreaElement | null = null;
   
   kind: "inner" | "outer";
   x: int;
@@ -46,6 +47,8 @@ export class Cell
 
     current.lattice.selected.add(this);
     current.lattice.selected = current.lattice.selected;
+
+    this.input?.focus();
     
     if (click) {
       current.dragselecting = true;
