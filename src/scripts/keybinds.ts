@@ -170,7 +170,9 @@ function keyup(e: KeyboardEvent)
 
 export function onblur()
 {
-  current.held_keys.clear();
+  for (let key of current.held_keys) {
+    window.dispatchEvent(new KeyboardEvent("keyup", { key }));
+  }
 }
 
 
