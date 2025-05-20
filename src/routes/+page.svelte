@@ -3,7 +3,7 @@
 import "#styles/essence.scss";
 
 import { current, prefs } from "#scripts/stores";
-import { set_keybinds, onbeforeunload } from "#scripts/keybinds";
+import { set_keybinds, onblur, onbeforeunload } from "#scripts/keybinds";
 import { FontSizes } from "#scripts/config";
 
 import Lattice from "#parts/lattice.svelte";
@@ -38,7 +38,7 @@ onMount(() => {
 </script>
 
 
-<svelte:window {onbeforeunload} />
+<svelte:window {onblur} {onbeforeunload} />
 
 <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 <!-- svelte-ignore a11y_click_events_have_key_events -->

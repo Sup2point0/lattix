@@ -15,8 +15,11 @@ Copying the table to Markdown. Cuz why not!
 ### **Feat**
 Transposing and rotating the grid. I can see it being quite difficult to implement... might need a refactor coming up.
 
+
+## 20 May 2025
+
 ### *Fix*
-Using `ALT` `TAB` to switch windows leaves `ALT` hanging in *lattix* due to the way modifier keys are tracked. I’m figuring out a way to get around this!
+Modifier keys will no longer hang when you switch windows while holding them, like when using `ALT` `TAB`.
 
 
 ## 18 May 2025

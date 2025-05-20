@@ -168,6 +168,12 @@ function keyup(e: KeyboardEvent)
 }
 
 
+export function onblur()
+{
+  current.held_keys.clear();
+}
+
+
 export function onbeforeunload(e: Event): boolean
 {
   for (let cell of Object.values(current.lattice.cells)) {
