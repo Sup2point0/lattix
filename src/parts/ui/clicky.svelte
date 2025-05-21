@@ -8,15 +8,16 @@ A button which runs a callback when clicked.
 interface Props {
   text: string;
   action: () => void;
+  disabled?: boolean;
   children?: any;
 }
 
-let { text, action, children }: Props = $props();
+let { text, action, disabled, children }: Props = $props();
 
 </script>
 
 
-<button onclick={action}>
+<button onclick={action} disabled={disabled || undefined}>
   {#if children}
     {@render children()}
   {:else}
@@ -42,14 +43,14 @@ button {
 
   transition: all 0.1s ease-out;
 
-  &:hover {
+  &:not([disabled]):where(:hover, :focus) {
     cursor: pointer;
     color: $col-blue;
     border-color: $col-blue;
     outline-width: 2px;
   }
 
-  &:active {
+  &:not([disabled]):active {
     color: $col-purp;
     border-color: $col-purp;
     outline-color: color.change($col-purp, $alpha: 20%);
