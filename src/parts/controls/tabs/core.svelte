@@ -59,28 +59,9 @@ import ColourOptions from "#parts/ui/options.cols.svelte";
   </section>
 
   <section>
-    <Clicky text="Clear Cells" action={() => {
-      if (window.confirm("Clear all entered and marked digits?")) {
-        for (let cell of Object.values(current.lattice.cells)) {
-          cell.entered = null;
-          cell.marks.clear();
-        }
-
-        current.add_toast({ text: "Cleared all" });
-      }
-    }} />
-    <Clicky text="Clear Marks Only" action={() => {
-      if (window.confirm("Clear all marked digits?")) {
-        for (let cell of Object.values(current.lattice.cells)) {
-          cell.marks.clear();
-        }
-
-        current.add_toast({ text: "Cleared marks" });
-      }
-    }} />
-    <Clicky text="Clear All" action={() => {
-      current.add_toast({ text: String(Math.random()) });
-    }} />
+    <Clicky text="Clear Work" action={current.lattice.clear_work} />
+    <Clicky text="Clear Marks Only" action={current.lattice.clear_marks} />
+    <Clicky text="Clear All" action={current.lattice.clear_all} />
     <Clicky text="New" action={() => {
       if (window.confirm("Reset the grid?")) {
         alert("This feature hasn’t been implemented yet!");

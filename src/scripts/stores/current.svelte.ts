@@ -66,6 +66,40 @@ class Lattice
 
   cells: Cells = $state({});
   selected: Set<Cell> = new Set();
+
+  clear_work()
+  {
+    if (window.confirm("Clear all entered and marked digits?")) {
+      for (let cell of Object.values(current.lattice.cells)) {
+        cell.entered = null;
+        cell.marks.clear();
+      }
+
+      current.add_toast({ text: "Cleared work" });
+    }
+  }
+
+  clear_marks()
+  {
+    if (window.confirm("Clear all marked digits?")) {
+      for (let cell of Object.values(current.lattice.cells)) {
+        cell.marks.clear();
+      }
+
+      current.add_toast({ text: "Cleared marks" });
+    }
+  }
+
+  clear_all()
+  {
+    if (window.confirm("Clear all digits in the grid?")) {
+      for (let cell of Object.values(current.lattice.cells)) {
+        cell.marks.clear();
+      }
+
+      current.add_toast({ text: "Cleared marks" });
+    }
+  }
 }
 
 class Time

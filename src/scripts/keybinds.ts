@@ -126,7 +126,7 @@ export function keydown(e: KeyboardEvent): boolean
       return true;
 
     case "R":
-      alert("This feature hasn’t been implemented yet!");
+      current.lattice.clear_work();
       return true;
 
     case "M":

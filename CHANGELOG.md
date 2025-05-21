@@ -24,6 +24,9 @@ Clicking on a cell then pressing `TAB` doesn’t jump to the next cell – it on
 ### **Feat**
 You can now access an in-built timer through **Stats**.
 
+### *Fix*
+Buttons and keybinds for clearing the grid are now fully functional.
+
 
 ## 20 May 2025
 
