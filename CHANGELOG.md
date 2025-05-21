@@ -7,16 +7,22 @@
 ## Features in Development
 
 ### **Feat**
-Interacting with outer cells – such as marking them as resolved.
-
-### **Feat**
 Copying the table to Markdown. Cuz why not!
 
 ### **Feat**
 Transposing and rotating the grid. I can see it being quite difficult to implement... might need a refactor coming up.
 
 ### *Fix*
+Outer cells should be able to be highlighted, currently they’re not.
+
+### *Fix*
 Clicking on a cell then pressing `TAB` doesn’t jump to the next cell – it only does so on the second press.
+
+
+## 21 May 2025
+
+### **Feat**
+You can now access an in-built timer through **Stats**.
 
 
 ## 20 May 2025
@@ -79,7 +85,7 @@ You can now highlight cells!
 You can `ALT` `click` a cell, or use `ALT` `H` while a cell(s) is selected, to highlight them with a default highlight colour. (`ALT` `drag` to highlight multiple cells will be added in future.)
 
 ### **Feat**
-You can now clear the grid with buttons in the Control Panel.
+You can now clear the grid with buttons in **Controls**.
 
 ### *Fix*
 The webpage will now confirm with you before closing, if you’ve typed anything into the grid, so that you don’t lose progress.
@@ -97,7 +103,7 @@ The `DELETE` key can now be used to delete the contents of a cell in the grid.
 Toggle tools have been added to indicate when keybinds are applying, and allow using grid manipulation features without pressing keys.
 
 ### **Feat**
-You can now change the UI typeface, grid input behaviour and more via the  Control Pane. More preferences configurations coming soon!
+You can now change the UI typeface, grid input behaviour and more via the **Control Pane**. More preferences configurations coming soon!
 
 ### **Feat**
 You can now open and close the Control Pane with `ALT` `P` – complete with a slick animation.
@@ -121,7 +127,7 @@ You can now type digits into cells with different handling for different scenari
 ## 7 May 2025
 
 ### **Feat**
-Keybinds have been added! You can view all of them using `ALT` `/`.
+**Keybinds** have been added! You can view all of them using `ALT` `/`.
 
 ### **Feat**
 *lattix* now has a landing overlay when you open it up, complete with a randomly chosen tip!

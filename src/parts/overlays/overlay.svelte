@@ -65,8 +65,8 @@ aside.overlay-container {
   box-shadow: 0 0 8px $col-grey-light;
 
   :global(h1) {
-      font-weight: 500;
-      padding-bottom: 1em;
+    font-weight: 500;
+    padding-bottom: 1em;
   }
 }
 

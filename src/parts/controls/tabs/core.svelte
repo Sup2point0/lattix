@@ -66,7 +66,7 @@ import ColourOptions from "#parts/ui/options.cols.svelte";
           cell.marks.clear();
         }
 
-        current.add_toast({ text: "Cleared All" });
+        current.add_toast({ text: "Cleared all" });
       }
     }} />
     <Clicky text="Clear Marks Only" action={() => {
@@ -75,7 +75,7 @@ import ColourOptions from "#parts/ui/options.cols.svelte";
           cell.marks.clear();
         }
 
-        current.add_toast({ text: "Cleared Marks" });
+        current.add_toast({ text: "Cleared marks" });
       }
     }} />
     <Clicky text="Clear All" action={() => {

@@ -79,6 +79,11 @@ import Content from "../../../CHANGELOG.md";
     color: $col-grey-dark;
   }
 
+  :global(p > strong) {
+    font-weight: normal;
+    color: $col-blue-dark;
+  }
+
   :global(code) {
     padding: 0.4em 0.6em;
     margin: 0 0.1em;
