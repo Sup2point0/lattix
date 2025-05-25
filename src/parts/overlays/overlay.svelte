@@ -10,6 +10,7 @@ import { Overlay } from "#scripts/config";
 
 import Keybinds from "./keybinds.svelte";
 import Changelog from "./changelog.svelte";
+import Synopsis from "./synopsis.svelte";
 
 import { scale } from "svelte/transition";
 import { expoOut, quartOut } from "svelte/easing";
@@ -34,6 +35,8 @@ import { expoOut, quartOut } from "svelte/easing";
         <Keybinds />
       {:else if current.overlay === Overlay.CHANGELOG}
         <Changelog />
+      {:else if current.overlay === Overlay.SYNOPSIS}
+        <Synopsis />
       {/if}
     </div>
   {/key}

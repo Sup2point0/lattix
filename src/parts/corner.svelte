@@ -14,7 +14,10 @@ import Clicky from "#parts/ui/clicky.svelte";
 
 
 <aside>
-  <Clicky text="?" action={() => { current.overlay = Overlay.CHANGELOG }}>
+  <Clicky text="?" action={() => { current.overlay = Overlay.SYNOPSIS; console.log(current.overlay);
+   }} />
+
+  <Clicky action={() => { current.overlay = Overlay.CHANGELOG; }}>
     <span class="material-symbols-rounded" style="
       position: absolute;
       top: 50%;
@@ -38,6 +41,7 @@ aside {
   display: flex;
   flex-flow: column nowrap;
   align-items: end;
+  gap: 0.5rem;
 }
 
 </style>

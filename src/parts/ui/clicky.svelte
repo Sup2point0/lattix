@@ -6,7 +6,7 @@ A button which runs a callback when clicked.
 <script lang="ts">
 
 interface Props {
-  text: string;
+  text?: string;
   action: () => void;
   disabled?: boolean;
   children?: any;
@@ -31,6 +31,7 @@ let { text, action, disabled, children }: Props = $props();
 @use 'sass:color';
 
 button {
+  width: max-content;
   padding: 0.5em 1em;
   position: relative;
   background: none;

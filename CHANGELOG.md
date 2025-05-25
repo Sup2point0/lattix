@@ -19,6 +19,12 @@ Outer cells should be able to be highlighted, currently they’re not.
 Clicking on a cell then pressing `TAB` doesn’t jump to the next cell – it only does so on the second press.
 
 
+## 25 May 2025
+
+### **Feat**
+A help overlay has been added for everyone who’s super confused about what *lattix* is when they first visit.
+
+
 ## 21 May 2025
 
 ### **Feat**

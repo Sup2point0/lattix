@@ -9,9 +9,9 @@ export class Keys
 
 export enum Overlay
 {
-  ABOUT,
-  CHANGELOG,
-  KEYBINDS,
+  SYNOPSIS = "Synopsis",
+  CHANGELOG = "Changelog",
+  KEYBINDS = "Keybinds",
 }
 
 export enum ControlTab
