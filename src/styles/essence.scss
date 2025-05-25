@@ -13,6 +13,11 @@
   font-size: 100%;
 }
 
+::selection {
+  color: white !important;
+  background: $col-blue !important;
+}
+
 body {
   --col-blue: #{$col-blue};
   --col-blue-dark: #{$col-blue-dark};
