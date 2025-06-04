@@ -119,7 +119,7 @@ function onkeydown(e: KeyboardEvent)
     Keys.Numbers.includes(key) || Keys.Alpha.includes(key) || Keys.Punct.includes(key)
   ) {
     let was_keybind = keybinds.keydown(e);
-    if (was_keybind) return;
+    if (was_keybind || e.ctrlKey) return;
 
     current.lattice.selected.forEach(each => each.animate_press());
     process_digit(key);
@@ -343,11 +343,12 @@ function highlight_multi()
 
 <button
   bind:this={self}
-  class="{kind}"
-  class:fixed={cell.fixed !== null}
-  class:highlight={cell.highlight}
-  class:editing={current.editing}
-  class:selected={cell.selected}
+  class={[kind, {
+    fixed: cell.fixed !== null,
+    highlight: cell.highlight,
+    editing: current.editing,
+    selected: cell.selected,
+  }]}
   disabled={(kind === "outer" && !current.editing && !cell.entered && !cell.marks.size && !cell.fixed) ? true : undefined}
   {onmouseenter}
   {onmousedown}
