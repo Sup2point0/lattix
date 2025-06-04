@@ -3,8 +3,9 @@
 import { prefs } from "#scripts/stores";
 import { Font } from "#scripts/types";
 
-import Options from "#parts/ui/options.svelte";
+import Toggle from "#parts/ui/toggle.svelte";
 import Slider from "#parts/ui/slider.svelte";
+import Options from "#parts/ui/options.svelte";
 
 
 let text = $prefs.text;
@@ -31,6 +32,15 @@ let text = $prefs.text;
     </section>
 
     <Slider bind:value={text.size} />
+  </label>
+
+  <label>
+    <section>
+      <h4> Invert Contrast </h4>
+      <p> Make fixed digits coloured and entered digits black. </p>
+    </section>
+
+    <Toggle bind:value={text.invert} />
   </label>
 </div>
 

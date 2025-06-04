@@ -348,6 +348,7 @@ function highlight_multi()
     highlight: cell.highlight,
     editing: current.editing,
     selected: cell.selected,
+    invert: $prefs.text.invert,
   }]}
   disabled={(kind === "outer" && !current.editing && !cell.entered && !cell.marks.size && !cell.fixed) ? true : undefined}
   {onmouseenter}
@@ -513,6 +514,21 @@ textarea {
   width: 0;
   resize: none;
   opacity: 0;
+}
+
+
+button.invert .content {
+  .fixed {
+    color: $col-blue;
+  }
+
+  .entered {
+    color: var(--col-text);
+  }
+
+  .marks {
+    color: var(--col-text);
+  }
 }
 
 </style>

@@ -21,6 +21,9 @@ Clicking on a cell then pressing `TAB` doesn’t jump to the next cell – it on
 
 ## 4 June 2025
 
+### **Feat*
+You can now invert the colour of cells, so that entered cells are black while fixed cells are coloured.
+
 ### *Fix*
 Clicking on a tab in the Control Pane now opens the Control Pane if it’s closed.
 

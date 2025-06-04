@@ -49,6 +49,8 @@ class TextPrefs
   font: Font = $state(Font.SORA);
 
   size: Scalar = $state(0.5);
+
+  invert: boolean = $state(false);
 }
 
 class MarkPrefs
