@@ -13,9 +13,6 @@ Copying the table to Markdown. Cuz why not!
 Transposing and rotating the grid. I can see it being quite difficult to implement... might need a refactor coming up.
 
 ### *Fix*
-Outer cells should be able to be highlighted, currently they’re not.
-
-### *Fix*
 Clicking on a cell then pressing `TAB` doesn’t jump to the next cell – it only does so on the second press.
 
 
@@ -23,6 +20,9 @@ Clicking on a cell then pressing `TAB` doesn’t jump to the next cell – it on
 
 ### **Feat*
 You can now invert the colour of cells, so that entered cells are black while fixed cells are coloured.
+
+### *Fix*
+Outer cells can now be highlighted and interacted with, and also prevent marks from being entered into them.
 
 ### *Fix*
 Clicking on a tab in the Control Pane now opens the Control Pane if it’s closed.

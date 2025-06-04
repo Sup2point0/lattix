@@ -74,9 +74,7 @@ function onclick(e: MouseEvent)
 }
 
 function onkeydown(e: KeyboardEvent)
-{  
-  if (cell.fixed && !current.editing) return;
-
+{
   let key = e.key.toUpperCase();
 
   if (Keys.Ignored.includes(key)) return;
@@ -100,6 +98,8 @@ function onkeydown(e: KeyboardEvent)
   }
 
   if (key === " " || key === "BACKSPACE" || key === "DELETE") {
+    if (cell.fixed && current.lattice.selected.size === 1) return;
+
     e.stopPropagation();
     for (let each of current.lattice.selected) {
       each.animate_press();
@@ -203,6 +203,10 @@ function process_digit(key: Key)
   if (current.editing) {    
     fix_multi(key);
     return;
+  } else {
+    if (cell.fixed && current.lattice.selected.size === 1) {
+      return;
+    }
   }
 
   if (current.marking) {
@@ -273,6 +277,7 @@ function mark_multi(key: Key)
   let added = 0;
 
   for (let each of current.lattice.selected) {
+    if (each.fixed) continue;
     each.entered = null;
     if (!each.marks.has(key)) {
       each.marks.add(key);
