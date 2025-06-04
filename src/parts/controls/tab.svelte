@@ -22,6 +22,7 @@ let { tab, text }: Props = $props();
   class:live={current.control_tab === tab}
   onclick={() => {
     current.control_tab = tab;
+    current.show_controls = true;
   }}
 >
   {text}

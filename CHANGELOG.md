@@ -19,6 +19,12 @@ Outer cells should be able to be highlighted, currently they’re not.
 Clicking on a cell then pressing `TAB` doesn’t jump to the next cell – it only does so on the second press.
 
 
+## 4 June 2025
+
+### *Fix*
+Clicking on a tab in the Control Pane now opens the Control Pane if it’s closed.
+
+
 ## 25 May 2025
 
 ### **Feat**
