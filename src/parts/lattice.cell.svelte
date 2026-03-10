@@ -37,8 +37,6 @@ let self: HTMLButtonElement;
 let input: HTMLTextAreaElement;
 
 
-$inspect(current.drag_mode)
-
 $effect(() => {
   cell.button = self;
   cell.input = input;
@@ -485,16 +483,9 @@ button:not(.outer[disabled]) {
     }
   }
 
-  &:active, &.clicked {
+  &:active {
     .content {
-      border-color: $col-purp;
-      outline-width: 3.5px;
-      outline-color: color.change($col-purp, $alpha: 20%);
       transform: scale(97%);
-    
-      .entered, .marks {
-        color: $col-purp;
-      }
     }
   }
 }
