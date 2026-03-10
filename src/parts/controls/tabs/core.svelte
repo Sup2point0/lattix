@@ -43,11 +43,11 @@ import ColourOptions from "#parts/ui/options.cols.svelte";
   <section>
     <ColourOptions
       bind:value={
-        () => (
-          (current.lattice.selected.size === 1) && current.lattice.selected.values().next().value!.highlight
-          || null
-        ),
-        (value) => {
+        () => {
+          let cols = new Set(current.lattice.selected.values().map(cell => cell.highlight));
+          return (cols.size === 1) ? cols.values().next().value! : undefined;
+        },
+        value => {
           for (let cell of current.lattice.selected) {
             cell.highlight = value;
           }

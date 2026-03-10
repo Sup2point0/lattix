@@ -38,7 +38,6 @@ function cycle_options()
   disabled={disabled}
 >-</button>
 
-<!-- svelte-ignore a11y_click_events_have_key_events -->
 <div class="options"
   role="listbox"
   tabindex="0"
@@ -51,9 +50,9 @@ function cycle_options()
       class:none={col === null}
       disabled={disabled || undefined}
       onclick={e => {
+        e.stopPropagation();
         value = col;
         current.lattice.selected.clear();
-        e.stopPropagation();
       }}
       style:--col="var(--col-{col})"
     >
@@ -109,12 +108,14 @@ button {
     border: 2px solid $col-grey-light;
     
     span {
+      pointer-events: none;
       display: block;
       @include font-code;
       font-weight: bold;
       font-size: 150%;
       color: $col-grey-light;
       transform: skew(-20deg);
+      transition: all 0.1s ease-out;
     }
 
     &:not([disabled]).selected {
@@ -131,14 +132,19 @@ button:not([disabled]) {
   &:hover, &:focus-visible {
     cursor: pointer;
     background: var(--col);
+    outline: none;
+
+    &.none {
+      border-color: $col-blue;
+
+      span {
+        color: $col-blue;
+      }
+    }
   }
 
   &:active {
     transform: scale(94%);
-
-    &::after {
-      filter: brightness(92%);
-    }
   }
 }
 
