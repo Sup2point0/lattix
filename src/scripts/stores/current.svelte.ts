@@ -16,8 +16,8 @@ class CurrentState
     this.held_keys.has("SHIFT")
   );
 
-  /** When enabled, hovering over a cell selects it (no click is needed). */
-  dragselecting = $state(false);
+  /** Whether dragging the mouse over a cell should select or deselect it. */
+  drag_mode: "selecting" | "erasing" | null = $state(null);
 
   /** When enabled, selecting a cell does not deselect other cells. */
   multiselecting = $derived(this.held_keys.has("CONTROL"));

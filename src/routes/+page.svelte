@@ -29,8 +29,8 @@ onMount(() => {
   set_keybinds(window);
 
   window.addEventListener("mouseup", () => {    
-    if (current.dragselecting) {
-      current.dragselecting = false;
+    if (current.drag_mode) {
+      current.drag_mode = null;
     }
   });
 });

@@ -48,29 +48,41 @@ $effect(() => {
 });
  
 
-/** If dragselecting, select the cell by simulating a `mousedown`. */
 function onmouseenter(e: MouseEvent)
-{  
-  if (current.dragselecting) {
-    onmousedown(e);
+{
+  e.stopPropagation();
+
+  if (current.drag_mode) {
+    cell.animate_press();
+
+    if (current.drag_mode === "erasing") {
+      current.lattice.selected.delete(cell);
+    } else {
+      cell.select();
+    }
   }
 }
 
 function onmousedown(e: MouseEvent)
 {
   e.stopPropagation();
+
   cell.animate_press();
-  cell.select();
+
+  if (current.multiselecting && cell.selected) {
+    current.lattice.selected.delete(cell);
+    current.drag_mode = "erasing";
+  } else {
+    cell.select();
+    current.drag_mode = "selecting";
+  }
 }
 
 function onclick(e: MouseEvent)
 {
   e.stopPropagation();
-  if (current.multiselecting && cell.selected) {
-    current.lattice.selected.delete(cell);
-  } else {
-    input.focus();
-  }
+
+  input.focus();
 }
 
 function onkeydown(e: KeyboardEvent)
@@ -81,7 +93,7 @@ function onkeydown(e: KeyboardEvent)
 
   if (Keys.Arrows.includes(key)) {
     e.preventDefault();
-    if (current.dragselecting) return;
+    if (current.drag_mode) return;
 
     let next: Cell;
     if (e.altKey) {
@@ -93,7 +105,7 @@ function onkeydown(e: KeyboardEvent)
     if (!next) return;
 
     next.button?.focus();
-    next.select(false);
+    next.select();
     return;
   }
 

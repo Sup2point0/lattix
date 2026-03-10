@@ -38,27 +38,23 @@ export class Cell
   }
 
   /** Select the cell. */
-  select(click = true)
+  select()
   {
-    if (!current.multiselecting && !current.dragselecting) {
+    if (!current.multiselecting && current.drag_mode === null) {
       current.lattice.selected.clear();
-      current.dragselecting = false;
     }
 
     current.lattice.selected.add(this);
     current.lattice.selected = current.lattice.selected;
 
     this.input?.focus();
-    
-    if (click) {
-      current.dragselecting = true;
-    }
   }
 
   /** Trigger a press animation. */
   animate_press()
   {
     this.button?.classList.add("clicked");
+
     setTimeout(() => {
       this.button?.classList.remove("clicked");
     }, 30);
