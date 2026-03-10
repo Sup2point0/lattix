@@ -15,7 +15,7 @@ import { current, prefs } from "#scripts/stores";
 import * as keybinds from "#scripts/keybinds";
 import { Keys } from "#scripts/config";
 import { interp3 } from "#scripts/utils";
-import { Cell, DragMode, MarkAlignment } from "#scripts/types";
+import { Cell, DragMode, MarkMode, MarkAlignment } from "#scripts/types";
 import type { int, Key } from "#scripts/types";
 
 import { SvelteSet as Set } from "svelte/reactivity";
@@ -121,10 +121,22 @@ function onkeydown(e: KeyboardEvent)
       next = arrow_move(key);
     }
 
-    if (!next) return;
+    next?.button?.focus();
+    next?.select();
+    return;
+  }
 
-    next.button?.focus();
-    next.select();
+  if (key === "END") {
+    let next = e.shiftKey ? arrow_jump("ARROWDOWN") : arrow_jump("ARROWRIGHT");
+    next?.button?.focus();
+    next?.select();
+    return;
+  }
+
+  if (key === "HOME") {
+    let next = e.shiftKey ? arrow_jump("ARROWUP") : arrow_jump("ARROWLEFT");
+    next?.button?.focus();
+    next?.select();
     return;
   }
 
@@ -234,7 +246,8 @@ function process_digit(key: Key)
   if (current.editing) {    
     fix_multi(key);
     return;
-  } else {
+  }
+  else {
     if (cell.fixed && current.lattice.selected.size === 1) {
       return;
     }
@@ -248,7 +261,7 @@ function process_digit(key: Key)
     }
   }
   else {
-    if ($prefs.marks.auto) {
+    if ($prefs.marks.auto && current.mark_mode !== MarkMode.NEVER) {
       if (current.lattice.selected.size === 1) {        
         noalt_auto_single(key);
       } else {

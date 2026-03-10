@@ -11,6 +11,12 @@ export enum DragMode {
   Unhighlighting,
 }
 
+export enum MarkMode {
+  ALWAYS  = "Always Enabled",
+  DEFAULT = "Default",
+  NEVER   = "Always Disabled",
+}
+
 
 class CurrentState
 {
@@ -30,8 +36,19 @@ class CurrentState
   /** When enabled, selecting a cell does not deselect other cells. */
   multiselecting = $derived(this.held_keys.has("CONTROL"));
 
-  /** When enabled, typing digits always makes a mark instead of entering the digit. */
-  marking = $state(false);
+  /** Whether typing a digit should make a pencilmark instead of entering the digit. */
+  marking = $derived(
+    this.mark_mode === MarkMode.ALWAYS ? true
+    : this.mark_mode === MarkMode.NEVER ? false
+    : this.held_keys.has("ALT")
+  );
+
+  /** Whether marks should always or never be made. */
+  mark_mode: MarkMode = $state(MarkMode.DEFAULT);
+
+  // TODO
+  highlighting = $state(false);
+
   show_marks = $state(true);
   editing = $state(false);
 
@@ -77,7 +94,7 @@ class Lattice
 
   clear_work()
   {
-    if (window.confirm("Clear all entered and marked digits?")) {
+    if (window.confirm("Clear all entered and pencilmarked digits?")) {
       for (let cell of Object.values(current.lattice.cells)) {
         cell.entered = null;
         cell.marks.clear();
@@ -89,12 +106,23 @@ class Lattice
 
   clear_marks()
   {
-    if (window.confirm("Clear all marked digits?")) {
+    if (window.confirm("Clear all pencilmarks? (fixed and entered digits will not be cleared.)")) {
       for (let cell of Object.values(current.lattice.cells)) {
         cell.marks.clear();
       }
 
-      current.add_toast({ text: "Cleared marks" });
+      current.add_toast({ text: "Cleared pencilmarks" });
+    }
+  }
+
+  clear_highlights()
+  {
+    if (window.confirm("Clear all highlights?")) {
+      for (let cell of Object.values(current.lattice.cells)) {
+        cell.highlight = null;
+      }
+
+      current.add_toast({ text: "Cleared highlights "});
     }
   }
 
@@ -102,10 +130,12 @@ class Lattice
   {
     if (window.confirm("Clear all digits in the grid?")) {
       for (let cell of Object.values(current.lattice.cells)) {
+        cell.fixed = null;
+        cell.entered = null;
         cell.marks.clear();
       }
 
-      current.add_toast({ text: "Cleared marks" });
+      current.add_toast({ text: "Cleared all" });
     }
   }
 }

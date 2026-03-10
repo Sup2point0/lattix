@@ -1,5 +1,6 @@
-import { current } from "./stores";
-import { Overlay } from "./config";
+import { current } from "#scripts/stores";
+import { Overlay } from "#scripts/config";
+import { MarkMode } from "#scripts/types";
 
 
 export const keybinds = [
@@ -60,20 +61,23 @@ export const keybinds = [
     keys: ["ALT", "R"],
     desc: "clear grid"
   }, {
-    keys: ["ALT", "M"],
-    desc: "toggle marking"
-  }, {
     keys: ["ALT", "N"],
     desc: "show/hide marks"
+  }, {
+    keys: ["ALT", "M"],
+    desc: "always enable marking"
+  }, {
+    keys: ["ALT", "SHIFT", "M"],
+    desc: "always disable marking"
   }, {
     keys: ["ALT", "P"],
     desc: "open Control Pane"
   }, {
     keys: ["ALT", "Q"],
     desc: "view changelog"
-  }, {
-    keys: [],
-    desc: "highlight all cells with same digit"
+  // }, {
+  //   keys: [],
+  //   desc: "highlight all cells with same digit"
   },
 ];
 
@@ -102,7 +106,6 @@ export function keydown(e: KeyboardEvent): boolean
       return true;
     
     case "ALT":
-      current.marking = true;        
       e.stopPropagation();
       return true;
 
@@ -129,12 +132,12 @@ export function keydown(e: KeyboardEvent): boolean
       current.lattice.clear_work();
       return true;
 
-    case "M":
-      alert("This feature hasn’t been implemented yet!");
-      return true;
-
     case "N":
       current.show_marks = false;
+      return true;
+
+    case "M":
+      current.mark_mode = e.shiftKey ? MarkMode.NEVER : MarkMode.ALWAYS;
       return true;
 
     case "P":
@@ -161,7 +164,7 @@ function keyup(e: KeyboardEvent)
       return true;
 
     case "ALT":
-      current.marking = false;
+      e.stopPropagation();
       return true;
     
     case "N":
