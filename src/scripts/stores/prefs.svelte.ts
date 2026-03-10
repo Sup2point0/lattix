@@ -17,11 +17,13 @@ export enum Font
   SNIGLET = "Sniglet",
 }
 
-enum MarkAlignment
+const MATERIAL = `span class="material-symbols-rounded" style="transform: translateY(0.15em)"`;
+
+export enum MarkAlignment
 {
-  CENTER = 0,
-  TOP_LEFT,
-  TOP_RIGHT,
+  CENTRE = `<${MATERIAL}>fullscreen</span>`,
+  TOP_LEFT = `<${MATERIAL}>arrow_insert</span>`,
+  TOP_RIGHT = `<${MATERIAL}>arrow_outward</span>`,
 }
 
 
@@ -31,7 +33,7 @@ export class Prefs
 
   text: TextPrefs = new TextPrefs();
 
-  /** Settings for pencil marks (little digits for noting possible values). */
+  /** Settings for pencilmarks (little digits for noting possible values). */
   marks: MarkPrefs = new MarkPrefs();
 
   cells: CellPrefs = new CellPrefs();
@@ -62,11 +64,11 @@ class MarkPrefs
    */
   auto: boolean = $state(true);
 
-  align: MarkAlignment = $state(0);
+  align: MarkAlignment = $state(MarkAlignment.CENTRE);
 
   size: Scalar = $state(0.5);
 
-  opacity: Scalar = $state(0.5);
+  opacity: Scalar = $state(1);
 }
 
 class CellPrefs

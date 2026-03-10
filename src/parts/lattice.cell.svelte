@@ -15,7 +15,7 @@ import { current, prefs } from "#scripts/stores";
 import * as keybinds from "#scripts/keybinds";
 import { Keys } from "#scripts/config";
 import { interp3 } from "#scripts/utils";
-import { Cell } from "#scripts/types";
+import { Cell, MarkAlignment } from "#scripts/types";
 import type { int, Key } from "#scripts/types";
 
 import { SvelteSet as Set } from "svelte/reactivity";
@@ -348,27 +348,29 @@ function highlight_multi()
 
 <button
   bind:this={self}
-  class={[kind, {
-    fixed: cell.fixed !== null,
-    highlight: cell.highlight,
-    editing: current.editing,
-    selected: cell.selected,
-    invert: $prefs.text.invert,
-  }]}
+  class={[
+    kind,
+    Object.entries(MarkAlignment).find(([key, val]) => val === $prefs.marks.align)?.[0].toLowerCase(),
+    {
+      fixed: cell.fixed !== null,
+      highlight: cell.highlight,
+      editing: current.editing,
+      selected: cell.selected,
+      invert: $prefs.text.invert,
+    }
+  ]}
   disabled={(kind === "outer" && !current.editing && !cell.entered && !cell.marks.size && !cell.fixed) ? true : undefined}
   {onmouseenter}
   {onmousedown}
   {onclick}
   {onkeydown}
   style:--col="var(--col-{cell.highlight})"
-  style:--cell-size={
-    interp3($prefs.cells.size, { lower: 0.75, preset: 1, upper: 1.5 })}
-  style:--cell-rounding={
-    interp3($prefs.cells.rounding, { lower: 0, preset: 1, upper: 2.5 })}
-  style:--cell-opacity={
-    interp3($prefs.cells.opacity, { lower: 1, preset: 0.75, upper: 0 })}
-  style:--text-size={
-    interp3($prefs.text.size, { lower: 0.75, preset: 1, upper: 1.5 })}
+  style:--cell-size={     interp3($prefs.cells.size,     { lower: 0.75, preset: 1, upper: 1.5 }) }
+  style:--cell-rounding={ interp3($prefs.cells.rounding, { lower: 0, preset: 1, upper: 2.5 }) }
+  style:--cell-opacity={  interp3($prefs.cells.opacity,  { lower: 1, preset: 0.75, upper: 0 }) }
+  style:--text-size={     interp3($prefs.text.size,      { lower: 0.75, preset: 1, upper: 1.5 }) }
+  style:--mark-size={     interp3($prefs.marks.size,     { lower: 0.75, preset: 1, upper: 1.5 }) }
+  style:--mark-opacity={  interp3($prefs.marks.opacity,  { lower: 0.2, preset: 0.75, upper: 1 }) }
 >
   <div class="content">
     {#if cell.fixed}
@@ -377,10 +379,8 @@ function highlight_multi()
 
     {#if cell.entered}
       <div class="entered"> {cell.entered} </div>
-    {:else}
-      {#if current.show_marks && cell.marks.size}
-        <div class="marks"> {@html [...cell.marks].sort().join("&ZeroWidthSpace;")} </div>
-      {/if}
+    {:else if current.show_marks}
+      <div class="marks"> {@html [...cell.marks].sort().join("&ZeroWidthSpace;")} </div>
     {/if}
   </div>
 </button>
@@ -433,8 +433,9 @@ button .content {
     }
 
     &.marks {
-      font-size: calc(0.25 * var(--size) * var(--text-size, 1));
+      font-size: calc(0.25 * var(--size) * var(--text-size, 1) * var(--mark-size, 1));
       color: $col-blue;
+      opacity: var(--mark-opacity);
     }
   }
 }
@@ -534,6 +535,19 @@ button.invert .content {
   .marks {
     color: var(--col-text);
   }
+}
+
+button.top_left .content:has(.marks) {
+  padding-top: 0.25em;
+  padding-left: 0.25em;
+  justify-content: start;
+  align-items: start;
+}
+button.top_right .content:has(.marks) {
+  padding-top: 0.25em;
+  padding-right: 0.25em;
+  justify-content: end;
+  align-items: start;
 }
 
 </style>

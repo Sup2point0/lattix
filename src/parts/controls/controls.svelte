@@ -25,23 +25,25 @@ import { expoOut } from "svelte/easing";
 <div class="controls-container">
   {#if current.show_controls}
     <div transition:slide={{ duration: 500, easing: expoOut, axis: "x" }}>
-    {#key current.control_tab}
-      <form in:scale={{ duration: 500, easing: expoOut, start: 0.97 }}>
-        {#if current.control_tab === ControlTab.CORE}
-          <Core />
-        {:else if current.control_tab === ControlTab.COLS}
-          <Cols />
-        {:else if current.control_tab === ControlTab.TEXT}
-          <Text />
-        {:else if current.control_tab === ControlTab.MARKS}
-          <Marks />
-        {:else if current.control_tab === ControlTab.CELLS}
-          <Cells />
-        {:else if current.control_tab === ControlTab.STATS}
-          <Stats />
-        {/if}
-      </form>
-    {/key}
+
+      {#key current.control_tab}
+        <form in:scale={{ duration: 500, easing: expoOut, start: 0.97 }}>
+          {#if current.control_tab === ControlTab.CORE}
+            <Core />
+          {:else if current.control_tab === ControlTab.COLS}
+            <Cols />
+          {:else if current.control_tab === ControlTab.TEXT}
+            <Text />
+          {:else if current.control_tab === ControlTab.MARKS}
+            <Marks />
+          {:else if current.control_tab === ControlTab.CELLS}
+            <Cells />
+          {:else if current.control_tab === ControlTab.STATS}
+            <Stats />
+          {/if}
+        </form>
+      {/key}
+
     </div>
   {/if}
   
@@ -74,7 +76,7 @@ form {
   min-width: 20vw;
   max-height: 80vh;
   padding: 1rem;
-  margin-right: 1rem;
+  padding-right: 2rem;
   overflow-y: auto;
   scrollbar-width: thin;
 }

@@ -35,13 +35,14 @@ function cycle_options()
   }}
 >
   {#each options as option}
-    <button class:selected={value === option}
+    <button
+      class:selected={value === option}
       onclick={e => {
         e.stopPropagation();
         value = option;
       }}
     >
-      {option}
+      {@html option}
     </button>
   {/each}
 </div>
