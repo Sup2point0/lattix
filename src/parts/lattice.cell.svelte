@@ -141,12 +141,14 @@ function onkeydown(e: KeyboardEvent)
   }
 
   if (key === " " || key === "BACKSPACE" || key === "DELETE") {
-    if (cell.fixed && current.lattice.selected.size === 1) return;
+    if (cell.fixed && !current.editing) return;
 
     e.stopPropagation();
     for (let each of current.lattice.selected) {
-      each.animate_press();
-      each.enter(null);
+      if (!each.fixed) {
+        each.animate_press();
+        each.enter(null);
+      }
     }
     return;
   }
