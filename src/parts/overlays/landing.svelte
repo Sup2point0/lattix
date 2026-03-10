@@ -17,7 +17,7 @@ let timeout: number | null = null;
 let tip = $state("");
 
 onMount(() => {
-  tip = tips[Math.floor(Math.random() * tips.length)];
+  tip = tips.sample_value()!;
 
   timeout = setTimeout(() => {
     current.landing = 4;  // trigger svg animations
@@ -30,7 +30,7 @@ onMount(() => {
           timeout = setTimeout(() => {
             current.landing = 0;  // reveal window
           }, 200);
-        }, 2000);  // hide overlay
+        }, 2500);  // hide overlay
       }, 500);  // reveal title
     }, 1);  // trigger svg transitions
   }, 1);  // trigger svg animations
