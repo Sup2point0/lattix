@@ -4,6 +4,14 @@ import { ControlTab, Overlay, TimerState } from "#scripts/config";
 import type { int, Key, Cell } from "#scripts/types";
 
 
+export enum DragMode {
+  Selecting,
+  Unselecting,
+  Highlighting,
+  Unhighlighting,
+}
+
+
 class CurrentState
 {
   lattice: Lattice = new Lattice();
@@ -17,7 +25,7 @@ class CurrentState
   );
 
   /** Whether dragging the mouse over a cell should select or deselect it. */
-  drag_mode: "selecting" | "erasing" | null = $state(null);
+  drag_mode: DragMode | null = $state(null);
 
   /** When enabled, selecting a cell does not deselect other cells. */
   multiselecting = $derived(this.held_keys.has("CONTROL"));

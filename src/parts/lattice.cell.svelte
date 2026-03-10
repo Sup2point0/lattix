@@ -15,7 +15,7 @@ import { current, prefs } from "#scripts/stores";
 import * as keybinds from "#scripts/keybinds";
 import { Keys } from "#scripts/config";
 import { interp3 } from "#scripts/utils";
-import { Cell, MarkAlignment } from "#scripts/types";
+import { Cell, DragMode, MarkAlignment } from "#scripts/types";
 import type { int, Key } from "#scripts/types";
 
 import { SvelteSet as Set } from "svelte/reactivity";
@@ -37,6 +37,8 @@ let self: HTMLButtonElement;
 let input: HTMLTextAreaElement;
 
 
+$inspect(current.drag_mode)
+
 $effect(() => {
   cell.button = self;
   cell.input = input;
@@ -50,16 +52,24 @@ $effect(() => {
 
 function onmouseenter(e: MouseEvent)
 {
+  if (current.drag_mode === null) return;
   e.stopPropagation();
 
-  if (current.drag_mode) {
-    cell.animate_press();
+  cell.animate_press();
 
-    if (current.drag_mode === "erasing") {
-      current.lattice.selected.delete(cell);
-    } else {
+  switch (current.drag_mode) {
+    case DragMode.Selecting:
       cell.select();
-    }
+      break;
+    case DragMode.Unselecting:
+      current.lattice.selected.delete(cell);
+      break;
+    case DragMode.Highlighting:
+      cell.highlight = $prefs.cols.highlight;
+      break;
+    case DragMode.Unhighlighting:
+      cell.highlight = null;
+      break;
   }
 }
 
@@ -71,10 +81,21 @@ function onmousedown(e: MouseEvent)
 
   if (current.multiselecting && cell.selected) {
     current.lattice.selected.delete(cell);
-    current.drag_mode = "erasing";
-  } else {
+    current.drag_mode = DragMode.Unselecting;
+  }
+  else if (e.altKey) {
+    if (cell.highlight) {
+      cell.highlight = null;
+      current.drag_mode = DragMode.Unhighlighting;
+    }
+    else {
+      cell.highlight = $prefs.cols.highlight;
+      current.drag_mode = DragMode.Highlighting;
+    }
+  }
+  else {
     cell.select();
-    current.drag_mode = "selecting";
+    current.drag_mode = DragMode.Selecting;
   }
 }
 
