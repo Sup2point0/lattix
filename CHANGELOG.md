@@ -16,6 +16,21 @@ Transposing and rotating the grid. I can see it being quite difficult to impleme
 Clicking on a cell then pressing `TAB` doesn’t jump to the next cell – it only does so on the second press.
 
 
+## 11 March 2026
+
+### **Feat**
+You can now choose to always enable or always disable pencilmarking.
+
+### *Fix*
+Fixed cells can now be cleared while editing the grid. (Particularly egregious problem, simple fix! Felt this one myself...)
+
+### *Fix*
+Control Pane buttons now do what they’re supposed to, and more utilities have been added.
+
+### *Fix*
+Previously unimplemented keybinds now work.
+
+
 ## 10 March 2026
 
 ### **Feat**
