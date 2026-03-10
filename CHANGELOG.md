@@ -16,9 +16,24 @@ Transposing and rotating the grid. I can see it being quite difficult to impleme
 Clicking on a cell then pressing `TAB` doesn’t jump to the next cell – it only does so on the second press.
 
 
+## 10 March 2026
+
+### **Feat**
+More options for customising how pencilmarks look have been added!
+
+### *Fix*
+`CTRL` `click` without dragging correctly selects multiple cells again.
+
+### *Fix*
+`ALT` `click` correctly highlights cells again.
+
+### *Fix*
+Cells can now be unhighlighted via the Control Pane.
+
+
 ## 4 June 2025
 
-### **Feat*
+### **Feat**
 You can now invert the colour of cells, so that entered cells are black while fixed cells are coloured.
 
 ### *Fix*
