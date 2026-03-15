@@ -132,7 +132,6 @@ function onkeydown(e: KeyboardEvent)
     next?.select();
     return;
   }
-
   if (key === "HOME") {
     let next = e.shiftKey ? arrow_jump("ARROWUP") : arrow_jump("ARROWLEFT");
     next?.button?.focus();
@@ -145,10 +144,8 @@ function onkeydown(e: KeyboardEvent)
 
     e.stopPropagation();
     for (let each of current.lattice.selected) {
-      if (!each.fixed) {
-        each.animate_press();
-        each.enter(null);
-      }
+      each.animate_press();
+      each.enter(null);
     }
     return;
   }

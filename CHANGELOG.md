@@ -16,6 +16,12 @@ Transposing and rotating the grid. I can see it being quite difficult to impleme
 Clicking on a cell then pressing `TAB` doesn’t jump to the next cell – it only does so on the second press.
 
 
+## 15 March 2026
+
+### *Fix*
+Ok, now you can *actually* clear fixed cells while editing the grid. For real this time, I promise.
+
+
 ## 11 March 2026
 
 ### **Feat**
@@ -35,6 +41,9 @@ Previously unimplemented keybinds now work.
 
 ### **Feat**
 More options for customising how pencilmarks look have been added!
+
+### **Feat**
+You can now `ALT` `drag` to easily highlight multiple cells at once.
 
 ### *Fix*
 `CTRL` `click` without dragging correctly selects multiple cells again.
