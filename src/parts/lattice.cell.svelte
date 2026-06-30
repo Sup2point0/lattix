@@ -285,9 +285,9 @@ function alt_single(key: Key)
 /** Handle ambiguous digit input when a *single* cell is selected and auto-marking is enabled. */
 function noalt_auto_single(key: Key)
 {
-  /** If marks have been made, add or remove from the marks */
+  /* If pencilmarks have been made, add or remove from the candidates */
   if (cell.marks.size) {
-    /** Make the mark the entered only if there's 1 digit and it's the same as the input key */
+    /* Convert the mark to the entered only if there's 1 digit and it's the same as the input key */
     if (cell.marks.size === 1 && cell.marks.has(key)) {
       cell.enter(cell.marks.values().next().value!);
     }
@@ -299,16 +299,16 @@ function noalt_auto_single(key: Key)
       }
     }
   }
-  /** If a digit has already been entered in this cell, turn it into a mark */
+  /* If a digit has already been entered in this cell, turn it into a mark */
   else if (cell.entered) {          
     if (cell.entered === key) {
-      /** Entering same key does nothing */
+      /* Entering same key does nothing */
     } else {
       cell.marks = new Set([cell.entered, key]);
       cell.entered = null;
     }
   }
-  /** Otherwise, just input the digit */
+  /* Otherwise, just input the digit */
   else {          
     cell.enter(key);
   }

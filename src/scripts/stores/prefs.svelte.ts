@@ -58,9 +58,9 @@ class TextPrefs
 class MarkPrefs
 {
   /**
-   * If disabled, marks can only be added with ALT + digit.
+   * If disabled, pencilmarks can only be added with ALT + digit.
    *
-   * If enabled, typing a digit either adds it to or removes it from the cell. If multiple digits have been added to a cell, they become marks.
+   * If enabled, typing a digit either adds it to or removes it from the cell. If multiple digits have been added to a cell, they become pencilmarks.
    */
   auto: boolean = true
 
@@ -90,6 +90,7 @@ class CellPrefs
   /** Opacity of cell outlines. */
   opacity: Scalar = 0.25
 }
+
 
 export const prefs = persisted(
   "lattix.prefs",

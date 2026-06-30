@@ -10,7 +10,7 @@ import Options from "#parts/ui/options.svelte";
 </script>
 
 
-<h2> Marks </h2>
+<h2> Pencilmarks </h2>
 
 <div>
   <label>

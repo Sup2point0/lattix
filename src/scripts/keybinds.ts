@@ -62,7 +62,7 @@ export const keybinds = [
     desc: "clear grid"
   }, {
     keys: ["ALT", "N"],
-    desc: "show/hide marks"
+    desc: "show/hide pencilmarks"
   }, {
     keys: ["ALT", "M"],
     desc: "always enable marking"

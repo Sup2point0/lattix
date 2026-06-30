@@ -43,7 +43,7 @@ class CurrentState
     : this.held_keys.has("ALT")
   );
 
-  /** Whether marks should always or never be made. */
+  /** Whether pencilmarks should always or never be made. */
   mark_mode: MarkMode = $state(MarkMode.DEFAULT);
 
   // TODO

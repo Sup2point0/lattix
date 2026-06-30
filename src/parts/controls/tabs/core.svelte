@@ -30,8 +30,8 @@ import ColourOptions from "#parts/ui/options.cols.svelte";
     />
 
     <Tool
-      text="Show Marks"
-      text_active="Marks Shown"
+      text="Show Pencilmarks"
+      text_active="Pencilmarks Shown"
       bind:value={current.show_marks}
     />
 

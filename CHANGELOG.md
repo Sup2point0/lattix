@@ -67,7 +67,7 @@ Cells can now be unhighlighted via the Control Pane.
 You can now invert the colour of cells, so that entered cells are black while fixed cells are coloured.
 
 ### *Fix*
-Outer cells can now be highlighted and interacted with, and also prevent marks from being entered into them.
+Outer cells can now be highlighted and interacted with, and also prevent pencilmarks from being entered into them.
 
 ### *Fix*
 Clicking on a tab in the Control Pane now opens the Control Pane if it’s closed.
