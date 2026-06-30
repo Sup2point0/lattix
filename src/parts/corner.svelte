@@ -14,8 +14,7 @@ import Clicky from "#parts/ui/clicky.svelte";
 
 
 <aside>
-  <Clicky text="?" action={() => { current.overlay = Overlay.SYNOPSIS; console.log(current.overlay);
-   }} />
+  <Clicky text="?" action={() => { current.overlay = Overlay.SYNOPSIS; }} />
 
   <Clicky action={() => { current.overlay = Overlay.CHANGELOG; }}>
     <span class="material-symbols-rounded" style="

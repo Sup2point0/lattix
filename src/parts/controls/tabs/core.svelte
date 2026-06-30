@@ -55,11 +55,11 @@ import ColourOptions from "#parts/ui/options.cols.svelte";
       bind:value={
         () => {
           let cols = new Set(current.lattice.selected.values().map(cell => cell.highlight));
-          return (cols.size === 1) ? cols.values().next().value! : undefined;
+          return (cols.size === 1) ? cols.values().next().value! : null;
         },
         value => {
           for (let cell of current.lattice.selected) {
-            cell.highlight = value;
+            cell.highlight = value ?? null;
           }
         }
       }
@@ -69,14 +69,14 @@ import ColourOptions from "#parts/ui/options.cols.svelte";
   </div>
 
   <div>
-    <Clicky text="Clear Work" action={current.lattice.clear_work} />
-    <Clicky text="Clear All" action={current.lattice.clear_all} />
-    <Clicky text="Clear Pencilmarks" action={current.lattice.clear_marks} />
-    <Clicky text="Clear Highlights" action={current.lattice.clear_highlights} />
+    <Clicky text="Clear Work" action={() => current.lattice.clear_work()} />
+    <Clicky text="Clear All" action={() => current.lattice.clear_all()} />
+    <Clicky text="Clear Pencilmarks" action={() => current.lattice.clear_marks()} />
+    <Clicky text="Clear Highlights" action={() => current.lattice.clear_highlights()} />
     <!-- <Clicky text="New" action={() => {
       if (window.confirm("Reset the grid?")) {
         alert("This feature hasn’t been implemented yet!");
-      }
+      } TODO
     }} /> -->
   </div>
 </div>
