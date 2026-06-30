@@ -77,7 +77,7 @@ export const keybinds = [
     desc: "view changelog"
   // }, {
   //   keys: [],
-  //   desc: "highlight all cells with same digit"
+  //   desc: "highlight all cells with same digit" TODO
   },
 ];
 
@@ -95,7 +95,8 @@ export function keydown(e: KeyboardEvent): boolean
   if (current.held_keys.has(key)) {
     e.stopPropagation();
     return false;
-  } else {
+  }
+  else {
     current.held_keys.add(key);
   }
 
@@ -122,30 +123,37 @@ export function keydown(e: KeyboardEvent): boolean
   switch (key) {
     case "/":      
       current.overlay = (current.overlay === Overlay.KEYBINDS) ? null : Overlay.KEYBINDS;
+      e.stopPropagation();
       return true;
     
     case "E":
       current.editing = !current.editing;
+      e.stopPropagation();
       return true;
 
     case "R":
       current.lattice.clear_work();
+      e.stopPropagation();
       return true;
 
     case "N":
       current.show_marks = false;
+      e.stopPropagation();
       return true;
 
     case "M":
       current.mark_mode = e.shiftKey ? MarkMode.NEVER : MarkMode.ALWAYS;
+      e.stopPropagation();
       return true;
 
     case "P":
       current.show_controls = !current.show_controls;
+      e.stopPropagation();
       return true;
 
     case "Q":
       current.overlay = (current.overlay === Overlay.CHANGELOG) ? null : Overlay.CHANGELOG;
+      e.stopPropagation();
       return true;
   }
 
@@ -161,6 +169,7 @@ function keyup(e: KeyboardEvent)
   switch (key) {
     case "CONTROL":
       current.multiselecting = false;
+      e.stopPropagation();
       return true;
 
     case "ALT":
@@ -169,11 +178,15 @@ function keyup(e: KeyboardEvent)
     
     case "N":
       current.show_marks = true;
+      e.stopPropagation();
       return true;
   }
 }
 
 
+/**
+ * Clear all held keys when the user leaves the page to avoid bleeding latent keypresses.
+ */
 export function onblur()
 {
   for (let key of current.held_keys) {
@@ -182,6 +195,9 @@ export function onblur()
 }
 
 
+/**
+ * Confirm with the user before closing the page if they have modified any cell.
+ */
 export function onbeforeunload(e: Event): boolean
 {
   for (let cell of Object.values(current.lattice.cells)) {
