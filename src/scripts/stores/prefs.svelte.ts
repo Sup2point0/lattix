@@ -1,5 +1,7 @@
 import { persisted } from "svelte-persisted-store";
 
+import { writable } from "svelte/store";
+
 import { ThemeCol } from "../config";
 import type { Scalar } from "../types";
 
@@ -92,7 +94,30 @@ class CellPrefs
 }
 
 
+/**
+ * All of the user's preferences, saved to localStorage.
+ */
 export const prefs = persisted(
   "lattix.prefs",
   Object.assign({}, new Prefs())
 );
+
+/**
+ * Has the user modified the preferences from their defaults?
+ */
+export const prefs_is_dirty = writable(false);
+
+
+prefs.subscribe(() => {
+  prefs_is_dirty.set(true);
+})
+
+
+/**
+ * Reset all preferences to their defaults.
+ */
+export function reset_prefs()
+{
+  prefs.set(Object.assign({}, new Prefs()));
+  prefs_is_dirty.set(false);
+}

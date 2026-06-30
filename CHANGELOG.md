@@ -21,6 +21,9 @@ Clicking on a cell then pressing `TAB` doesn’t jump to the next cell – it on
 ### **Feat**
 Preferences are now saved locally so you don’t need to keep re-configuring each time you visit. Finally!
 
+### **Feat**
+This update also comes with a button to reset all preferences back to their defaults.
+
 
 ## 15 March 2026
 

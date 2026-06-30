@@ -1,35 +1,12 @@
 <script lang="ts">
 
 import { current } from "#scripts/stores";
+import { prefs_is_dirty, reset_prefs } from "#scripts/stores/prefs.svelte.ts";
 import { TimerState } from "#scripts/config";
 import type { int } from "#scripts/types";
 
 import Clicky from "#parts/ui/clicky.svelte";
 
-import { onMount } from "svelte";
-
-
-let elapsed: int | null = $state(null);
-
-onMount(() => {
-  update_elapsed();
-
-  let interval = setInterval(update_elapsed, 500);
-
-  return () => {
-    clearInterval(interval);
-  }
-});
-
-
-function update_elapsed()
-{
-  if (current.time_start) {
-    elapsed = Math.round(Date.now() - current.time_start);
-  } else {
-    elapsed = null;
-  }
-}
 
 function display_time(t: int | null): string
 {
@@ -93,6 +70,18 @@ function display_time(t: int | null): string
       <h4> Fixed Cells </h4>
       <p> {Object.values(current.lattice.cells).filter(cell => cell.kind === "inner" && cell.fixed).length} </p>
     </div>
+  </section>
+
+  <section>
+    <Clicky text="Reset All Preferences to Defaults"
+      action={() => {
+        if (window.confirm("Reset all preferences back to their defaults?")) {
+          reset_prefs();
+          current.add_toast({ text: "All preferences reset to default" });
+        }
+      }}
+      disabled={!$prefs_is_dirty}
+    />
   </section>
 </div>
 
