@@ -2,8 +2,7 @@
 
 import { current } from "#scripts/stores";
 import { prefs_is_dirty, reset_prefs } from "#scripts/stores/prefs.svelte.ts";
-import { TimerState } from "#scripts/config";
-import type { int } from "#scripts/types";
+import { type int, TimerState } from "#scripts/types";
 
 import Clicky from "#parts/ui/clicky.svelte";
 
@@ -33,26 +32,26 @@ function display_time(t: int | null): string
       <h4> Timer </h4>
 
       <p>
-        {display_time(current.time.elapsed)}
+        {display_time(current.timer.elapsed)}
       </p>
     </div>
     
     <div>
       <div class="row" style:justify-content="start">
-        <Clicky text={current.time.state === TimerState.IDLE ? "Start Timer" : "Stop Timer"}
+        <Clicky text={current.timer.state === TimerState.IDLE ? "Start Timer" : "Stop Timer"}
           action={() => {
-            if (current.time.state === TimerState.IDLE) {
-              current.time.start();
+            if (current.timer.state === TimerState.IDLE) {
+              current.timer.start();
             } else {
-              current.time.freeze();
+              current.timer.freeze();
             }
           }}
-          disabled={current.time.state === TimerState.FROZEN}
+          disabled={current.timer.state === TimerState.FROZEN}
         />
         
         <Clicky text="Reset Timer"
           action={() => {
-            current.time.reset();
+            current.timer.reset();
             current.add_toast({ text: "Timer reset" });
           }}
         />

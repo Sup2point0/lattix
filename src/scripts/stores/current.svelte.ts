@@ -1,8 +1,10 @@
-// TODO wtf are 3 classes doing in here??
 import { SvelteSet as Set } from "svelte/reactivity";
 
-import { ControlTab, Overlay, TimerState } from "#scripts/config";
-import type { int, Key, Cell } from "#scripts/types";
+import { ControlTab, Overlay } from "#scripts/config";
+import type { int, Key } from "#scripts/types";
+
+import { Lattice } from "#scripts/types";
+import { Timer } from "#scripts/types";
 
 
 export enum DragMode {
@@ -22,13 +24,13 @@ export enum MarkMode {
 class CurrentState
 {
   lattice: Lattice = new Lattice();
-  time: Time = new Time();
+  timer: Timer = new Timer();
 
   held_keys: Set<Key> = new Set();
   any_modkeys: boolean = $derived(
-    this.held_keys.has("CONTROL") ||
-    this.held_keys.has("ALT") ||
-    this.held_keys.has("SHIFT")
+    this.held_keys.has("CONTROL")
+    || this.held_keys.has("ALT")
+    || this.held_keys.has("SHIFT")
   );
 
   /** Whether dragging the mouse over a cell should select or deselect it. */
@@ -37,15 +39,15 @@ class CurrentState
   /** When enabled, selecting a cell does not deselect other cells. */
   multiselecting = $derived(this.held_keys.has("CONTROL"));
 
+  /** Whether pencilmarks should always or never be made. */
+  mark_mode: MarkMode = $state(MarkMode.DEFAULT);
+
   /** Whether typing a digit should make a pencilmark instead of entering the digit. */
   marking = $derived(
     this.mark_mode === MarkMode.ALWAYS ? true
     : this.mark_mode === MarkMode.NEVER ? false
     : this.held_keys.has("ALT")
   );
-
-  /** Whether pencilmarks should always or never be made. */
-  mark_mode: MarkMode = $state(MarkMode.DEFAULT);
 
   // TODO
   highlighting = $state(false);
@@ -66,6 +68,7 @@ class CurrentState
   toast_count: int = 0;
   clear_toasts: int = 0;
 
+  
   add_toast(toast: Partial<Toast>)
   {
     this.toast_count++;
@@ -82,106 +85,6 @@ class CurrentState
   }
 }
 
-class Lattice
-{
-  /** The width of the grid, excluding outer cells. */
-  x: int = $state(5);
-
-  /** The height of the grid, excluding outer cells. */
-  y: int = $state(5);
-
-  cells: Cells = $state({});
-  selected: Set<Cell> = new Set();
-
-  clear_work()
-  {
-    if (window.confirm("Clear all entered and pencilmarked digits?")) {
-      for (let cell of Object.values(current.lattice.cells)) {
-        cell.entered = null;
-        cell.marks.clear();
-      }
-
-      current.add_toast({ text: "Cleared work" });
-    }
-  }
-
-  clear_marks()
-  {
-    if (window.confirm("Clear all pencilmarks? (fixed and entered digits will not be cleared.)")) {
-      for (let cell of Object.values(current.lattice.cells)) {
-        cell.marks.clear();
-      }
-
-      current.add_toast({ text: "Cleared pencilmarks" });
-    }
-  }
-
-  clear_highlights()
-  {
-    if (window.confirm("Clear all highlights?")) {
-      for (let cell of Object.values(current.lattice.cells)) {
-        cell.highlight = null;
-      }
-
-      current.add_toast({ text: "Cleared highlights "});
-    }
-  }
-
-  clear_all()
-  {
-    if (window.confirm("Clear all digits in the grid?")) {
-      for (let cell of Object.values(current.lattice.cells)) {
-        cell.fixed = null;
-        cell.entered = null;
-        cell.marks.clear();
-      }
-
-      current.add_toast({ text: "Cleared all" });
-    }
-  }
-}
-
-class Time
-{
-  state: TimerState = $state(TimerState.IDLE);
-  init: number | null = $state(null);
-  stamp: number | null = $state(null);
-  elapsed: number | null = $state(null);
-  interval: int  = $state(0);
-
-  start()
-  {
-    this.state = TimerState.TIMING;
-    this.init = Date.now();
-    this.stamp = null;
-
-    this.interval = setInterval(() => {
-      this.elapsed = Math.round(Date.now() - this.init!);
-    }, 500);
-  }
-
-  freeze()
-  {
-    this.state = TimerState.FROZEN;
-    this.init = null;
-    this.stamp = Date.now();
-    clearInterval(this.interval);
-  }
-
-  reset()
-  {
-    if (this.state === TimerState.FROZEN) {
-      this.state = TimerState.IDLE;
-    }
-    this.init = this.init ? Date.now() : null;
-    this.stamp = null;
-    this.elapsed = null;
-  }
-}
-
-interface Cells {
-  [cords: string]: Cell;
-}
 
 interface Toast {
   id: int;

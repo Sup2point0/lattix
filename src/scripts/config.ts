@@ -24,12 +24,6 @@ export enum ControlTab
   STATS = "Stats",
 }
 
-export enum TimerState
-{
-  IDLE,
-  TIMING,
-  FROZEN,
-}
 
 export enum ThemeCol
 {
