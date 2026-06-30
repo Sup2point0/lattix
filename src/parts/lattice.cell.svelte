@@ -275,6 +275,9 @@ function process_digit(key: Key)
 
 function alt_single(key: Key)
 {
+  /* NOTE: `alt`+alpha is reserved for shortcuts, must use `ctrl`+`alt`+alpha to pencilmark letter */
+  if (Keys.Alpha.includes(key) && !current.held_keys.has("CONTROL")) return;
+
   if (cell.marks.has(key)) {
     cell.marks.delete(key);
   } else {

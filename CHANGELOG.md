@@ -28,7 +28,10 @@ Preferences are now saved locally so you don’t need to keep re-configuring eac
 This update also comes with a button to reset all preferences back to their defaults.
 
 ### *Fix*
-Improve slider mechanics a little (still not ideal, don’t think much can be done with everything moving around as you drag them though...)
+Improved slider mechanics a little (still not ideal, don’t think much can be done with everything moving around as you drag them though...)
+
+### *Fix*
+Using `alt`+letter keyboard shortcuts now no longer enters a stray letter pencilmark. Unfortunately this means you can no longer enter letter pencilmarks for individual cells (you still can by selecting multiple cells, though). If you can think of a suitable alternative, please let me know!
 
 
 ## 15 March 2026
@@ -159,7 +162,7 @@ You can `ALT` `click` a cell, or use `ALT` `H` while a cell(s) is selected, to h
 ### **Feat**
 You can now clear the grid with buttons in **Controls**.
 
-### *Fix*
+### **Feat**
 The webpage will now confirm with you before closing, if you’ve typed anything into the grid, so that you don’t lose progress.
 
 
