@@ -35,9 +35,10 @@ const config = {
     }),
     sveltePreprocess({
       scss: {
+        includePaths: ["src/styles"],
         prependData: `
-          @use 'src/styles/colours' as *;
-          @use 'src/styles/fonts' as *;
+          @use 'colours' as *;
+          @use 'fonts' as *;
         `,
       }
     }),
