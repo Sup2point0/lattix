@@ -95,6 +95,8 @@ let y = $derived(current.lattice.y +2);
 button.new {
   justify-self: center;
   align-self: center;
+  font-size: 150%;
+  color: $col-blue;
   background: color-mix(in oklch, $col-blue, transparent 90%);
   border: none;
   border-radius: 0.5rem;
@@ -111,7 +113,12 @@ button.new {
 
   &:hover {
     cursor: pointer;
+    color: white;
     background: $col-blue;
+  }
+
+  &:active {
+    background: $col-blue-dark;
   }
 }
 
