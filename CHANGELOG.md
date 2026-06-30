@@ -7,7 +7,10 @@
 ## Features in Development
 
 ### **Feat**
-Copying the table to Markdown. Cuz why not!
+Downsizing the grid
+
+### **Feat**
+Copying the grid to Markdown. Cuz why not!
 
 ### **Feat**
 Transposing and rotating the grid. I can see it being quite difficult to implement... might need a refactor coming up.
@@ -23,6 +26,9 @@ Preferences are now saved locally so you don’t need to keep re-configuring eac
 
 ### **Feat**
 This update also comes with a button to reset all preferences back to their defaults.
+
+### *Fix*
+Improve slider mechanics a little (still not ideal, don’t think much can be done with everything moving around as you drag them though...)
 
 
 ## 15 March 2026

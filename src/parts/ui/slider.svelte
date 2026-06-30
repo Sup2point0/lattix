@@ -5,8 +5,11 @@ A draggable slider for setting a numerical value.
 
 <script lang="ts">
 
+import type { Scalar } from "#scripts/types";
+
+
 interface Props {
-  value: any;
+  value: Scalar;
   min?: number;
   max?: number,
 }
@@ -14,29 +17,36 @@ interface Props {
 let { value = $bindable(), min = 0, max = 1 }: Props = $props();
 
 
-let track: HTMLButtonElement | null = null;
-let left: number;
-let width: number;
+let track: HTMLButtonElement | undefined = $state();
 
 let dragging = $state(false);
+let drag_x_init = 0;
+let value_snap = 0;
+let width_snap = 0;
 
 
-function onmousedown()
+function onmousedown(e: MouseEvent)
 {
+  if (!track) return;
+
+  e.preventDefault();
+
   dragging = true;
-  if (track) {
-    ({ left , width } = track.getBoundingClientRect());
-  }
+  drag_x_init = e.clientX;
+  value_snap = value;
+  width_snap = track.clientWidth;
 }
 
 function onmousemove(e: MouseEvent)
 {
-  if (!(dragging && track && left && width)) return;
+  if (!(dragging && track)) return;
 
-  value = (e.clientX - left) / width;
+  let delta = e.clientX - drag_x_init;
+  let shift = delta / width_snap;
 
+  value = value_snap + shift;
   if (value < 0) value = 0;
-  else if (value > 1) value = 1;  
+  if (value > 1) value = 1;  
 }
 
 </script>
@@ -103,7 +113,7 @@ button.knob {
   outline-style: solid;
   outline-color: color.change($col-blue, $alpha: 20%);
   transform: translateX(-50%) scale(150%);
-  transition: all 0.1s ease-out;
+  transition: all 0.1s ease-out, left 0s;
 
   &:hover, button.track:hover ~ & {
     cursor: ew-resize;
