@@ -5,7 +5,7 @@ The right controls pane for configuring options.
 
 <script lang="ts">
 
-import { current } from "#src/scripts/stores";
+import { current } from "#scripts/stores";
 import { ControlTab } from "#scripts/config";
 
 import Tab from "./tab.svelte";

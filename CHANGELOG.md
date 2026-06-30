@@ -16,6 +16,12 @@ Transposing and rotating the grid. I can see it being quite difficult to impleme
 Clicking on a cell then pressing `TAB` doesn’t jump to the next cell – it only does so on the second press.
 
 
+## 30 June 2026
+
+### **Feat**
+Preferences are now saved locally so you don’t need to keep re-configuring each time you visit. Finally!
+
+
 ## 15 March 2026
 
 ### *Fix*

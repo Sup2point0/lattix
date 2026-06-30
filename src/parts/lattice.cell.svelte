@@ -408,12 +408,12 @@ function highlight_multi()
   {onclick}
   {onkeydown}
   style:--col="var(--col-{cell.highlight})"
-  style:--cell-size={     interp3($prefs.cells.size,     { lower: 0.75, preset: 1, upper: 1.5 }) }
-  style:--cell-rounding={ interp3($prefs.cells.rounding, { lower: 0, preset: 1, upper: 2.5 }) }
-  style:--cell-opacity={  interp3($prefs.cells.opacity,  { lower: 1, preset: 0.75, upper: 0 }) }
-  style:--text-size={     interp3($prefs.text.size,      { lower: 0.75, preset: 1, upper: 1.5 }) }
-  style:--mark-size={     interp3($prefs.marks.size,     { lower: 0.75, preset: 1, upper: 1.5 }) }
-  style:--mark-opacity={  interp3($prefs.marks.opacity,  { lower: 0.2, preset: 0.75, upper: 1 }) }
+  style:--cell-size={     interp3($prefs.cells.size,     { lower: 0.75, preset: 1.00, upper: 1.50 }) }
+  style:--cell-rounding={ interp3($prefs.cells.rounding, { lower: 0.00, preset: 1.00, upper: 2.50 }) }
+  style:--cell-opacity={  interp3($prefs.cells.opacity,  { lower: 1.00, preset: 0.75, upper: 0.00 }) }
+  style:--text-size={     interp3($prefs.text.size,      { lower: 0.75, preset: 1.00, upper: 1.50 }) }
+  style:--mark-size={     interp3($prefs.marks.size,     { lower: 0.75, preset: 1.00, upper: 1.50 }) }
+  style:--mark-opacity={  interp3($prefs.marks.opacity,  { lower: 0.20, preset: 0.75, upper: 1.00 }) }
 >
   <div class="content">
     {#if cell.fixed}

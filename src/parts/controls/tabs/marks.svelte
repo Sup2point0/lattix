@@ -3,12 +3,9 @@
 import { prefs } from "#scripts/stores";
 import { MarkAlignment } from "#scripts/types";
 
-import Toggle from "#parts/ui/toggle.svelte";
-import Slider from "#parts/ui/slider.svelte";
+import Toggle  from "#parts/ui/toggle.svelte";
+import Slider  from "#parts/ui/slider.svelte";
 import Options from "#parts/ui/options.svelte";
-
-
-let marks = $prefs.marks;
 
 </script>
 
@@ -22,7 +19,7 @@ let marks = $prefs.marks;
       <p> Entering more than 1 digit into a cell automatically turns them into pencilmarks. </p>
     </section>
 
-    <Toggle bind:value={marks.auto} />
+    <Toggle bind:value={$prefs.marks.auto} />
   </label>
   
   <label style:flex-wrap="wrap">
@@ -31,7 +28,7 @@ let marks = $prefs.marks;
       <p> Change how pencilmarks should be positioned inside their cell. </p>
     </section>
 
-    <Options bind:value={marks.align} options={Object.values(MarkAlignment)} />
+    <Options bind:value={$prefs.marks.align} options={Object.values(MarkAlignment)} />
   </label>
 
   <label style:flex-wrap="wrap">
@@ -40,7 +37,7 @@ let marks = $prefs.marks;
       <p> Scale the size of pencilmarks relative to solved digits. </p>
     </section>
 
-    <Slider bind:value={marks.size} />
+    <Slider bind:value={$prefs.marks.size} />
   </label>
 
   <label style:flex-wrap="wrap">
@@ -49,7 +46,7 @@ let marks = $prefs.marks;
       <p> Change how transparent pencilmarks are. </p>
     </section>
 
-    <Slider bind:value={marks.opacity} />
+    <Slider bind:value={$prefs.marks.opacity} />
   </label>
 </div>
 

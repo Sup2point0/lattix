@@ -3,12 +3,9 @@
 import { prefs } from "#scripts/stores";
 import { Font } from "#scripts/types";
 
-import Toggle from "#parts/ui/toggle.svelte";
-import Slider from "#parts/ui/slider.svelte";
+import Toggle  from "#parts/ui/toggle.svelte";
+import Slider  from "#parts/ui/slider.svelte";
 import Options from "#parts/ui/options.svelte";
-
-
-let text = $prefs.text;
 
 </script>
 
@@ -22,7 +19,7 @@ let text = $prefs.text;
       <p> Change the display font of the interface. </p>
     </section>
 
-    <Options bind:value={text.font} options={Object.values(Font)} />
+    <Options bind:value={$prefs.text.font} options={Object.values(Font)} />
   </label>
 
   <label style:flex-wrap="wrap">
@@ -31,7 +28,7 @@ let text = $prefs.text;
       <p> Scale the size of entered digits in the grid. </p>
     </section>
 
-    <Slider bind:value={text.size} />
+    <Slider bind:value={$prefs.text.size} />
   </label>
 
   <label>
@@ -40,7 +37,7 @@ let text = $prefs.text;
       <p> Make fixed digits coloured and entered digits black. </p>
     </section>
 
-    <Toggle bind:value={text.invert} />
+    <Toggle bind:value={$prefs.text.invert} />
   </label>
 </div>
 

@@ -1,19 +1,19 @@
-import { writable } from "svelte/store";
+import { persisted } from "svelte-persisted-store";
 
 import { ThemeCol } from "../config";
 import type { Scalar } from "../types";
 
 
 export enum Theme {
-  LIGHT = "light",
-  DARK = "dark",
+  LIGHT     = "light",
+  DARK      = "dark",
   BUBBLEGUM = "bubblegum",
 }
 
 export enum Font
 {
-  SORA = "Sora",
-  LORA = "Lora",
+  SORA    = "Sora",
+  LORA    = "Lora",
   SNIGLET = "Sniglet",
 }
 
@@ -21,38 +21,38 @@ const MATERIAL = `span class="material-symbols-rounded" style="transform: transl
 
 export enum MarkAlignment
 {
-  CENTRE = `<${MATERIAL}>fullscreen</span>`,
-  TOP_LEFT = `<${MATERIAL}>arrow_insert</span>`,
+  CENTRE    = `<${MATERIAL}>fullscreen</span>`,
+  TOP_LEFT  = `<${MATERIAL}>arrow_insert</span>`,
   TOP_RIGHT = `<${MATERIAL}>arrow_outward</span>`,
 }
 
 
 export class Prefs
 {
-  cols: ColPrefs = new ColPrefs();
+  cols: ColPrefs = Object.assign({}, new ColPrefs())
 
-  text: TextPrefs = new TextPrefs();
+  text: TextPrefs = Object.assign({}, new TextPrefs())
 
   /** Settings for pencilmarks (little digits for noting possible values). */
-  marks: MarkPrefs = new MarkPrefs();
+  marks: MarkPrefs = Object.assign({}, new MarkPrefs())
 
-  cells: CellPrefs = new CellPrefs();
+  cells: CellPrefs = Object.assign({}, new CellPrefs())
 }
 
 class ColPrefs
 {
-  theme: Theme = $state(Theme.LIGHT);
+  theme: Theme = Theme.LIGHT
 
-  highlight: ThemeCol = $state(ThemeCol.PINK);
+  highlight: ThemeCol = ThemeCol.PINK
 }
 
 class TextPrefs
 {
-  font: Font = $state(Font.SORA);
+  font: Font = Font.SORA
 
-  size: Scalar = $state(0.5);
+  size: Scalar = 0.5
 
-  invert: boolean = $state(false);
+  invert: boolean = false
 }
 
 class MarkPrefs
@@ -62,33 +62,36 @@ class MarkPrefs
    *
    * If enabled, typing a digit either adds it to or removes it from the cell. If multiple digits have been added to a cell, they become marks.
    */
-  auto: boolean = $state(true);
+  auto: boolean = true
 
-  align: MarkAlignment = $state(MarkAlignment.CENTRE);
+  align: MarkAlignment = MarkAlignment.CENTRE
 
-  size: Scalar = $state(0.5);
+  size: Scalar = 0.5
 
-  opacity: Scalar = $state(1);
+  opacity: Scalar = 1
 }
 
 class CellPrefs
 {
   /** If enabled, navigating the grid with arrow keys will also move to outer cells. */
-  nav_outer: boolean = $state(false);
+  nav_outer: boolean = false
 
-  size: Scalar = $state(0.5);
+  size: Scalar = 0.5
 
   /** Space between cells. */
-  gap: Scalar = $state(0.5);
+  gap: Scalar = 0.5
 
   /** Gap between main grid and outer lanes. */
-  outer_gap: Scalar = $state(0.5);
+  outer_gap: Scalar = 0.5
 
   /** border-radius of cells. */
-  rounding: Scalar = $state(0.5);
+  rounding: Scalar = 0.5
 
   /** Opacity of cell outlines. */
-  opacity: Scalar = $state(0.25);
+  opacity: Scalar = 0.25
 }
 
-export const prefs = writable(new Prefs());
+export const prefs = persisted(
+  "lattix.prefs",
+  Object.assign({}, new Prefs())
+);

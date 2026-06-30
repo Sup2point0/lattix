@@ -5,9 +5,6 @@ import { prefs } from "#scripts/stores";
 import Toggle from "#parts/ui/toggle.svelte";
 import Slider from "#parts/ui/slider.svelte";
 
-
-let cells = $prefs.cells;
-
 </script>
 
 
@@ -20,7 +17,7 @@ let cells = $prefs.cells;
       <p> Arrow keys can navigate to outer cells. </p>
     </section>
 
-    <Toggle bind:value={cells.nav_outer} />
+    <Toggle bind:value={$prefs.cells.nav_outer} />
   </label>
 
   <label style:flex-wrap="wrap">
@@ -29,7 +26,7 @@ let cells = $prefs.cells;
       <p> Scale the size of grid cells. </p>
     </section>
 
-    <Slider bind:value={cells.size} />
+    <Slider bind:value={$prefs.cells.size} />
   </label>
 
   <label style:flex-wrap="wrap">
@@ -38,7 +35,7 @@ let cells = $prefs.cells;
       <p> Scale the size of the gap between adjacent cells. </p>
     </section>
 
-    <Slider bind:value={cells.gap} />
+    <Slider bind:value={$prefs.cells.gap} />
   </label>
 
   <label style:flex-wrap="wrap">
@@ -47,7 +44,7 @@ let cells = $prefs.cells;
       <p> Change how rounded the corners of cells are. </p>
     </section>
 
-    <Slider bind:value={cells.rounding} />
+    <Slider bind:value={$prefs.cells.rounding} />
   </label>
 
   <label style:flex-wrap="wrap">
@@ -56,7 +53,7 @@ let cells = $prefs.cells;
       <p> Change how transparent the cell borders are. </p>
     </section>
 
-    <Slider bind:value={cells.opacity} />
+    <Slider bind:value={$prefs.cells.opacity} />
   </label>
 </div>
 
