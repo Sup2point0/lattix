@@ -72,7 +72,7 @@ function display_time(t: int | null): string
   </section>
 
   <section>
-    <Clicky text="Reset All Preferences to Defaults"
+    <Clicky text="Reset All Preferences"
       action={() => {
         if (window.confirm("Reset all preferences back to their defaults?")) {
           reset_prefs();

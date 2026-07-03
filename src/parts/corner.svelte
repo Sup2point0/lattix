@@ -14,7 +14,23 @@ import Clicky from "#parts/ui/clicky.svelte";
 
 
 <aside>
-  <Clicky text="?" action={() => { current.overlay = Overlay.SYNOPSIS; }} />
+  <Clicky text="?" action={() => { current.overlay = Overlay.SYNOPSIS; }}>
+    <div style:transform="scale(125%) translateY(0.02em)">?</div>
+  </Clicky>
+
+  <Clicky action={() => { current.overlay = Overlay.KEYBINDS; }}>
+    <span class="material-symbols-rounded" style="
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      font-size: 1.25rem;
+      font-variation-settings: 'wght' 350;
+      transform: translateX(-50%) translateY(-50%);
+    ">
+      keyboard_command_key
+    </span>
+    <div style:padding="0.75em 0.25em"></div>
+  </Clicky>
 
   <Clicky action={() => { current.overlay = Overlay.CHANGELOG; }}>
     <span class="material-symbols-rounded" style="
@@ -22,6 +38,7 @@ import Clicky from "#parts/ui/clicky.svelte";
       top: 50%;
       left: 50%;
       font-size: 1.25rem;
+      font-variation-settings: 'wght' 400;
       transform: translateX(-50%) translateY(-50%);
     ">
       page_info
@@ -38,8 +55,8 @@ aside {
   top: 1rem;
   right: 1rem;
   display: flex;
-  flex-flow: column nowrap;
-  align-items: end;
+  flex-flow: row nowrap;
+  align-items: stretch;
   gap: 0.5rem;
 }
 

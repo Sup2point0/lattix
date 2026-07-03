@@ -21,7 +21,7 @@ let { text, action, disabled, children }: Props = $props();
   {#if children}
     {@render children()}
   {:else}
-    {text}
+    {@html text}
   {/if}
 </button>
 
@@ -31,7 +31,7 @@ let { text, action, disabled, children }: Props = $props();
 @use 'sass:color';
 
 button {
-  width: max-content;
+  // width: max-content;
   padding: 0.5em 1em;
   position: relative;
   background: none;
@@ -41,7 +41,6 @@ button {
   outline-style: solid;
   outline-color: color.change($col-blue, $alpha: 20%);
   box-shadow: 0 0.5px 1px $col-grey-light;
-
   transition: all 0.1s ease-out;
 
   &:not([disabled]):where(:hover, :focus) {

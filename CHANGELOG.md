@@ -19,6 +19,12 @@ Transposing and rotating the grid. I can see it being quite difficult to impleme
 Clicking on a cell then pressing `TAB` doesn’t jump to the next cell – it only does so on the second press.
 
 
+## 3 July 2026
+
+### *Fix*
+Added an explicit button to view keybinds in the upper-right corner.
+
+
 ## 30 June 2026
 
 ### **Feat**
