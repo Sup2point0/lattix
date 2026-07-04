@@ -7,14 +7,22 @@
 ## Features in Development
 
 <!--
-- PAGE for Control Panel pages
-- Copying the grid to Markdown
-- Transposing and rotating the grid
+Quick
 - mark alignment broken
-- Only allow outer navigation if cell has contents (arrow, alt+arrow)
+- PAGE for Control Panel pages
 - auto-highlight lane peaks
+- copying the grid to Markdown
+- transposing and rotating the grid
+- highlight all cells with same digit
+- Only allow outer navigation if cell has contents (arrow, alt+arrow)
 - auto-highlight conflicts
-- Right click for note
+
+Features
+- right-click for note
+- Lane sums
+- highlight toggle
+- draw borders
+- storing grids
 -->
 
 ### *Fix*
