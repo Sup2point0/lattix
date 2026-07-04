@@ -14,15 +14,13 @@ test("is-outer()", () =>
     for (let cell of lattice.cells.at(-1)!) {
       expect(lattice.is_outer_cell(cell)).toBe(true);
     }
-    for (let column of lattice.cells) {
-      expect(lattice.is_outer_cell(column[0])).toBe(true);
-      expect(lattice.is_outer_cell(column[lattice.height + 1])).toBe(true);
+    for (let row of lattice.cells) {
+      expect(lattice.is_outer_cell(row[0])).toBe(true);
+      expect(lattice.is_outer_cell(row[lattice.width + 1])).toBe(true);
     }
     
-    for (let column of lattice.cells.slice(1, -1)) {
-      for (let cell of column.slice(1, -1)) {
-        expect(lattice.is_outer_cell(cell)).toBe(false);
-      }
-    }
+    lattice.for_each_inner_cell(cell => {
+      expect(lattice.is_outer_cell(cell)).toBe(false);
+    });
   });
 });

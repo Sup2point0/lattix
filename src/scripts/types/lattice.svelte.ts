@@ -10,7 +10,7 @@ export class Lattice
   /**
    * Cells of the grid, including outer cells.
    * 
-   * A square 2D array, indexed as `[column][row]` (x, y).
+   * A square 2D array, indexed as `[row][col]` (y, x).
    * */
   cells: Cell[][] = $state([]);
 
@@ -20,22 +20,76 @@ export class Lattice
   #toasts?: Toasts;
 
 
+  // == PROPERTIES == //
+
   /** x-width of the grid, excluding outer cells. */
   get width(): int {
-    return this.cells.length - 2;
+    return this.cells.length ? (this.cells[0].length - 2) : 0;
   }
 
   /** y-height of the grid, excluding outer cells. */
   get height(): int {
-    return this.cells[0].length - 2;
+    return this.cells.length ? (this.cells.length - 2) : 0;
   }
 
 
+  // == ACCESSORS == //
+
+  at(x: int, y: int): Cell | undefined
+  {
+    return this.cells.at(y)?.at(x);
+  }
+
+  *iter_cells(): Generator<Cell>
+  {
+    for (let row of this.cells) {
+      for (let cell of row) {
+        yield cell;
+      }
+    }
+  }
+
+  inner_rows(): Array<Cell[]>
+  {
+    return this.cells.slice(1, -1);
+  }
+
+  // *iter_rows(): Generator<Cell[]>
+  // {
+  //   for (let y = 0; y < this.height + 2; y++) {
+  //     yield Array.from({ length: this.width + 2 },
+  //       (_, x) => this.cells[x][y]
+  //     );
+  //   }
+  // }
+
+  // *enum_rows(): Generator<[int, Cell[]]>
+  // {
+  //   let i = 0;
+
+  //   for (let row of this.iter_rows()) {
+  //     yield [i, row];
+  //     i++;
+  //   }
+  // }
+
+  *iter_inner_cols(): Generator<Cell[]>
+  {
+    for (let x = 1; x < this.width + 1; x++) {
+      yield Array.from({ length: this.height + 2 },
+        (_, y) => this.at(x, y)!
+      );
+    }
+  }
+
+
+  // == CONSTRUCTORS == //
+
   init(width: int, height: int, toasts?: Toasts)
   {
-    this.cells = Array.from({ length: width + 2 },
-      (_, x) => Array.from({ length: height + 2 },
-        (_, y) => new Cell(x, y)
+    this.cells = Array.from({ length: height + 2 },
+      (_, y) => Array.from({ length: width + 2 },
+        (_, x) => new Cell(x, y)
       )
     );
 
@@ -68,8 +122,17 @@ export class Lattice
 
   for_each_cell(action: (cell: Cell) => void)
   {
-    for (let column of this.cells) {
-      for (let cell of column) {
+    for (let row of this.cells) {
+      for (let cell of row) {
+        action(cell);
+      }
+    }
+  }
+
+  for_each_inner_cell(action: (cell: Cell) => void)
+  {
+    for (let row of this.inner_rows()) {
+      for (let cell of row.slice(1, -1)) {
         action(cell);
       }
     }

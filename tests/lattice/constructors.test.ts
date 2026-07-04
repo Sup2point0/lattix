@@ -11,11 +11,12 @@ test("init()", () =>
     expect(lattice.width).toBe(width);
     expect(lattice.height).toBe(height);
     
-    for (let x = 0; x < lattice.width + 2; x++) {
-      for (let y = 0; y < lattice.height + 2; y++) {
-        let cell = lattice.cells[x][y];
-        expect(cell.x).toBe(x);
-        expect(cell.y).toBe(y);
+    for (let y = 0; y < lattice.height + 2; y++) {
+      for (let x = 0; x < lattice.width + 2; x++) {
+        let cell = lattice.at(x, y);
+        expect(cell).toBeDefined();
+        expect(cell!.x).toBe(x);
+        expect(cell!.y).toBe(y);
       }
     }
   });
@@ -32,20 +33,7 @@ test("fill-random()", () =>
     expect(lattice.width).toBe(size);
     expect(lattice.height).toBe(size);
 
-    for (let column of lattice.inner_cols()) {
-      let seen_digits = new Set();
-
-      for (let cell of column.slice(1, -1)) {
-        let digit = Number(cell.entered);
-        expect(digit).toBeGreaterThan(0);
-        expect(digit).toBeLessThanOrEqual(size);
-        seen_digits.add(digit);
-      }
-
-      expect(seen_digits.size, `saw: ${[...seen_digits]}`).toBe(size);
-    }
-
-    for (let row of lattice.iter_inner_rows()) {
+    for (let row of lattice.inner_rows()) {
       let seen_digits = new Set();
 
       for (let cell of row.slice(1, -1)) {
@@ -55,7 +43,20 @@ test("fill-random()", () =>
         seen_digits.add(digit);
       }
 
-      expect(seen_digits.size, `saw: ${[...seen_digits]}`).toBe(size);
+      expect(seen_digits.size).toBe(size);
+    }
+
+    for (let column of lattice.iter_inner_cols()) {
+      let seen_digits = new Set();
+
+      for (let cell of column.slice(1, -1)) {
+        let digit = Number(cell.entered);
+        expect(digit).toBeGreaterThan(0);
+        expect(digit).toBeLessThanOrEqual(size);
+        seen_digits.add(digit);
+      }
+
+      expect(seen_digits.size).toBe(size);
     }
   }
 });
