@@ -13,19 +13,22 @@ jobs:
         
     steps:
       - name: 'git / checkout'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
+        with:
+          submodules: true
+          token: ${{ secrets.SUPPETY_PAT }}
 
       - name: 'node / setup'
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: latest
           cache: 'npm'
-          cache-dependency-path: './package-lock.json'
 
-      - name: 'node / install'
-        run: npm install
+      - name: 'svelte / npm install'
+        run: |
+          npm install
 
-      - name: 'svelte / build'
+      - name: 'svelte / npm run build'
         run: |
           npm run build
 
@@ -49,4 +52,4 @@ jobs:
     steps:
       - name: 'github / deploy'
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

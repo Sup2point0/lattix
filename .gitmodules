@@ -1,0 +1,3 @@
+[submodule "src/scripts/suppety"]
+	path = src/scripts/suppety
+	url = https://github.com/Sup2point0/suppety
