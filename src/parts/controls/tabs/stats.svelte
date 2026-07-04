@@ -72,6 +72,21 @@ function display_time(t: int | null): string
   </section>
 
   <section>
+    <Clicky text="Randomise Grid"
+      action={() => {
+        if (!has_reset) {
+          if (!window.confirm("Fill the grid with random numbers? This will overwrite existing work!")) {
+            return;
+          }
+        }
+        
+        current.lattice.fill_random();
+        current.toasts.push("Filled the grid randomly");
+        has_reset = true;
+      }}
+      disabled={!current.lattice.is_square}
+    />
+
     <Clicky text="Reset All Preferences"
       action={() => {
         if (window.confirm("Reset all preferences back to their defaults?")) {

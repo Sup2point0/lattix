@@ -96,8 +96,55 @@ export class Lattice
     this.#toasts = toasts;
   }
 
+  /** For a square lattice only: Fill the lattice with random digits, such that each lane has exactly 1 each of `[1, size]`. */
+  fill_random(): boolean
+  {
+    if (this.inner_width !== this.inner_height) return false;
 
-  // == QUERY == //
+    /* Initialise a Sudoku grid, then shuffle by repeatedly swapping random lanes. This is sufficient to produce random output! */
+
+    this.for_each_inner_cell(cell => {
+      let xy = cell.x + cell.y;
+      let digit = 1 + (xy % this.inner_width);
+      cell.entered = digit.toString();
+    });
+
+    const SHUFFLE_ITERATIONS: int = 25;
+
+    for (let _ = 0; _ < SHUFFLE_ITERATIONS; _++) {
+      if (Math.random() > 0.5) {
+        let y1 = 1 + Math.floor(Math.random() * this.inner_width);
+        let y2 = 1 + Math.floor(Math.random() * this.inner_width);
+
+        for (let cell of this.cells[y1]) cell.y = y2;
+        for (let cell of this.cells[y2]) cell.y = y1;
+
+        let temp       = this.cells[y1];
+        this.cells[y1] = this.cells[y2];
+        this.cells[y2] = temp;
+      }
+      else {
+        let x1 = 1 + Math.floor(Math.random() * this.inner_width);
+        let x2 = 1 + Math.floor(Math.random() * this.inner_width);
+
+        for (let row of this.inner_rows()) {
+          row[x1].x = x2;
+          row[x2].x = x1;
+
+          let temp = row[x1];
+          row[x1]  = row[x2];
+          row[x2]  = temp;
+        }
+      }
+    }
+
+    return true;
+  }
+
+
+  // == PREDICATES == //
+
+  is_square: boolean = $derived(this.full_width === this.full_height);
 
   is_outer_cell(cell: Cell): boolean
   {
