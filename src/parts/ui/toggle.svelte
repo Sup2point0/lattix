@@ -5,8 +5,6 @@ A button for enabling or disabling an option.
 
 <script lang="ts">
   
-import { prefs } from "#scripts/stores";
-
 interface Props {
   value: boolean;
 }

@@ -3,7 +3,6 @@
 import "#styles/essence.scss";
 
 import { current, prefs } from "#scripts/stores";
-import { repair_prefs } from "#scripts/stores/prefs.svelte";
 import { set_keybinds, onblur, onbeforeunload } from "#scripts/keybinds";
 import { FontSizes } from "#scripts/config";
 
@@ -27,7 +26,6 @@ $effect(() => {
 
 
 onMount(() => {
-  repair_prefs();
   set_keybinds(window);
 
   window.addEventListener("mouseup", () => {    

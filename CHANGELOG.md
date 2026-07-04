@@ -23,6 +23,9 @@ Clicking on a cell then pressing `TAB` doesn’t jump to the next cell – it on
 
 ## 4 July 2026
 
+### **Feat**
+New preferences settings for the **Grid** are now available! **Stats** has been renamed to **Extras**.
+
 ### *Fix*
 It’s taken ages, but resizing the grid on both end now works properly.
 

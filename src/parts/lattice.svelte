@@ -41,8 +41,7 @@ onMount(() => {
     style:--x={x}
     style:--y={y}
     style:--size="calc(0.7 * 100vh / {Math.max(x, y) + Number(current.editing)})"
-    style:--cell-gap={
-      interp3($prefs.cells.gap, { lower: 0, preset: 1, upper: 2 })}
+    style:--cell-gap={interp3($prefs.cells.gap, { lower: 0, preset: 1, upper: 2 })}
   >
     {#each current.lattice.cells as column}
       {#each column as cell}

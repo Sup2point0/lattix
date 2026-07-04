@@ -116,8 +116,20 @@ class CellPrefs
  */
 export const prefs = persisted(
   "lattix.prefs",
-  Object.assign({}, new Prefs())
+  Object.assign({}, new Prefs()),
+  {
+    serializer: {
+      stringify: JSON.stringify,
+      parse: data => {
+        let out = JSON.parse(data);
+        repair_prefs(out);
+        console.log(`out =`, out);
+        return out;
+      }
+    }
+  }
 );
+
 
 /**
  * Has the user modified the preferences from their defaults?
@@ -128,6 +140,7 @@ prefs.subscribe(() => {
   prefs_is_dirty.set(true);
 })
 
+
 /**
  * Reset all preferences to their defaults.
  */
@@ -137,25 +150,28 @@ export function reset_prefs()
   prefs_is_dirty.set(false);
 }
 
+
 /**
  * Find any unset categories of preferences (if the user has an older version of `Prefs` in their `localStorage`) and fill them out.
  */
-export function repair_prefs()
+function repair_prefs(prefs: Prefs)
 {
-  default_if_undefined("lattice", () => new LatticePrefs());
-  default_if_undefined("cols",    () => new ColPrefs());
-  default_if_undefined("text",    () => new TextPrefs());
-  default_if_undefined("marks",   () => new MarkPrefs());
-  default_if_undefined("grid",    () => new GridPrefs());
-  default_if_undefined("cells",   () => new CellPrefs());
+  let defaults = new Prefs();
 
-  function default_if_undefined(category: string, constructor: () => any)
-  {
-    if (!get(prefs)[category]) {
-      prefs.update(p => {
-        p[category] = Object.assign({}, constructor());
-        return p;
-      })
+  for (let category in defaults) {
+    if (!Object.hasOwn(prefs, category)) {
+        // @ts-ignore
+        prefs[category] = defaults[category];
+    }
+    else {
+      // @ts-ignore
+      for (let option in defaults[category]) {
+        // @ts-ignore
+        if (!Object.hasOwn(prefs[category], option)) {
+          // @ts-ignore
+          prefs[category][option] = defaults[category][option]
+        }
+      }
     }
   }
 }
