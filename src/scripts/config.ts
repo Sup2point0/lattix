@@ -42,7 +42,7 @@ export enum ThemeCol
   RED    = "red",
   ORANGE = "orange",
   GREEN  = "green",
-  GREY   = "grey",
+  GREY   = "grey-dark",
 }
 
 export const HighlightCols = [
