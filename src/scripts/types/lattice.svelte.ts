@@ -5,6 +5,14 @@ import type { int, Direction } from "./root";
 import type { Toasts } from "./toasts.svelte.ts";
 
 
+const MIN_SIZE: int = 3;
+
+
+/**
+ * A grid of cells.
+ * 
+ * The grid has a minimum size of 3x3.
+ */
 export class Lattice
 {
   /**
@@ -64,24 +72,10 @@ export class Lattice
     return this.cells.slice(1, -1);
   }
 
-  // *iter_rows(): Generator<Cell[]>
-  // {
-  //   for (let y = 0; y < this.height + 2; y++) {
-  //     yield Array.from({ length: this.width + 2 },
-  //       (_, x) => this.cells[x][y]
-  //     );
-  //   }
-  // }
-
-  // *enum_rows(): Generator<[int, Cell[]]>
-  // {
-  //   let i = 0;
-
-  //   for (let row of this.iter_rows()) {
-  //     yield [i, row];
-  //     i++;
-  //   }
-  // }
+  *iter_inner_rows(): Generator<Cell[]>
+  {
+    return this.inner_rows()[Symbol.iterator];
+  }
 
   *iter_inner_cols(): Generator<Cell[]>
   {
@@ -97,6 +91,9 @@ export class Lattice
 
   init(width: int, height: int, toasts?: Toasts)
   {
+    if (width < MIN_SIZE)  width = MIN_SIZE;
+    if (height < MIN_SIZE) height = MIN_SIZE;
+
     this.cells = Array.from({ length: height + 2 },
       (_, y) => Array.from({ length: width + 2 },
         (_, x) => new Cell(x, y)
@@ -203,15 +200,15 @@ export class Lattice
     switch (from) {
       case "right":
         // shift rightmost column to make space
-        let right_column = this.cells.at(-1)!
+        let right_column = this.cells.at(-1)!;
         for (let cell of right_column) {
           cell.x++;
         }
 
-        let x = this.width + 1;
-        this.cells.splice(x, 0, Array.from({ length: this.height },
-          (_, y) => new Cell(x, y)
-        ));
+        // let x = this.width + 1;
+        // this.cells.splice(x, 0, Array.from({ length: this.height },
+        //   (_, y) => new Cell(x, y)
+        // ));
 
         break;
       
@@ -230,9 +227,30 @@ export class Lattice
         break;
 
       case "top":
+        // shift all rows to make space
+        for (let row of this.cells.slice(1)) {
+          for (let cell of row) {
+            cell.y++;
+          }
+        }
+
+        this.cells.splice(1, 0, Array.from({ length: this.full_width },
+          (_, x) => new Cell(x, 1)
+        ));
+        
         break;
 
       case "down":
+        // shift lowermost row to make space
+        let lowest_row = this.cells.at(-1)!;
+        for (let cell of lowest_row) {
+          cell.y++;
+        }
+
+        let y = this.inner_height + 1;
+        this.cells.splice(y, 0, Array.from({ length: this.full_width },
+          (_, x) => new Cell(x, y)
+        ));
 
         break;
     }

@@ -29,18 +29,18 @@ onMount(() => {
 >
   {#if current.editing}
     <div class="empty"></div>
-    <button class="new row" onclick={() => { current.lattice.height++; }}> + </button>
+    <button class="new row" onclick={() => current.lattice.upsize("top")}> + </button>
     <div class="empty"></div>
   {/if}
 
   {#if current.editing}
-    <button class="new column" onclick={() => { current.lattice.width++; }}> + </button>
+    <button class="new column" onclick={() => current.lattice.upsize("left")}> + </button>
   {/if}
 
   <div class="lattice"
     style:--x={x}
     style:--y={y}
-    style:--size="calc(0.7 * 100vh / {Math.max(x, y)})"
+    style:--size="calc(0.7 * 100vh / {Math.max(x, y) + Number(current.editing)})"
     style:--cell-gap={
       interp3($prefs.cells.gap, { lower: 0, preset: 1, upper: 2 })}
   >
@@ -69,20 +69,20 @@ onMount(() => {
     {/each}
 
     <div class="empty"></div> -->
-    {#each current.lattice.cells as col}
-      {#each col as cell}
+    {#each current.lattice.cells as column}
+      {#each column as cell}
         <Cell {cell} />
       {/each}
     {/each}
   </div>
   
   {#if current.editing}
-    <button class="new column" onclick={() => { current.lattice.width++; }}> + </button>
+    <button class="new column" onclick={() => current.lattice.upsize("right")}> + </button>
   {/if}
 
   {#if current.editing}
     <div class="empty"></div>
-    <button class="new row" onclick={() => { current.lattice.height++; }}> + </button>
+    <button class="new row" onclick={() => current.lattice.upsize("down")}> + </button>
     <div class="empty"></div>
   {/if}
 </div>
