@@ -13,8 +13,8 @@ import Cell from "#parts/lattice.cell.svelte";
 import { onMount } from "svelte";
 
 
-let x = $derived(current.lattice.width + 2);
-let y = $derived(current.lattice.height + 2);
+let x = $derived(current.lattice.inner_width + 2);
+let y = $derived(current.lattice.inner_height + 2);
 
 onMount(() => {
   let { width, height } = $prefs.lattice;

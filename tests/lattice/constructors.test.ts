@@ -11,8 +11,8 @@ test("init()", () =>
     expect(lattice.width).toBe(width);
     expect(lattice.height).toBe(height);
     
-    for (let y = 0; y < lattice.height + 2; y++) {
-      for (let x = 0; x < lattice.width + 2; x++) {
+    for (let y = 0; y < lattice.inner_height + 2; y++) {
+      for (let x = 0; x < lattice.inner_width + 2; x++) {
         let cell = lattice.at(x, y);
         expect(cell).toBeDefined();
         expect(cell!.x).toBe(x);
@@ -30,8 +30,8 @@ test("fill-random()", () =>
     lattice.init(size, size);
     lattice.fill_random();
 
-    expect(lattice.width).toBe(size);
-    expect(lattice.height).toBe(size);
+    expect(lattice.inner_width).toBe(size);
+    expect(lattice.inner_height).toBe(size);
 
     for (let row of lattice.inner_rows()) {
       let seen_digits = new Set();

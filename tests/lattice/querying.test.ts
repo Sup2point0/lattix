@@ -16,7 +16,7 @@ test("is-outer()", () =>
     }
     for (let row of lattice.cells) {
       expect(lattice.is_outer_cell(row[0])).toBe(true);
-      expect(lattice.is_outer_cell(row[lattice.width + 1])).toBe(true);
+      expect(lattice.is_outer_cell(row[lattice.inner_width + 1])).toBe(true);
     }
     
     lattice.for_each_inner_cell(cell => {

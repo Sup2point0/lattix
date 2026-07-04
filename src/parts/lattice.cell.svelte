@@ -166,14 +166,14 @@ function arrow_move(key: Key): Cell
   switch (key) {
     case "ARROWLEFT":
       if (x === 1 - move_outer) {
-        x = current.lattice.width + move_outer;
+        x = current.lattice.inner_width + move_outer;
       } else {
         x--;
       }
       break;
 
     case "ARROWRIGHT":
-      if (x === current.lattice.width + move_outer) {
+      if (x === current.lattice.inner_width + move_outer) {
         x = 1 - move_outer;
       } else {
         x++;
@@ -182,14 +182,14 @@ function arrow_move(key: Key): Cell
 
     case "ARROWUP":
       if (y === 1 - move_outer) {
-        y = current.lattice.height + move_outer;
+        y = current.lattice.inner_height + move_outer;
       } else {
         y--;
       }
       break;
 
     case "ARROWDOWN":
-      if (y === current.lattice.height + move_outer) {
+      if (y === current.lattice.inner_height + move_outer) {
         y = 1 - move_outer;
       } else {
         y++;
@@ -212,7 +212,7 @@ function arrow_jump(key: Key): Cell
       break;
 
     case "ARROWRIGHT":
-      x = current.lattice.width + jump_outer;
+      x = current.lattice.inner_width + jump_outer;
       break;
 
     case "ARROWUP":
@@ -220,7 +220,7 @@ function arrow_jump(key: Key): Cell
       break;
 
     case "ARROWDOWN":
-      y = current.lattice.height + jump_outer;
+      y = current.lattice.inner_height + jump_outer;
       break;
   }
 

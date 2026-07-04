@@ -22,14 +22,24 @@ export class Lattice
 
   // == PROPERTIES == //
 
+  /** x-width of the grid, including outer cells. */
+  get full_width(): int {
+    return this.cells.length ? (this.cells[0].length) : 0;
+  }
+
   /** x-width of the grid, excluding outer cells. */
-  get width(): int {
-    return this.cells.length ? (this.cells[0].length - 2) : 0;
+  get inner_width(): int {
+    return this.full_width ? (this.full_width - 2) : 0;
+  }
+
+  /** y-height of the grid, including outer cells. */
+  get full_height(): int {
+    return this.cells.length ? (this.cells.length) : 0;
   }
 
   /** y-height of the grid, excluding outer cells. */
-  get height(): int {
-    return this.cells.length ? (this.cells.length - 2) : 0;
+  get inner_height(): int {
+    return this.full_height ? (this.full_height - 2) : 0;
   }
 
 
@@ -75,8 +85,8 @@ export class Lattice
 
   *iter_inner_cols(): Generator<Cell[]>
   {
-    for (let x = 1; x < this.width + 1; x++) {
-      yield Array.from({ length: this.height + 2 },
+    for (let x = 1; x < this.inner_width + 1; x++) {
+      yield Array.from({ length: this.inner_height + 2 },
         (_, y) => this.at(x, y)!
       );
     }
@@ -148,8 +158,8 @@ export class Lattice
 
   is_outer_cell(cell: Cell): boolean
   {
-    let is_outer_x = (cell.x == 0 || cell.x == this.width + 1);
-    let is_outer_y = (cell.y == 0 || cell.y == this.height + 1);
+    let is_outer_x = (cell.x == 0 || cell.x == this.inner_width + 1);
+    let is_outer_y = (cell.y == 0 || cell.y == this.inner_height + 1);
 
     return is_outer_x || is_outer_y;
   }
@@ -157,9 +167,9 @@ export class Lattice
   is_corner_cell(cell: Cell): boolean
   {
     let is_upper_left  = (cell.x == 0             && cell.y == 0);
-    let is_upper_right = (cell.x == this.width + 1 && cell.y == 0);
-    let is_lower_left  = (cell.x == 0             && cell.y == this.height + 1);
-    let is_lower_right = (cell.x == this.width + 1 && cell.y == this.height + 1);
+    let is_upper_right = (cell.x == this.inner_width + 1 && cell.y == 0);
+    let is_lower_left  = (cell.x == 0             && cell.y == this.inner_height + 1);
+    let is_lower_right = (cell.x == this.inner_width + 1 && cell.y == this.inner_height + 1);
 
     return is_upper_left || is_upper_right || is_lower_left || is_lower_right;
   }
@@ -213,7 +223,7 @@ export class Lattice
           }
         }
 
-        this.cells.splice(1, 0, Array.from({ length: this.height },
+        this.cells.splice(1, 0, Array.from({ length: this.inner_height },
           (_, y) => new Cell(1, y)
         ));
 
