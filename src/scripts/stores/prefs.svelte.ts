@@ -1,9 +1,9 @@
-import { writable } from "svelte/store";
-
 import { persisted } from "svelte-persisted-store";
 
 import { ThemeCol } from "#scripts/config";
 import type { int, Scalar } from "#scripts/types";
+
+import { get, writable } from "svelte/store";
 
 
 export enum Theme {
@@ -135,4 +135,27 @@ export function reset_prefs()
 {
   prefs.set(Object.assign({}, new Prefs()));
   prefs_is_dirty.set(false);
+}
+
+/**
+ * Find any unset categories of preferences (if the user has an older version of `Prefs` in their `localStorage`) and fill them out.
+ */
+export function repair_prefs()
+{
+  default_if_undefined("lattice", () => new LatticePrefs());
+  default_if_undefined("cols",    () => new ColPrefs());
+  default_if_undefined("text",    () => new TextPrefs());
+  default_if_undefined("marks",   () => new MarkPrefs());
+  default_if_undefined("grid",    () => new GridPrefs());
+  default_if_undefined("cells",   () => new CellPrefs());
+
+  function default_if_undefined(category: string, constructor: () => any)
+  {
+    if (!get(prefs)[category]) {
+      prefs.update(p => {
+        p[category] = Object.assign({}, constructor());
+        return p;
+      })
+    }
+  }
 }
