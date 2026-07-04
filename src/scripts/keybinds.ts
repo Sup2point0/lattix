@@ -1,6 +1,5 @@
-import { current } from "#scripts/stores";
+import { current, MarkMode } from "#scripts/stores";
 import { Overlay } from "#scripts/config";
-import { MarkMode } from "#scripts/types";
 
 
 export const keybinds = [

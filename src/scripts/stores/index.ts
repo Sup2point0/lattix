@@ -1,2 +1,2 @@
-export { current } from "./current.svelte.ts";
-export { prefs } from "./prefs.svelte.ts";
+export { current, DragMode, MarkMode } from "./current.svelte.ts";
+export { prefs, Theme, Font, MarkAlignment } from "./prefs.svelte.ts";

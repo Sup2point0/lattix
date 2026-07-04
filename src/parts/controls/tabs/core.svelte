@@ -1,8 +1,7 @@
 <script lang="ts">
 
-import { current } from "#scripts/stores";
+import { current, MarkMode } from "#scripts/stores";
 import { HighlightCols } from "#scripts/config";
-import { MarkMode } from "#scripts/types";
 
 import Tool from "#parts/ui/tool.svelte";
 import Clicky from "#parts/ui/clicky.svelte";

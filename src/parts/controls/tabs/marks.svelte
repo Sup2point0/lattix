@@ -1,7 +1,6 @@
 <script lang="ts">
 
-import { prefs } from "#scripts/stores";
-import { MarkAlignment } from "#scripts/types";
+import { prefs, MarkAlignment } from "#scripts/stores";
 
 import Toggle  from "#parts/ui/toggle.svelte";
 import Slider  from "#parts/ui/slider.svelte";

@@ -52,7 +52,7 @@ function display_time(t: int | null): string
         <Clicky text="Reset Timer"
           action={() => {
             current.timer.reset();
-            current.add_toast({ text: "Timer reset" });
+            current.toasts.push("Timer reset");
           }}
         />
       </div>
@@ -76,7 +76,7 @@ function display_time(t: int | null): string
       action={() => {
         if (window.confirm("Reset all preferences back to their defaults?")) {
           reset_prefs();
-          current.add_toast({ text: "All preferences reset to default" });
+          current.toasts.push("All preferences reset to default");
         }
       }}
       disabled={!$prefs_is_dirty}
