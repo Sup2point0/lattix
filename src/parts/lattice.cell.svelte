@@ -3,35 +3,27 @@
 A cell in the grid.
 -->
 
-<script module>
-
-let total = 0;
-
-</script>
-
 <script lang="ts">
 
-import { current, prefs } from "#scripts/stores";
+import { current, prefs, DragMode, MarkMode, MarkAlignment } from "#scripts/stores";
 import * as keybinds from "#scripts/keybinds";
 import { Keys } from "#scripts/config";
 import { interp3 } from "#scripts/utils";
-import { Cell, DragMode, MarkMode, MarkAlignment } from "#scripts/types";
-import type { int, Key } from "#scripts/types";
+import { Cell } from "#scripts/types";
+import type { Key } from "#scripts/types";
 
-import { SvelteSet as Set } from "svelte/reactivity";
-import { untrack } from "svelte";
+import { SvelteSet } from "svelte/reactivity";
 
 interface Props {
-  kind?: "inner" | "outer";
-  x: int;
-  y: int;
+  // kind?: "inner" | "outer";
+  // x: int;
+  // y: int;
+  cell: Cell
 }
 
-let { kind = "inner", x, y }: Props = $props();
+// let { kind = "inner", x, y }: Props = $props();
+let { cell }: Props = $props();
 
-
-total++;
-let cell = new Cell(total, kind, x, y);
 
 let self: HTMLButtonElement;
 let input: HTMLTextAreaElement;
@@ -40,11 +32,6 @@ let input: HTMLTextAreaElement;
 $effect(() => {
   cell.button = self;
   cell.input = input;
-
-  let cord = x.toString() + y.toString();
-  untrack(() => {
-    current.lattice.cells[cord] = cell;
-  });
 });
  
 
@@ -172,71 +159,72 @@ function onkeydown(e: KeyboardEvent)
 /** Handle moving in the grid with the arrow keys. */
 function arrow_move(key: Key): Cell
 {
-  let X = x, Y = y;
-  let move_outer = (current.editing || $prefs.cells.nav_outer) ? 1 : 0;
+  let x = cell.x;
+  let y = cell.y;
+  let move_outer = (current.editing || $prefs.cells.nav_outer) ? 1 : 0;  // FIXME
 
   switch (key) {
     case "ARROWLEFT":
-      if (X === 1 - move_outer) {
-        X = current.lattice.x + move_outer;
+      if (x === 1 - move_outer) {
+        x = current.lattice.width + move_outer;
       } else {
-        X--;
+        x--;
       }
       break;
 
     case "ARROWRIGHT":
-      if (X === current.lattice.x + move_outer) {
-        X = 1 - move_outer;
+      if (x === current.lattice.width + move_outer) {
+        x = 1 - move_outer;
       } else {
-        X++;
+        x++;
       }
       break;
 
     case "ARROWUP":
-      if (Y === 1 - move_outer) {
-        Y = current.lattice.y + move_outer;
+      if (y === 1 - move_outer) {
+        y = current.lattice.height + move_outer;
       } else {
-        Y--;
+        y--;
       }
       break;
 
     case "ARROWDOWN":
-      if (Y === current.lattice.y + move_outer) {
-        Y = 1 - move_outer;
+      if (y === current.lattice.height + move_outer) {
+        y = 1 - move_outer;
       } else {
-        Y++;
+        y++;
       }
       break;
   }
 
-  return current.lattice.cells[X.toString() + Y.toString()];
+  return current.lattice.cells[x][y];
 }
 
 /** Handle jump moving in the grid with the arrow keys. */
 function arrow_jump(key: Key): Cell
 {  
-  let X = x, Y = y;
+  let x = cell.x, y = cell.y;
   let jump_outer = (current.editing || $prefs.cells.nav_outer) ? 1 : 0;
 
   switch (key) {
     case "ARROWLEFT":
-      X = 1 - jump_outer;
+      x = 1 - jump_outer;
       break;
 
     case "ARROWRIGHT":
-      X = current.lattice.x + jump_outer;
+      x = current.lattice.width + jump_outer;
       break;
 
     case "ARROWUP":
-      Y = 1 - jump_outer;
+      y = 1 - jump_outer;
       break;
 
     case "ARROWDOWN":
-      Y = current.lattice.y + jump_outer;
+      y = current.lattice.height + jump_outer;
       break;
   }
 
-  return current.lattice.cells[X.toString() + Y.toString()];
+  return current.lattice.cells[x][y];
 }
 
 /** Handle entering or marking digits in the cell. */
@@ -307,7 +295,7 @@ function noalt_auto_single(key: Key)
     if (cell.entered === key) {
       /* Entering same key does nothing */
     } else {
-      cell.marks = new Set([cell.entered, key]);
+      cell.marks = new SvelteSet([cell.entered, key]);
       cell.entered = null;
     }
   }
@@ -395,7 +383,7 @@ function highlight_multi()
 <button
   bind:this={self}
   class={[
-    kind,
+    cell.kind,
     Object.entries(MarkAlignment).find(([key, val]) => val === $prefs.marks.align)?.[0].toLowerCase(),
     {
       fixed: cell.fixed !== null,
@@ -405,7 +393,11 @@ function highlight_multi()
       invert: $prefs.text.invert,
     }
   ]}
-  disabled={(kind === "outer" && !current.editing && !cell.entered && !cell.marks.size && !cell.fixed) ? true : undefined}
+  disabled={
+    (cell.kind === "outer" && !current.editing && !cell.entered && !cell.marks.size && !cell.fixed) ?
+      true
+    : undefined
+  }
   {onmouseenter}
   {onmousedown}
   {onclick}

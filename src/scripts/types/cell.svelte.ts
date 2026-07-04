@@ -1,38 +1,34 @@
 import { SvelteSet as Set } from "svelte/reactivity";
 
-import { current } from "../stores";
+import { current } from "#scripts/stores/current.svelte.ts";
 import type { ThemeCol } from "../config";
 import type { int, Key } from "./root";
 
 
 export class Cell
 {
-  shard: int;
   button: HTMLButtonElement | null = null;
   input: HTMLTextAreaElement | null = null;
   
-  kind: "inner" | "outer";
   x: int;
   y: int;
 
-  /** Whether the cell is selected. */
+  /** Is the cell selected? */
   selected: boolean = $derived(current.lattice.selected.has(this));
   
-  /** Whether the cell ctonains digit pre-provided by the puzzle. */
+  /** Pre-provided digit in the puzzle. */
   fixed: string | null = $state(null);
 
-  /** The single digit currently entered in the cell. */
+  /** A single currently entered value. */
   entered: string | null = $state(null);
 
-  /** The digits marked in the cell. */
+  /** Pencilmarked candidates. */
   marks: Set<string> = $state(new Set());
 
-  /** The highlight colour of the cell. */
+  /** Highlight colour. */
   highlight: ThemeCol | null = $state(null);
   
-  constructor(shard: int, kind: "inner" | "outer", x: int, y: int) {
-    this.shard = shard;
-    this.kind = kind;
+  constructor(x: int, y: int) {
     this.x = x;
     this.y = y;
   }
