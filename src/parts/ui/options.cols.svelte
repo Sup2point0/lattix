@@ -125,6 +125,10 @@ button {
         color: $col-blue;
       }
     }
+
+    &[disabled] {
+      opacity: 40%;
+    }
   }
 }
 
