@@ -44,34 +44,17 @@ onMount(() => {
     style:--cell-gap={
       interp3($prefs.cells.gap, { lower: 0, preset: 1, upper: 2 })}
   >
-    <!-- <div class="empty"></div>
-
-    {#each { length: current.lattice.width } as _, i}
-      <Cell kind="outer" x={i+1} y={0} />
-    {/each}
-
-    <div class="empty"></div>
-
-    {#each { length: current.lattice.height } as _, j}
-        <Cell kind="outer" x={0} y={j+1} />
-
-      {#each { length: current.lattice.width } as _, i}
-        <Cell kind="inner" x={i+1} y={j+1} />
-      {/each}
-
-        <Cell kind="outer" x={x-1} y={j+1} />
-    {/each}
-    
-    <div class="empty"></div>
-
-    {#each { length: current.lattice.width } as _, i}
-      <Cell kind="outer" x={i+1} y={y-1} />
-    {/each}
-
-    <div class="empty"></div> -->
     {#each current.lattice.cells as column}
       {#each column as cell}
-        <Cell {cell} />
+        {#if current.lattice.is_corner_cell(cell)}
+          {#if $prefs.cells.include_corners}
+            <Cell {cell} />
+          {:else}
+            <div class="empty"></div>
+          {/if}
+        {:else}
+          <Cell {cell} />
+        {/if}
       {/each}
     {/each}
   </div>

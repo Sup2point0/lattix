@@ -116,7 +116,7 @@ export class Lattice
       cell.entered = digit.toString();
     });
 
-    const SHUFFLE_ITERATIONS: int = 25;
+    const SHUFFLE_ITERATIONS: int = 20 + this.full_width + this.full_height;
 
     for (let _ = 0; _ < SHUFFLE_ITERATIONS; _++) {
       if (Math.random() > 0.5) {
@@ -199,47 +199,28 @@ export class Lattice
   {
     switch (from) {
       case "right":
-        // shift rightmost column to make space
-        let right_column = this.cells.at(-1)!;
-        for (let cell of right_column) {
-          cell.x++;
+        let x = this.full_width - 1;
+
+        for (let [y, row] of this.cells.entries()) {
+          // shift rightmost column to make space
+          row[x].x++;
+
+          // insert new column
+          row.splice(x, 0, new Cell(x, y))
         }
-
-        // let x = this.width + 1;
-        // this.cells.splice(x, 0, Array.from({ length: this.height },
-        //   (_, y) => new Cell(x, y)
-        // ));
-
         break;
       
       case "left":
         // shift all columns to make space
-        for (let column of this.cells.slice(1)) {
-          for (let cell of column) {
+        for (let [y, row] of this.cells.entries()) {
+          for (let cell of row.slice(1)) {
             cell.x++;
           }
+
+          row.splice(1, 0, new Cell(1, y));
         }
-
-        this.cells.splice(1, 0, Array.from({ length: this.inner_height },
-          (_, y) => new Cell(1, y)
-        ));
-
         break;
-
-      case "top":
-        // shift all rows to make space
-        for (let row of this.cells.slice(1)) {
-          for (let cell of row) {
-            cell.y++;
-          }
-        }
-
-        this.cells.splice(1, 0, Array.from({ length: this.full_width },
-          (_, x) => new Cell(x, 1)
-        ));
-        
-        break;
-
+      
       case "down":
         // shift lowermost row to make space
         let lowest_row = this.cells.at(-1)!;
@@ -253,6 +234,21 @@ export class Lattice
         ));
 
         break;
+      
+      case "top":
+        // shift all rows to make space
+        for (let row of this.cells.slice(1)) {
+          for (let cell of row) {
+            cell.y++;
+          }
+        }
+
+        this.cells.splice(1, 0, Array.from({ length: this.full_width },
+          (_, x) => new Cell(x, 1)
+        ));
+
+        break;
+      
     }
   }
 
