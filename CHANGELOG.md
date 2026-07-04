@@ -21,6 +21,18 @@ Downsizing the grid
 Clicking on a cell then pressing `TAB` doesn’t jump to the next cell – it only does so on the second press.
 
 
+## 4 July 2026
+
+### *Fix*
+It’s taken ages, but resizing the grid on both end now works properly.
+
+### *Fix*
+Some internal restructuring means future grid functionality should be significantly easier to implement!
+
+### *Fix*
+Pressing `ALT`+`M` and `ALT`+`SHIFT`+`M` twice resets pencilmarking back to default (instead of being idempotent).
+
+
 ## 3 July 2026
 
 ### *Fix*

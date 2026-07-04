@@ -65,7 +65,7 @@ export const keybinds = [
     desc: "highlight cell"
   },
   {
-    keys: ["ALT", "E"],
+    keys: ["ALT", "G"],
     desc: "edit grid"
   },
   {
@@ -147,7 +147,7 @@ export function keydown(e: KeyboardEvent): boolean
       e.stopPropagation();
       return true;
     
-    case "E":
+    case "G":
       current.editing = !current.editing;
       e.stopPropagation();
       return true;
@@ -163,7 +163,12 @@ export function keydown(e: KeyboardEvent): boolean
       return true;
 
     case "M":
-      current.mark_mode = e.shiftKey ? MarkMode.NEVER : MarkMode.ALWAYS;
+      /* NOTE: Not idempotent, we want retriggering to reset to default */
+      if (e.shiftKey) {
+        current.mark_mode = (current.mark_mode === MarkMode.NEVER) ? MarkMode.DEFAULT : MarkMode.NEVER;
+      } else {
+        current.mark_mode = (current.mark_mode === MarkMode.ALWAYS) ? MarkMode.DEFAULT : MarkMode.ALWAYS;
+      }
       e.stopPropagation();
       return true;
 
