@@ -1,6 +1,10 @@
 @use 'src/styles/colours' as *;
 
 
+div {
+  min-width: 16em;
+}
+
 h2 {
   font-weight: 500;
 }
