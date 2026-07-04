@@ -3,8 +3,10 @@ import { SvelteSet as Set } from "svelte/reactivity";
 import { ControlTab, Overlay } from "#scripts/config";
 import type { int, Key } from "#scripts/types";
 
-import { Lattice } from "#scripts/types";
-import { Timer } from "#scripts/types";
+// NOTE: Separate imports required to avoid circular imports in unit testing
+import { Lattice } from "#scripts/types/lattice.svelte.ts";
+import { Timer }   from "#scripts/types/timer.svelte.ts";
+import { Toasts }  from "#scripts/types/toasts.svelte.ts";
 
 
 export enum DragMode {
@@ -21,10 +23,11 @@ export enum MarkMode {
 }
 
 
-class CurrentState
+export class CurrentState
 {
   lattice: Lattice = new Lattice();
-  timer: Timer = new Timer();
+  timer:   Timer   = new Timer();
+  toasts:  Toasts  = new Toasts();
 
   held_keys: Set<Key> = new Set();
   any_modkeys: boolean = $derived(
@@ -61,35 +64,10 @@ class CurrentState
   /** Stage of the landing overlay animation. */
   landing: int = $state(5);
 
-  /** The currently shown overlay window. */
+  /** Currently shown overlay window. */
   overlay: Overlay | null = $state(null);
-  
-  toasts: Toast[] = $state([]);
-  toast_count: int = 0;
-  clear_toasts: int = 0;
-
-  
-  add_toast(toast: Partial<Toast>)
-  {
-    this.toast_count++;
-    toast.id = this.toast_count;
-    this.toasts.push(toast as Toast);
-
-    if (this.clear_toasts) {
-      clearTimeout(this.clear_toasts);
-    }
-
-    this.clear_toasts = setTimeout(() => {
-      this.toasts.splice(0);
-    }, 5000);
-  }
 }
 
 
-interface Toast {
-  id: int;
-  text: string;
-}
-
-
+/** Global object for providing access to the current application state. */
 export const current = new CurrentState();

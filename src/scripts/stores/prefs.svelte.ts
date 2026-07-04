@@ -1,9 +1,9 @@
-import { persisted } from "svelte-persisted-store";
-
 import { writable } from "svelte/store";
 
-import { ThemeCol } from "../config";
-import type { Scalar } from "../types";
+import { persisted } from "svelte-persisted-store";
+
+import { ThemeCol } from "#scripts/config";
+import type { int, Scalar } from "#scripts/types";
 
 
 export enum Theme {
@@ -31,14 +31,24 @@ export enum MarkAlignment
 
 export class Prefs
 {
+  /** Settings for default lattice on startup. */
+  lattice: LatticePrefs = Object.assign({}, new LatticePrefs())
+
   cols: ColPrefs = Object.assign({}, new ColPrefs())
 
   text: TextPrefs = Object.assign({}, new TextPrefs())
 
-  /** Settings for pencilmarks (little digits for noting possible values). */
+  /** Settings for pencilmarks. */
   marks: MarkPrefs = Object.assign({}, new MarkPrefs())
 
   cells: CellPrefs = Object.assign({}, new CellPrefs())
+}
+
+class LatticePrefs
+{
+  width: int = 5
+  
+  height: int = 5
 }
 
 class ColPrefs
@@ -75,6 +85,8 @@ class MarkPrefs
 
 class CellPrefs
 {
+  include_corners: boolean = false  // TODO
+
   /** If enabled, navigating the grid with arrow keys will also move to outer cells. */
   nav_outer: boolean = false
 
@@ -84,7 +96,7 @@ class CellPrefs
   gap: Scalar = 0.5
 
   /** Gap between main grid and outer lanes. */
-  outer_gap: Scalar = 0.5
+  outer_gap: Scalar = 0.5  // TODO
 
   /** border-radius of cells. */
   rounding: Scalar = 0.5
@@ -107,11 +119,9 @@ export const prefs = persisted(
  */
 export const prefs_is_dirty = writable(false);
 
-
 prefs.subscribe(() => {
   prefs_is_dirty.set(true);
 })
-
 
 /**
  * Reset all preferences to their defaults.
