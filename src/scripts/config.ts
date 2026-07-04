@@ -21,7 +21,7 @@ export enum ControlTab
   TEXT = "Text",
   MARKS = "Marks",
   CELLS = "Cells",
-  STATS = "Stats",
+  STATS = "Extras",
 }
 
 

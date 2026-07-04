@@ -25,6 +25,8 @@ export enum MarkMode {
 
 export class CurrentState
 {
+  DEBUG: boolean = $state(false);
+  
   lattice: Lattice = new Lattice();
   timer:   Timer   = new Timer();
   toasts:  Toasts  = new Toasts();

@@ -6,7 +6,8 @@ export const keybinds = [
   {
     keys: ["ALT", "/"],
     desc: "view keybinds"
-  }, {
+  },
+  {
     keys: [
       "↑", null,
       "←", null,
@@ -14,69 +15,90 @@ export const keybinds = [
       "→"
     ],
     desc: "move in grid"
-  }, {
+  },
+  {
     keys: [
       "HOME", null,
       "ALT", "←"
     ],
     desc: "jump to left edge of grid"
-  }, {
+  },
+  {
     keys: [
       "END", null,
       "ALT", "→"
     ],
     desc: "jump to cell furthest right"
-  }, {
+  },
+  {
     keys: [
       "⇧", "HOME", null,
       "ALT", "↑"
     ],
     desc: "jump to cell furthest up"
-  }, {
+  },
+  {
     keys: [
       "⇧", "END", null,
       "ALT", "↓"
     ],
     desc: "jump to cell furthest down"
-  }, {
+  },
+  {
     keys: ["CTRL", "click"],
     desc: "select multiple cells"
-  }, {
+  },
+  {
     keys: ["CTRL", "arrow"],
     desc: "select multiple cells while moving"
-  }, {
+  },
+  {
     keys: ["SPACE", null, "BACKSPACE", null, "DELETE"],
     desc: "clear cell"
-  }, {
+  },
+  {
     keys: ["ALT", "digit"],
     desc: "make mark"
-  }, {
+  },
+  {
     keys: ["ALT", "click", null, "ALT", "H"],
     desc: "highlight cell"
-  }, {
+  },
+  {
     keys: ["ALT", "E"],
     desc: "edit grid"
-  }, {
+  },
+  {
     keys: ["ALT", "R"],
     desc: "clear grid"
-  }, {
+  },
+  {
     keys: ["ALT", "N"],
     desc: "show/hide pencilmarks"
-  }, {
+  },
+  {
     keys: ["ALT", "M"],
     desc: "always enable marking"
-  }, {
+  },
+  {
     keys: ["ALT", "SHIFT", "M"],
     desc: "always disable marking"
-  }, {
+  },
+  {
     keys: ["ALT", "P"],
     desc: "open Control Pane"
-  }, {
+  },
+  {
     keys: ["ALT", "Q"],
     desc: "view changelog"
-  // }, {
+  },
+  // {
   //   keys: [],
   //   desc: "highlight all cells with same digit" TODO
+  // },
+  {
+    keys: ["ALT", "K"],
+    desc: "enable debug mode"
   },
 ];
 
@@ -152,6 +174,11 @@ export function keydown(e: KeyboardEvent): boolean
 
     case "Q":
       current.overlay = (current.overlay === Overlay.CHANGELOG) ? null : Overlay.CHANGELOG;
+      e.stopPropagation();
+      return true;
+
+    case "K":
+      current.DEBUG = !current.DEBUG;
       e.stopPropagation();
       return true;
   }

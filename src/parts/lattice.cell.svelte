@@ -411,6 +411,10 @@ function highlight_multi()
   style:--mark-opacity={  interp3($prefs.marks.opacity,  { lower: 0.20, preset: 0.75, upper: 1.00 }) }
 >
   <div class="content">
+    {#if current.DEBUG}
+      <code>{cell.x}-{cell.y}</code>
+    {/if}
+    
     {#if cell.fixed}
       <div class="fixed"> {cell.fixed} </div>
     {/if}
