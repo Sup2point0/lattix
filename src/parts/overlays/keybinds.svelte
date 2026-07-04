@@ -13,7 +13,7 @@ import { keybinds } from "#scripts/keybinds";
 <h1> Keybinds </h1>
 <p> Keybinds to help you ever more optimise your workflow. Hopefully they should be pretty intuitive! </p>
 
-<table><tbody>
+<table class="keybinds"><tbody>
   {#each keybinds as keybind}
     <tr>
       <th>
@@ -25,7 +25,7 @@ import { keybinds } from "#scripts/keybinds";
           {/if}
         {/each}
       </th>
-      <td> {keybind.desc} </td>
+      <td> {@html keybind.desc} </td>
     </tr>
   {/each}
 </tbody></table>
@@ -37,24 +37,22 @@ table {
   margin-top: 3rem;
   font-size: 100%;
   border-collapse: collapse;
-}
 
-tr {
-  border-top: 1px solid $col-grey-light;
-  border-bottom: 1px solid $col-grey-light;
-}
+  tr {
+    border-top: 1px solid $col-grey-light;
+    border-bottom: 1px solid $col-grey-light;
+  }
 
-th {
-  padding: 1.5rem 2rem 1.5rem 0;
-  margin: 0;
-  font-weight: normal;
-  text-align: left;
-}
+  th {
+    padding: 1.25rem 2rem 1.25rem 0;
+    margin: 0;
+    font-weight: normal;
+    text-align: left;
+  }
 
-td {
-  width: 100%;
-  padding: 0 2rem;
-  margin: 0;
+  td {
+    padding-right: 4em;
+  }
 }
 
 code {
@@ -66,6 +64,11 @@ code {
   border: 1px solid $col-grey-light;
   border-radius: 0.5em;
   box-shadow: 0 0.5px 1px $col-grey-light;
+}
+
+:global(.keybinds strong) {
+  font-weight: normal;
+  color: $col-blue-dark;
 }
 
 span.separator {

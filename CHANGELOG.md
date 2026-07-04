@@ -34,6 +34,12 @@ Clicking on a cell then pressing `TAB` doesn’t jump to the next cell – it on
 ### **Feat**
 New preferences settings for the **Grid** are now available! **Stats** has been renamed to **Extras**.
 
+### **Feat**
+One of those new preferences is `W` `A` `S` `D` navigation. I bet you’ll love that!
+
+### **Feat**
+New keybinds: `ALT` `=` and `ALT` `+` to upsize the grid.
+
 ### *Fix*
 It’s taken ages, but resizing the grid on both end now works properly.
 

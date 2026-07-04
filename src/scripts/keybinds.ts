@@ -8,6 +8,11 @@ export const keybinds = [
     desc: "view keybinds"
   },
   {
+    keys: ["ALT", "P"],
+    desc: "open/close Control Pane"
+  },
+  {},
+  {
     keys: [
       "↑", null,
       "←", null,
@@ -15,6 +20,15 @@ export const keybinds = [
       "→"
     ],
     desc: "move in grid"
+  },
+  {
+    keys: [
+      "W", null,
+      "A", null,
+      "S", null,
+      "D"
+    ],
+    desc: `move in grid (must be enabled in <strong>Grid</strong> settings)`
   },
   {
     keys: [
@@ -52,6 +66,7 @@ export const keybinds = [
     keys: ["CTRL", "arrow"],
     desc: "select multiple cells while moving"
   },
+  {},
   {
     keys: ["SPACE", null, "BACKSPACE", null, "DELETE"],
     desc: "clear cell"
@@ -69,6 +84,14 @@ export const keybinds = [
     desc: "edit grid"
   },
   {
+    keys: ["ALT", "="],
+    desc: `upsize grid (rightwards)`
+  },
+  {
+    keys: ["ALT", "SHIFT", "="],
+    desc: `upsize grid (downwards)`
+  },
+  {
     keys: ["ALT", "R"],
     desc: "clear grid"
   },
@@ -84,18 +107,15 @@ export const keybinds = [
     keys: ["ALT", "SHIFT", "M"],
     desc: "always disable marking"
   },
-  {
-    keys: ["ALT", "P"],
-    desc: "open Control Pane"
-  },
-  {
-    keys: ["ALT", "Q"],
-    desc: "view changelog"
-  },
   // {
   //   keys: [],
   //   desc: "highlight all cells with same digit" TODO
   // },
+  {},
+  {
+    keys: ["ALT", "Q"],
+    desc: "view changelog"
+  },
   {
     keys: ["ALT", "K"],
     desc: "enable debug mode"
@@ -146,9 +166,24 @@ export function keydown(e: KeyboardEvent): boolean
       current.overlay = (current.overlay === Overlay.KEYBINDS) ? null : Overlay.KEYBINDS;
       e.stopPropagation();
       return true;
+
+    case "P":
+      current.show_controls = !current.show_controls;
+      e.stopPropagation();
+      return true;
     
     case "G":
       current.editing = !current.editing;
+      e.stopPropagation();
+      return true;
+
+    case "=":
+      current.lattice.upsize("right");
+      e.stopPropagation();
+      return true;
+
+    case "+":
+      current.lattice.upsize("down");
       e.stopPropagation();
       return true;
 
@@ -169,11 +204,6 @@ export function keydown(e: KeyboardEvent): boolean
       } else {
         current.mark_mode = (current.mark_mode === MarkMode.ALWAYS) ? MarkMode.DEFAULT : MarkMode.ALWAYS;
       }
-      e.stopPropagation();
-      return true;
-
-    case "P":
-      current.show_controls = !current.show_controls;
       e.stopPropagation();
       return true;
 
