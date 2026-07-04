@@ -15,13 +15,9 @@ import type { Key } from "#scripts/types";
 import { SvelteSet } from "svelte/reactivity";
 
 interface Props {
-  // kind?: "inner" | "outer";
-  // x: int;
-  // y: int;
   cell: Cell
 }
 
-// let { kind = "inner", x, y }: Props = $props();
 let { cell }: Props = $props();
 
 
@@ -161,7 +157,7 @@ function arrow_move(key: Key): Cell
 {
   let x = cell.x;
   let y = cell.y;
-  let move_outer = (current.editing || $prefs.cells.nav_outer) ? 1 : 0;  // FIXME
+  let move_outer = (current.editing || $prefs.grid.nav_outer) ? 1 : 0;  // FIXME
 
   switch (key) {
     case "ARROWLEFT":
@@ -197,14 +193,14 @@ function arrow_move(key: Key): Cell
       break;
   }
 
-  return current.lattice.cells[x][y];
+  return current.lattice.cells[y][x];
 }
 
 /** Handle jump moving in the grid with the arrow keys. */
 function arrow_jump(key: Key): Cell
 {  
   let x = cell.x, y = cell.y;
-  let jump_outer = (current.editing || $prefs.cells.nav_outer) ? 1 : 0;
+  let jump_outer = (current.editing || $prefs.grid.nav_outer) ? 1 : 0;
 
   switch (key) {
     case "ARROWLEFT":
@@ -224,7 +220,7 @@ function arrow_jump(key: Key): Cell
       break;
   }
 
-  return current.lattice.cells[x][y];
+  return current.lattice.cells[y][x];
 }
 
 /** Handle entering or marking digits in the cell. */
@@ -263,8 +259,8 @@ function process_digit(key: Key)
 
 function alt_single(key: Key)
 {
-  /* NOTE: `alt`+alpha is reserved for shortcuts, must use `ctrl`+`alt`+alpha to pencilmark letter */
-  if (Keys.Alpha.includes(key) && !current.held_keys.has("CONTROL")) return;
+  /* NOTE: `alt`+alpha is reserved for shortcuts */
+  if (Keys.Alpha.includes(key)) return;
 
   if (cell.marks.has(key)) {
     cell.marks.delete(key);

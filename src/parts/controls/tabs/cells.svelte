@@ -2,7 +2,6 @@
 
 import { prefs } from "#scripts/stores";
 
-import Toggle from "#parts/ui/toggle.svelte";
 import Slider from "#parts/ui/slider.svelte";
 
 </script>
@@ -11,15 +10,6 @@ import Slider from "#parts/ui/slider.svelte";
 <h2> Cells </h2>
 
 <div>
-  <label>
-    <section>
-      <h4> Outer Navigation </h4>
-      <p> Arrow keys can navigate to outer cells. </p>
-    </section>
-
-    <Toggle bind:value={$prefs.cells.nav_outer} />
-  </label>
-
   <label style:flex-wrap="wrap">
     <section>
       <h4> Size </h4>

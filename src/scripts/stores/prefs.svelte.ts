@@ -41,6 +41,8 @@ export class Prefs
   /** Settings for pencilmarks. */
   marks: MarkPrefs = Object.assign({}, new MarkPrefs())
 
+  grid: GridPrefs = Object.assign({}, new GridPrefs())
+
   cells: CellPrefs = Object.assign({}, new CellPrefs())
 }
 
@@ -83,13 +85,16 @@ class MarkPrefs
   opacity: Scalar = 1
 }
 
-class CellPrefs
+class GridPrefs
 {
-  include_corners: boolean = false  // TODO
+  include_corners: boolean = false
 
   /** If enabled, navigating the grid with arrow keys will also move to outer cells. */
   nav_outer: boolean = false
+}
 
+class CellPrefs
+{
   size: Scalar = 0.5
 
   /** Space between cells. */

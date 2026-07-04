@@ -9,12 +9,13 @@ import { current } from "#scripts/stores";
 import { ControlTab } from "#scripts/config";
 
 import Tab from "./tab.svelte";
-import Core from "./tabs/core.svelte";
-import Cols from "./tabs/cols.svelte";
-import Text from "./tabs/text.svelte";
-import Marks from "./tabs/marks.svelte";
-import Cells from "./tabs/cells.svelte";
-import Stats from "./tabs/stats.svelte";
+import CoreTab from "./tabs/core.svelte";
+import ColsTab from "./tabs/cols.svelte";
+import TextTab from "./tabs/text.svelte";
+import MarksTab from "./tabs/marks.svelte";
+import GridTab from "./tabs/grid.svelte";
+import CellsTab from "./tabs/cells.svelte";
+import StatsTab from "./tabs/stats.svelte";
 
 import { slide, scale } from "svelte/transition";
 import { expoOut } from "svelte/easing";
@@ -29,17 +30,19 @@ import { expoOut } from "svelte/easing";
       {#key current.control_tab}
         <form in:scale={{ duration: 500, easing: expoOut, start: 0.97 }}>
           {#if current.control_tab === ControlTab.CORE}
-            <Core />
+            <CoreTab />
           {:else if current.control_tab === ControlTab.COLS}
-            <Cols />
+            <ColsTab />
           {:else if current.control_tab === ControlTab.TEXT}
-            <Text />
+            <TextTab />
           {:else if current.control_tab === ControlTab.MARKS}
-            <Marks />
+            <MarksTab />
+          {:else if current.control_tab === ControlTab.GRID}
+            <GridTab />
           {:else if current.control_tab === ControlTab.CELLS}
-            <Cells />
+            <CellsTab />
           {:else if current.control_tab === ControlTab.STATS}
-            <Stats />
+            <StatsTab />
           {/if}
         </form>
       {/key}

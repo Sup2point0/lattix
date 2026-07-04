@@ -47,7 +47,7 @@ onMount(() => {
     {#each current.lattice.cells as column}
       {#each column as cell}
         {#if current.lattice.is_corner_cell(cell)}
-          {#if $prefs.cells.include_corners}
+          {#if $prefs.grid.include_corners}
             <Cell {cell} />
           {:else}
             <div class="empty"></div>
