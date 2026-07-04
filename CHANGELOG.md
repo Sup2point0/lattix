@@ -7,15 +7,15 @@
 ## Features in Development
 
 <!--
-Copying the grid to Markdown
-Transposing and rotating the grid
-
-Fix:
-Invert (x,y) to (y,x) to sync better with rendering
+- PAGE for Control Panel pages
+- Copying the grid to Markdown
+- Transposing and rotating the grid
+- mark alignment broken
+- Only allow outer navigation if cell has contents (arrow, alt+arrow)
+- auto-highlight lane peaks
+- auto-highlight conflicts
+- Right click for note
 -->
-
-### **Feat**
-Downsizing the grid
 
 ### *Fix*
 Clicking on a cell then pressing `TAB` doesn’t jump to the next cell – it only does so on the second press.
