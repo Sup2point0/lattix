@@ -87,6 +87,8 @@ class MarkPrefs
 
 class GridPrefs
 {
+  wasd_nav: boolean = false
+  
   include_corners: boolean = false
 
   /** If enabled, navigating the grid with arrow keys will also move to outer cells. */

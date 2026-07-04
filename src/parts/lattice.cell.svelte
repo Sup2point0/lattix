@@ -91,9 +91,9 @@ function onkeydown(e: KeyboardEvent)
 {
   let key = e.key.toUpperCase();
 
-  if (Keys.Ignored.includes(key)) return;
+  if (Keys.Ignored.has(key)) return;
 
-  if (Keys.Arrows.includes(key)) {
+  if (Keys.Arrows.has(key) || (Keys.WASD.has(key) && $prefs.grid.wasd_nav)) {
     e.preventDefault();
     if (current.drag_mode) return;
 
@@ -141,7 +141,7 @@ function onkeydown(e: KeyboardEvent)
   }
 
   if (
-    Keys.Numbers.includes(key) || Keys.Alpha.includes(key) || Keys.Punct.includes(key)
+    Keys.Numbers.has(key) || Keys.Alpha.has(key) || Keys.Punct.has(key)
   ) {
     let was_keybind = keybinds.keydown(e);
     if (was_keybind || e.ctrlKey) return;
@@ -157,10 +157,11 @@ function arrow_move(key: Key): Cell
 {
   let x = cell.x;
   let y = cell.y;
-  let move_outer = (current.editing || $prefs.grid.nav_outer) ? 1 : 0;  // FIXME
+  let move_outer = (current.editing || $prefs.grid.nav_outer) ? 1 : 0;
 
   switch (key) {
     case "ARROWLEFT":
+    case "A":
       if (x === 1 - move_outer) {
         x = current.lattice.inner_width + move_outer;
       } else {
@@ -169,6 +170,7 @@ function arrow_move(key: Key): Cell
       break;
 
     case "ARROWRIGHT":
+    case "D":
       if (x === current.lattice.inner_width + move_outer) {
         x = 1 - move_outer;
       } else {
@@ -177,6 +179,7 @@ function arrow_move(key: Key): Cell
       break;
 
     case "ARROWUP":
+    case "W":
       if (y === 1 - move_outer) {
         y = current.lattice.inner_height + move_outer;
       } else {
@@ -185,6 +188,7 @@ function arrow_move(key: Key): Cell
       break;
 
     case "ARROWDOWN":
+    case "S":
       if (y === current.lattice.inner_height + move_outer) {
         y = 1 - move_outer;
       } else {
@@ -204,18 +208,22 @@ function arrow_jump(key: Key): Cell
 
   switch (key) {
     case "ARROWLEFT":
+    case "A":
       x = 1 - jump_outer;
       break;
 
     case "ARROWRIGHT":
+    case "D":
       x = current.lattice.inner_width + jump_outer;
       break;
 
     case "ARROWUP":
+    case "W":
       y = 1 - jump_outer;
       break;
 
     case "ARROWDOWN":
+    case "S":
       y = current.lattice.inner_height + jump_outer;
       break;
   }
@@ -260,7 +268,7 @@ function process_digit(key: Key)
 function alt_single(key: Key)
 {
   /* NOTE: `alt`+alpha is reserved for shortcuts */
-  if (Keys.Alpha.includes(key)) return;
+  if (Keys.Alpha.has(key)) return;
 
   if (cell.marks.has(key)) {
     cell.marks.delete(key);

@@ -1,18 +1,21 @@
 export class Keys {
   static readonly Ignored
-    = ["CONTROL", "SHIFT", "ALT", "TAB"];
+    = new Set(["CONTROL", "SHIFT", "ALT", "TAB"]);
   
   static readonly Arrows
-    = ["ARROWLEFT", "ARROWRIGHT", "ARROWUP", "ARROWDOWN"];
+    = new Set(["ARROWLEFT", "ARROWRIGHT", "ARROWUP", "ARROWDOWN"]);
+
+  static readonly WASD
+    = new Set(["W", "A", "S", "D"]);
   
   static readonly Numbers
-    = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+    = new Set(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]);
   
   static readonly Alpha
-    = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "U", "T", "V", "W", "X", "Y", "Z"];
+    = new Set(["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "U", "T", "V", "W", "X", "Y", "Z"]);
   
   static readonly Punct
-    = [",", ".", "!", "?", "+", "-", "*", "/", "=", "<", ">", "_", "~", "#", "$", "%"];
+    = new Set([",", ".", "!", "?", "+", "-", "*", "/", "=", "<", ">", "_", "~", "#", "$", "%"]);
 }
 
 export enum Overlay

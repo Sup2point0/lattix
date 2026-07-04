@@ -9,13 +9,13 @@ import { current } from "#scripts/stores";
 import { ControlTab } from "#scripts/config";
 
 import Tab from "./tab.svelte";
-import CoreTab from "./tabs/core.svelte";
-import ColsTab from "./tabs/cols.svelte";
-import TextTab from "./tabs/text.svelte";
-import MarksTab from "./tabs/marks.svelte";
-import GridTab from "./tabs/grid.svelte";
-import CellsTab from "./tabs/cells.svelte";
-import StatsTab from "./tabs/stats.svelte";
+import CoreTab  from "./tabs/core.prefs.svelte";
+import ColsTab  from "./tabs/cols.prefs.svelte";
+import TextTab  from "./tabs/text.prefs.svelte";
+import MarksTab from "./tabs/marks.prefs.svelte";
+import GridTab  from "./tabs/grid.prefs.svelte";
+import CellsTab from "./tabs/cells.prefs.svelte";
+import StatsTab from "./tabs/extra.prefs.svelte";
 
 import { slide, scale } from "svelte/transition";
 import { expoOut } from "svelte/easing";
