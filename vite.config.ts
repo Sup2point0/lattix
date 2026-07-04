@@ -1,3 +1,5 @@
+/// <reference types="vitest/config" />
+
 import { sveltekit } from "@sveltejs/kit/vite";
 import { defineConfig } from "vite";
 
@@ -15,4 +17,7 @@ export default defineConfig({
       allow: [".."],
     },
   },
+  test: {
+    globals: true,
+  }
 });
