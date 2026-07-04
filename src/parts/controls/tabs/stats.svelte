@@ -5,6 +5,10 @@ import { prefs_is_dirty, reset_prefs } from "#scripts/stores/prefs.svelte.ts";
 import { type int, TimerState } from "#scripts/types";
 
 import Clicky from "#parts/ui/clicky.svelte";
+import Tool from "#parts/ui/tool.svelte";
+
+
+let has_reset = false;
 
 
 function display_time(t: int | null): string
@@ -24,7 +28,7 @@ function display_time(t: int | null): string
 </script>
 
 
-<h2> Stats </h2>
+<h2> Extras </h2>
 
 <div>
   <section>
@@ -62,12 +66,20 @@ function display_time(t: int | null): string
   <section>
     <div class="row">
       <h4> Outer Cells </h4>
-      <p> {Object.values(current.lattice.cells).filter(cell => cell.kind === "outer" && cell.fixed).length} </p>
+      <p>
+        {[...current.lattice.iter_cells().filter(
+          cell => current.lattice.is_outer_cell(cell) && cell.fixed
+        )].length}
+      </p>
     </div>
     
     <div class="row">
       <h4> Fixed Cells </h4>
-      <p> {Object.values(current.lattice.cells).filter(cell => cell.kind === "inner" && cell.fixed).length} </p>
+      <p>
+        {[...current.lattice.iter_cells().filter(
+          cell => current.lattice.is_outer_cell(cell) && cell.fixed
+        )].length}
+      </p>
     </div>
   </section>
 
@@ -96,6 +108,8 @@ function display_time(t: int | null): string
       }}
       disabled={!$prefs_is_dirty}
     />
+
+    <Tool text="Debug Mode" text_active="Debugging" bind:value={current.DEBUG} />
   </section>
 </div>
 

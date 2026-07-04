@@ -8,8 +8,8 @@ test("init()", () =>
   let lattice = new Lattice();
   
   for_sizes(lattice, (width, height) => {
-    expect(lattice.width).toBe(width);
-    expect(lattice.height).toBe(height);
+    expect(lattice.inner_width).toBe(width);
+    expect(lattice.inner_height).toBe(height);
     
     for (let y = 0; y < lattice.inner_height + 2; y++) {
       for (let x = 0; x < lattice.inner_width + 2; x++) {
@@ -33,7 +33,7 @@ test("fill-random()", () =>
     expect(lattice.inner_width).toBe(size);
     expect(lattice.inner_height).toBe(size);
 
-    for (let row of lattice.inner_rows()) {
+    for (let row of lattice.iter_inner_rows()) {
       let seen_digits = new Set();
 
       for (let cell of row.slice(1, -1)) {

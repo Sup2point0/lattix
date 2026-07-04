@@ -383,7 +383,7 @@ function highlight_multi()
 <button
   bind:this={self}
   class={[
-    cell.kind,
+    current.lattice.is_outer_cell(cell) ? "outer" : "inner",
     Object.entries(MarkAlignment).find(([key, val]) => val === $prefs.marks.align)?.[0].toLowerCase(),
     {
       fixed: cell.fixed !== null,
@@ -394,7 +394,7 @@ function highlight_multi()
     }
   ]}
   disabled={
-    (cell.kind === "outer" && !current.editing && !cell.entered && !cell.marks.size && !cell.fixed) ?
+    (current.lattice.is_outer_cell(cell) && !current.editing && !cell.entered && !cell.marks.size && !cell.fixed) ?
       true
     : undefined
   }
