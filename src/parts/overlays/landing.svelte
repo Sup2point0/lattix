@@ -6,7 +6,7 @@ The landing overlay.
 <script lang="ts">
 
 import { current } from "#scripts/stores";
-import { tips } from "#scripts/flavour";
+import { lattix } from "#scripts/suppety";
 
 import { draw, fade, slide } from "svelte/transition";
 import { expoInOut, quintInOut } from "svelte/easing";
@@ -17,23 +17,14 @@ let timeout: number | null = null;
 let tip = $state("");
 
 onMount(() => {
-  tip = tips.sample_value()!;
+  tip = lattix.tips.sample_value()!;
 
-  timeout = setTimeout(() => {
-    current.landing = 4;  // trigger svg animations
-    timeout = setTimeout(() => {
-      current.landing = 3;  // trigger svg transitions
-      timeout = setTimeout(() => {
-        current.landing = 2;  // reveal title
-        timeout = setTimeout(() => {
-          current.landing = 1;  // hide overlay
-          timeout = setTimeout(() => {
-            current.landing = 0;  // reveal window
-          }, 200);
-        }, 2500);  // hide overlay
-      }, 500);  // reveal title
-    }, 1);  // trigger svg transitions
-  }, 1);  // trigger svg animations
+  let reveal_window  = () => { current.landing = 0; };
+  let hide_overlay   = () => { current.landing = 1; timeout = setTimeout(reveal_window,  200); };
+  let reveal_title   = () => { current.landing = 2; timeout = setTimeout(hide_overlay,   2500); };
+  let svg_transition = () => { current.landing = 3; timeout = setTimeout(reveal_title,   500); };
+  let svg_animation  = () => { current.landing = 4; timeout = setTimeout(svg_transition, 1); };
+  timeout = setTimeout(svg_animation, 1);
 });
 
 </script>
