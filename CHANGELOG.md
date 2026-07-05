@@ -8,7 +8,6 @@
 
 <!--
 Quick
-- PAGE for Control Panel pages
 - auto-highlight lane peaks
 - copying the grid to Markdown
 - highlight all cells with same digit

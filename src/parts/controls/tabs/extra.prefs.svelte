@@ -65,6 +65,11 @@ function display_time(t: int | null): string
 
   <section>
     <div class="row">
+      <h4> Size </h4>
+      <p> {current.lattice.inner_width}×{current.lattice.inner_height} </p>
+    </div>
+
+    <div class="row">
       <h4> Outer Cells </h4>
       <p>
         {[...current.lattice.iter_cells().filter(
@@ -79,6 +84,16 @@ function display_time(t: int | null): string
         {[...current.lattice.iter_cells().filter(
           cell => current.lattice.is_outer_cell(cell) && cell.fixed
         )].length}
+      </p>
+    </div>
+
+    <div class="row">
+      <h4> Filled </h4>
+      <p>
+        {Math.round(100
+          * [...current.lattice.iter_cells().filter(cell => cell.entered)].length
+          / (current.lattice.inner_width * current.lattice.inner_height)
+        )}%
       </p>
     </div>
   </section>

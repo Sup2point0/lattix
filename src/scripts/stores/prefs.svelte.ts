@@ -41,9 +41,9 @@ export class Prefs
   /** Settings for pencilmarks. */
   marks: MarkPrefs = Object.assign({}, new MarkPrefs())
 
-  grid: GridPrefs = Object.assign({}, new GridPrefs())
-
   cells: CellPrefs = Object.assign({}, new CellPrefs())
+
+  grid: GridPrefs = Object.assign({}, new GridPrefs())
 }
 
 class LatticePrefs
@@ -86,6 +86,23 @@ class MarkPrefs
   opacity: Scalar = 1
 }
 
+class CellPrefs
+{
+  size: Scalar = 0.5
+
+  /** Space between cells. */
+  gap: Scalar = 0.5
+
+  /** Gap between main grid and outer lanes. */
+  outer_gap: Scalar = 0.5  // TODO
+
+  /** `border-radius:` of cells. */
+  rounding: Scalar = 0.5
+
+  /** Opacity of cell outlines. */
+  opacity: Scalar = 0.25
+}
+
 class GridPrefs
 {
   wasd_nav: boolean = false
@@ -97,23 +114,6 @@ class GridPrefs
 
   /** Can the grid grow to an infinite size? */
   unlimited: boolean = false
-}
-
-class CellPrefs
-{
-  size: Scalar = 0.5
-
-  /** Space between cells. */
-  gap: Scalar = 0.5
-
-  /** Gap between main grid and outer lanes. */
-  outer_gap: Scalar = 0.5  // TODO
-
-  /** border-radius of cells. */
-  rounding: Scalar = 0.5
-
-  /** Opacity of cell outlines. */
-  opacity: Scalar = 0.25
 }
 
 
