@@ -406,7 +406,7 @@ function fix_multi(key: Key)
 
     {#if cell.entered}
       <div class="entered"> {cell.entered} </div>
-    {:else if current.show_marks}
+    {:else if current.show_marks && cell.marks.size > 0}
       <div class="marks"> {@html [...cell.marks].sort().join("&ZeroWidthSpace;")} </div>
     {/if}
   </div>
@@ -444,7 +444,7 @@ button .content {
   outline-style: solid;
   outline-color: transparent;
 
-  transition: all 0.1s ease-out;
+  transition: border 0.1s ease-out, outline 0.1s ease-out;
 
   div {
     max-width: 100%;
@@ -558,14 +558,14 @@ button.invert .content {
 }
 
 button.top_left .content:has(.marks) {
-  padding-top: 0.25em;
-  padding-left: 0.25em;
+  padding-top: 0.4em;
+  padding-left: 0.4em;
   justify-content: start;
   align-items: start;
 }
 button.top_right .content:has(.marks) {
-  padding-top: 0.25em;
-  padding-right: 0.25em;
+  padding-top: 0.4em;
+  padding-right: 0.4em;
   justify-content: end;
   align-items: start;
 }
