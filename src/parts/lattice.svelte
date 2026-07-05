@@ -50,7 +50,7 @@ onMount(() => {
     style:--cell-gap={interp3($prefs.cells.gap, { lower: 0, preset: 1, upper: 2 })}
   >
     {#each current.lattice.cells as column}
-      {#each column as cell}
+      {#each column as cell (cell.shard)}
         {#if current.lattice.is_corner_cell(cell) && !$prefs.grid.include_corners}
           <div class="empty"></div>
         {:else}

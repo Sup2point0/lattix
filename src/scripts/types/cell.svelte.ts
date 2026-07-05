@@ -7,6 +7,9 @@ import type { int, Key } from "./root";
 
 export class Cell
 {
+  static shard_counter: int = 0;
+  shard: int;
+
   button: HTMLButtonElement | null = null;
   input: HTMLTextAreaElement | null = null;
   
@@ -29,6 +32,9 @@ export class Cell
   highlight: ThemeCol | null = $state(null);
   
   constructor(x: int, y: int) {
+    Cell.shard_counter++;
+    this.shard = Cell.shard_counter;
+
     this.x = x;
     this.y = y;
   }
