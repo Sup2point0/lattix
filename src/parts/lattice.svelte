@@ -29,12 +29,18 @@ onMount(() => {
 >
   {#if current.editing}
     <div class="empty"></div>
-    <button class="new row" onclick={() => current.lattice.upsize("top")}> + </button>
+    <div class="resize row">
+      <button class="wipe row" onclick={() => current.lattice.downsize("top")}> - </button>
+      <button class="new row" onclick={() => current.lattice.upsize("top")}> + </button>
+    </div>
     <div class="empty"></div>
   {/if}
-
+  
   {#if current.editing}
-    <button class="new column" onclick={() => current.lattice.upsize("left")}> + </button>
+    <div class="resize column">
+      <button class="wipe column" onclick={() => current.lattice.downsize("left")}> - </button>
+      <button class="new column" onclick={() => current.lattice.upsize("left")}> + </button>
+    </div>
   {/if}
 
   <div class="lattice"
@@ -55,12 +61,18 @@ onMount(() => {
   </div>
   
   {#if current.editing}
-    <button class="new column" onclick={() => current.lattice.upsize("right")}> + </button>
+    <div class="resize column">
+      <button class="wipe column" onclick={() => current.lattice.downsize("right")}> - </button>
+      <button class="new column" onclick={() => current.lattice.upsize("right")}> + </button>
+    </div>
   {/if}
 
   {#if current.editing}
     <div class="empty"></div>
-    <button class="new row" onclick={() => current.lattice.upsize("down")}> + </button>
+    <div class="resize row">
+      <button class="wipe row" onclick={() => current.lattice.downsize("down")}> - </button>
+      <button class="new row" onclick={() => current.lattice.upsize("down")}> + </button>
+    </div>
     <div class="empty"></div>
   {/if}
 </div>
@@ -82,33 +94,56 @@ onMount(() => {
   border-collapse: collapse;
 }
 
-button.new {
+.resize {
   justify-self: center;
   align-self: center;
-  font-size: 150%;
-  color: $col-blue;
-  background: color-mix(in oklch, $col-blue, transparent 90%);
-  border: none;
-  border-radius: 0.5rem;
+  display: flex;
+  justify-content: stretch;
+  align-items: stretch;
+  gap: 0.5rem;
 
   &.row {
     width: 50%;
     height: 2rem;
+    flex-flow: row nowrap;
   }
 
   &.column {
     width: 2rem;
     height: 50%;
+    flex-flow: column nowrap;
+  }
+}
+
+.resize button {
+  width: 100%;
+  height: 100%;
+  font-size: 150%;
+  border: none;
+  border-radius: 0.5rem;
+  transition: all 0.1s ease-out;
+
+  &.new {
+    color: $col-blue;
+    background: color-mix(in oklch, $col-blue, transparent 90%);
+
+    &:hover { background: $col-blue; }
+    &:active { background: $col-blue-dark; }
   }
 
-  &:hover {
-    cursor: pointer;
-    color: white;
-    background: $col-blue;
+  &.wipe {
+    color: $col-red;
+    background: color-mix(in oklch, $col-red, transparent 90%);
+
+    &:hover { background: $col-red; }
+    &:active { background: color-mix(in oklch, $col-red, black 20%); }
   }
 
-  &:active {
-    background: $col-blue-dark;
+  &.new, &.wipe {
+    &:where(:hover, :focus-visible) {
+      cursor: pointer;
+      color: white;
+    }
   }
 }
 

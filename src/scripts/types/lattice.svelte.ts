@@ -1,11 +1,15 @@
-import { SvelteSet } from "svelte/reactivity";
+import { prefs } from "#scripts/stores";
 
 import { Cell } from "./cell.svelte.ts";
 import type { int, Direction } from "./root";
 import type { Toasts } from "./toasts.svelte.ts";
 
+import { get } from "svelte/store";
+import { SvelteSet } from "svelte/reactivity";
 
-const MIN_SIZE: int = 3;
+
+const MIN_SIZE: int = 1;
+const MAX_SIZE: int = 32;
 
 
 /**
@@ -195,32 +199,25 @@ export class Lattice
 
   // == RESIZING == //
 
+  /**
+   * Add a lane to the grid.
+   */
   upsize(from: Direction)
   {
+    if (get(prefs).grid.unlimited !== true) {
+      if (this.inner_width >= MAX_SIZE && this.inner_height >= MAX_SIZE) {
+        window.alert(`Maximum supported grid size is currently ${MAX_SIZE}×${MAX_SIZE}, sorry!\n\nIf you’d like to go further, you can enable Unlimited grid size in the Control Pane, but this might result in bugs or instability!`);
+        return;
+      }  else if ((from === "top" || from === "down") && this.inner_height >= MAX_SIZE) {
+        window.alert(`Maximum supported grid height is ${MAX_SIZE}!`);
+        return;
+      } else if ((from === "left" || from === "right") && this.inner_width >= MAX_SIZE) {
+        window.alert(`Maximum supported grid width is ${MAX_SIZE}!`);
+        return;
+      }
+    }
+
     switch (from) {
-      case "right":
-        let x = this.full_width - 1;
-
-        for (let [y, row] of this.cells.entries()) {
-          // shift rightmost column to make space
-          row[x].x++;
-
-          // insert new column
-          row.splice(x, 0, new Cell(x, y))
-        }
-        break;
-      
-      case "left":
-        // shift all columns to make space
-        for (let [y, row] of this.cells.entries()) {
-          for (let cell of row.slice(1)) {
-            cell.x++;
-          }
-
-          row.splice(1, 0, new Cell(1, y));
-        }
-        break;
-      
       case "down":
         // shift lowermost row to make space
         let lowest_row = this.cells.at(-1)!;
@@ -248,12 +245,87 @@ export class Lattice
         ));
 
         break;
+
+      case "right":
+        let x = this.full_width - 1;
+
+        for (let [y, row] of this.cells.entries()) {
+          // shift rightmost column to make space
+          row[x].x++;
+
+          // insert new column
+          row.splice(x, 0, new Cell(x, y))
+        }
+        break;
       
+      case "left":
+        // shift all columns to make space
+        for (let [y, row] of this.cells.entries()) {
+          for (let cell of row.slice(1)) {
+            cell.x++;
+          }
+
+          row.splice(1, 0, new Cell(1, y));
+        }
+        break;
     }
   }
 
-  downsize()
-  {}
+  /**
+   * Wipe a lane from the grid.
+   */
+  downsize(from: Direction)
+  {
+    if (this.inner_width <= 1 && this.inner_height <= 1) {
+      window.alert(`Minimum supported grid size is ${MIN_SIZE}×${MIN_SIZE}, mate! Any more and your grid’s gone!`);
+      return;
+    } else if ((from === "top" || from === "down") && this.inner_height <= 1) {
+      window.alert(`Minimum supported grid height is ${MIN_SIZE}!`);
+      return;
+    } else if ((from === "left" || from === "right") && this.inner_width <= 1) {
+      window.alert(`Minimum supported grid width is ${MIN_SIZE}!`);
+      return;
+    }
+    
+    switch (from) {
+      case "down":
+        this.cells.splice(this.inner_height, 1);
+
+        for (let cell of this.cells.at(-1)!) {
+          cell.y--;
+        }
+        break;
+
+      case "top":
+        this.cells.splice(1, 1);
+
+        for (let row of this.cells.slice(1)) {
+          for (let cell of row) {
+            cell.y--;
+          }
+        }
+        break;
+
+      case "right":
+        let x = this.inner_width;
+
+        for (let row of this.cells) {
+          row.splice(x, 1);
+          row.at(-1)!.x--;
+        }
+        break;
+
+      case "left":
+        for (let row of this.cells) {
+          row.splice(1, 1);
+
+          for (let cell of row.slice(1)) {
+            cell.x--;
+          }
+        }
+        break;
+    }
+  }
 
 
   // == CLEAR == //
