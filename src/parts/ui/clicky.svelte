@@ -26,6 +26,7 @@ let {
 </script>
 
 
+<div style:position="relative">
 <button
   class:square
   onclick={action}
@@ -36,18 +37,22 @@ let {
   {:else}
     {@html text}
   {/if}
+</button>
 
   {#if hover_text}
     <div class="hover-text">
       {@html hover_text}
     </div>
   {/if}
-</button>
+  </div>
 
 
 <style lang="scss">
 
 @use 'sass:color';
+
+
+$square-size: 2.25rem;
 
 button {
   padding: 0.5em 1em;
@@ -62,8 +67,8 @@ button {
   transition: all 0.1s ease-out;
 
   &.square {
-    width: 2.25rem;
-    height: 2.25rem;
+    width: $square-size;
+    height: $square-size;
     padding: 0.25em;
     display: flex;
     justify-content: center;
@@ -89,17 +94,19 @@ button {
   width: max-content;
   padding: 0.5em 1em;
   position: absolute;
-  top: 3rem;
+  top: $square-size + 0.5rem;
   z-index: 5;
-  text-align: center;
+  font-size: 90%;
   color: white;
+  text-align: center;
   background: rgb(black, 75%);
   border-radius: 0.5rem;
   visibility: hidden;
   opacity: 0;
+  transform: translateX(-50%) translateX($square-size / 2);
   transition: opacity 0.2s ease-out;
 
-  button:not([disabled]):where(:hover, :focus) & {
+  button:not([disabled]):where(:hover, :focus) ~ & {
     display: block;
     visibility: visible;
     opacity: 1;

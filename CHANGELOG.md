@@ -41,6 +41,9 @@ Added all sorts of transformations on the grid – flipping, rotating, transposi
 ### **Feat**
 Also long overdue, the **Control Pane** tabs now use icons instead of text, for a much cleaner UI.
 
+### *Fix*
+Grid size is now saved to localStorage.
+
 
 ## 4 July 2026
 

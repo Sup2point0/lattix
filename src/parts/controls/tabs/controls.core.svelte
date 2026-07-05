@@ -14,97 +14,99 @@ import ColourOptions from "#parts/ui/options.cols.svelte";
 <h2> Control Pane </h2>
 
 <div>
-  <div class="tools">
-    <Tool
-      text="Select Multiple"
-      text_active="Selecting Multiple"
-      bind:value={current.multiselecting}
-    />
-    <Tool
-      text="Make Pencilmarks"
-      text_active="Pencilmarking"
-      bind:value={current.marking}
-    />
-    <Tool
-      text="Edit Grid"
-      text_active="Editing Grid"
-      bind:value={current.editing}
-    />
-    <Tool
-      text="Show Pencilmarks"
-      text_active="Pencilmarks Shown"
-      bind:value={current.show_marks}
-    />
-  </div>
+  <section class="core">
+    <div class="tools">
+      <Tool
+        text="Select Multiple"
+        text_active="Selecting Multiple"
+        bind:value={current.multiselecting}
+      />
+      <Tool
+        text="Make Pencilmarks"
+        text_active="Pencilmarking"
+        bind:value={current.marking}
+      />
+      <Tool
+        text="Edit Grid"
+        text_active="Editing Grid"
+        bind:value={current.editing}
+      />
+      <Tool
+        text="Show Pencilmarks"
+        text_active="Pencilmarks Shown"
+        bind:value={current.show_marks}
+      />
+    </div>
 
-  <div class="clickies">
-    <section>
-      <Clicky square
-        hover-text="Rotate Grid (Clockwise)"
-        action={() => current.lattice.rotate_clockwise()}
-      >
-        <span class="material-symbols-rounded"> rotate_right </span>
-      </Clicky>
-      
-      <Clicky square
-        hover-text="Rotate Grid (Counter-Clockwise)"
-        action={() => current.lattice.rotate_counter_clockwise()}
-      >
-        <span class="material-symbols-rounded"> rotate_left </span>
-      </Clicky>
+    <div class="clickies">
+      <section>
+        <Clicky square
+          hover-text="Rotate Grid (Clockwise)"
+          action={() => current.lattice.rotate_clockwise()}
+        >
+          <span class="material-symbols-rounded"> rotate_right </span>
+        </Clicky>
+        
+        <Clicky square
+          hover-text="Rotate Grid (Counter-Clockwise)"
+          action={() => current.lattice.rotate_counter_clockwise()}
+        >
+          <span class="material-symbols-rounded"> rotate_left </span>
+        </Clicky>
 
-      <Clicky square
-        hover-text="Flip Grid (Horizontal)"
-        action={() => current.lattice.flip_horizontal()}
-      >
-        <span class="material-symbols-rounded"> swap_horiz </span>
-      </Clicky>
+        <Clicky square
+          hover-text="Flip Grid (Horizontal)"
+          action={() => current.lattice.flip_horizontal()}
+        >
+          <span class="material-symbols-rounded"> swap_horiz </span>
+        </Clicky>
+        
+        <Clicky square
+          hover-text="Flip Grid (Vertical)"
+          action={() => current.lattice.flip_vertical()}
+        >
+          <span class="material-symbols-rounded"> swap_vert </span>
+        </Clicky>
+        
+        <Clicky square
+          hover-text="Transpose Grid"
+          action={() => current.lattice.transpose()}
+        >
+          <span class="material-symbols-rounded"> open_in_full </span>
+        </Clicky>
+      </section>
       
-      <Clicky square
-        hover-text="Flip Grid (Vertical)"
-        action={() => current.lattice.flip_vertical()}
-      >
-        <span class="material-symbols-rounded"> swap_vert </span>
-      </Clicky>
-      
-      <Clicky square
-        hover-text="Transpose Grid"
-        action={() => current.lattice.transpose()}
-      >
-        <span class="material-symbols-rounded"> open_in_full </span>
-      </Clicky>
-    </section>
-    
-    <section>
-      <Clicky square
-        hover-text="Restart"
-        action={() => current.lattice.clear_work()}
-      >
-        <span class="material-symbols-rounded"> refresh </span>
-      </Clicky>
-      
-      <Clicky square
-        hover-text="Clear Pencilmarks"
-        action={() => current.lattice.clear_marks()}
-      >
-        <span class="material-symbols-rounded"> reset_wrench </span>
-      </Clicky>
-      
-      <Clicky square
-        hover-text="Clear Highlights"
-        action={() => current.lattice.clear_highlights()}
-      >
-        <span class="material-symbols-rounded"> reset_colors </span>
-      </Clicky>
-      
-      <Clicky square
-        hover-text="Reset Grid"
-        action={() => current.lattice.reset_grid()}
-      >
-        <span class="material-symbols-rounded"> reset_focus </span>
-      </Clicky>
-    </section>
-  </div>
+      <section>
+        <Clicky square
+          hover-text="Restart"
+          action={() => current.lattice.clear_work()}
+        >
+          <span class="material-symbols-rounded"> refresh </span>
+        </Clicky>
+        
+        <Clicky square
+          hover-text="Clear Pencilmarks"
+          action={() => current.lattice.clear_marks()}
+        >
+          <span class="material-symbols-rounded"> reset_wrench </span>
+        </Clicky>
+        
+        <Clicky square
+          hover-text="Clear Highlights"
+          action={() => current.lattice.clear_highlights()}
+        >
+          <span class="material-symbols-rounded"> reset_colors </span>
+        </Clicky>
+        
+        <Clicky square
+          hover-text="Reset Grid"
+          action={() => current.lattice.reset_grid()}
+        >
+          <span class="material-symbols-rounded"> reset_focus </span>
+        </Clicky>
+      </section>
+    </div>
+  </section>
   
   <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
   <!-- svelte-ignore a11y_click_events_have_key_events -->
@@ -151,20 +153,24 @@ import ColourOptions from "#parts/ui/options.cols.svelte";
 @use './tab-view' as *;
 
 
-div > div {
+section.core {
   padding-top: 2rem;
   margin-top: 2rem;
+  border-top: 1px solid $col-grey-light;
+}
+
+.tools {
   display: grid;
   grid-template-columns: 1fr 1fr;
   justify-content: stretch;
   gap: 0.5rem;
-  border-top: 1px solid $col-grey-light;
 }
 
 .clickies {
+  margin-top: 1.5rem;
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-between;
+  justify-content: space-around;
 
   section {
     display: flex;

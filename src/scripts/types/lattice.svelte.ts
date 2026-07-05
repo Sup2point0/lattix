@@ -245,6 +245,12 @@ export class Lattice
         }
         break;
     }
+
+    prefs.update(p => {
+      p.lattice.width = this.inner_width;
+      p.lattice.height = this.inner_height;
+      return p;
+    });
   }
 
   /**
@@ -301,6 +307,12 @@ export class Lattice
         }
         break;
     }
+
+    prefs.update(p => {
+      p.lattice.width = this.inner_width;
+      p.lattice.height = this.inner_height;
+      return p;
+    });
   }
 
 

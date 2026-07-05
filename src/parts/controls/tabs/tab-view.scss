@@ -2,7 +2,8 @@
 
 
 div {
-  min-width: 20em;
+  min-width: 21em;
+  max-width: 50em;
 }
 
 h2 {
@@ -36,6 +37,7 @@ section {
   }
 
   p {
+    font-size: 90%;
     color: $col-grey-dark;
   }
 }

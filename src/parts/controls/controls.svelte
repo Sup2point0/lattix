@@ -25,29 +25,25 @@ import { expoOut } from "svelte/easing";
 
 <div class="controls-container">
   {#if current.show_controls}
-    <div transition:slide={{ duration: 500, easing: expoOut, axis: "x" }}>
+  <div transition:slide={{ duration: 500, easing: expoOut, axis: "x" }}>
 
-      {#key current.control_tab}
-        <form in:scale={{ duration: 500, easing: expoOut, start: 0.97 }}>
-          {#if current.control_tab === ControlTab.CORE}
-            <CoreTab />
-          {:else if current.control_tab === ControlTab.COLS}
-            <ColsTab />
-          {:else if current.control_tab === ControlTab.TEXT}
-            <TextTab />
-          {:else if current.control_tab === ControlTab.MARKS}
-            <MarksTab />
-          {:else if current.control_tab === ControlTab.GRID}
-            <GridTab />
-          {:else if current.control_tab === ControlTab.CELLS}
-            <CellsTab />
-          {:else if current.control_tab === ControlTab.EXTRA}
-            <StatsTab />
-          {/if}
-        </form>
-      {/key}
+    {#key current.control_tab}
+    <form
+      class:no-scroll={current.control_tab === ControlTab.CORE}
+      in:scale={{ duration: 500, easing: expoOut, start: 0.97 }}
+    >
+      {#if      current.control_tab === ControlTab.CORE}  <CoreTab />
+      {:else if current.control_tab === ControlTab.COLS}  <ColsTab />
+      {:else if current.control_tab === ControlTab.TEXT}  <TextTab />
+      {:else if current.control_tab === ControlTab.MARKS} <MarksTab />
+      {:else if current.control_tab === ControlTab.GRID}  <GridTab />
+      {:else if current.control_tab === ControlTab.CELLS} <CellsTab />
+      {:else if current.control_tab === ControlTab.EXTRA} <StatsTab />
+      {/if}
+    </form>
+    {/key}
 
-    </div>
+  </div>
   {/if}
   
   <nav>
@@ -94,6 +90,10 @@ form {
   padding-right: 2rem;
   overflow-y: auto;
   scrollbar-width: thin;
+
+  &.no-scroll {
+    overflow-y: visible;
+  }
 }
 
 </style>
