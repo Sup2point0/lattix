@@ -42,7 +42,9 @@ onMount(() => {
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <main
   onmousedown={e => {
-    if (document.elementFromPoint(e.clientX, e.clientY)?.tagName !== "BUTTON") {
+    let clicked = document.elementFromPoint(e.clientX, e.clientY)?.tagName;
+
+    if (!["BUTTON", "LABEL", "H4"].includes(clicked)) {
       current.lattice.selected.clear();
     }
   }}

@@ -75,7 +75,8 @@ function cycle_options()
 }
 
 button {
-  min-width: 5em;
+  width: max-content;
+  min-width: 6em;
   padding: 0.4em 0.6em;
   font-size: 100%;
   background: none;

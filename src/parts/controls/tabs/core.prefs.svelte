@@ -1,13 +1,12 @@
 <script lang="ts">
 
-import { current, MarkMode } from "#scripts/stores";
+import { current, prefs, MarkMode } from "#scripts/stores";
 import { HighlightCols } from "#scripts/config";
 
 import Tool from "#parts/ui/tool.svelte";
 import Clicky from "#parts/ui/clicky.svelte";
 import Options from "#parts/ui/options.svelte";
 import ColourOptions from "#parts/ui/options.cols.svelte";
-
 
 </script>
 
@@ -21,23 +20,20 @@ import ColourOptions from "#parts/ui/options.cols.svelte";
       text_active="Selecting Multiple"
       bind:value={current.multiselecting}
     />
-
     <Tool
       text="Make Pencilmarks"
       text_active="Pencilmarking"
       bind:value={current.marking}
     />
-
-    <Tool
-      text="Show Pencilmarks"
-      text_active="Pencilmarks Shown"
-      bind:value={current.show_marks}
-    />
-
     <Tool
       text="Edit Grid"
       text_active="Editing Grid"
       bind:value={current.editing}
+    />
+    <Tool
+      text="Show Pencilmarks"
+      text_active="Pencilmarks Shown"
+      bind:value={current.show_marks}
     />
   </div>
 
@@ -49,7 +45,20 @@ import ColourOptions from "#parts/ui/options.cols.svelte";
     <Options bind:value={current.mark_mode} options={Object.values(MarkMode)} />
   </label>
 
-  <div>
+  
+  <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+  <!-- svelte-ignore a11y_click_events_have_key_events -->
+  <label
+    style:flex-wrap="wrap"
+    onclick={() => {
+      current.lattice.highlight_selected();
+      current.lattice.selected.clear();
+    }}
+  >
+    <section>
+      <h4> Highlight </h4>
+    </section>
+
     <ColourOptions
       bind:value={
         () => {
@@ -65,18 +74,13 @@ import ColourOptions from "#parts/ui/options.cols.svelte";
       cols={[null].concat(HighlightCols)}
       disabled={current.lattice.selected.size === 0}
     />
-  </div>
+  </label>
 
   <div>
     <Clicky text="Clear Work" action={() => current.lattice.clear_work()} />
-    <Clicky text="Clear All" action={() => current.lattice.clear_all()} />
+    <Clicky text="Reset Grid" action={() => current.lattice.reset_grid()} />
     <Clicky text="Clear Pencilmarks" action={() => current.lattice.clear_marks()} />
     <Clicky text="Clear Highlights" action={() => current.lattice.clear_highlights()} />
-    <!-- <Clicky text="New" action={() => {
-      if (window.confirm("Reset the grid?")) {
-        alert("This feature hasn’t been implemented yet!");
-      } TODO
-    }} /> -->
   </div>
 </div>
 

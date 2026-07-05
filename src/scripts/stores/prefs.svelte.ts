@@ -57,6 +57,7 @@ class ColPrefs
 {
   theme: Theme = Theme.LIGHT
 
+  /** Default colour for highlighting a cell. */
   highlight: ThemeCol = ThemeCol.PINK
 }
 
@@ -128,7 +129,6 @@ export const prefs = persisted(
       parse: data => {
         let out = JSON.parse(data);
         repair_prefs(out);
-        console.log(`out =`, out);
         return out;
       }
     }

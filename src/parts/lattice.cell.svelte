@@ -135,7 +135,7 @@ function onkeydown(e: KeyboardEvent)
 
   if (e.altKey && key === "H") {
     current.lattice.selected.forEach(each => each.animate_press());
-    highlight_multi();
+    current.lattice.highlight_selected();
     current.lattice.selected.clear();
     return;
   }
@@ -353,25 +353,6 @@ function fix_multi(key: Key)
 
   for (let each of current.lattice.selected) {
     each.fix(null);
-  }
-}
-
-/** Handle highlighting multiple cells. */
-function highlight_multi()
-{
-  let added = 0;
-
-  for (let each of current.lattice.selected) {
-    if (each.highlight !== $prefs.cols.highlight) {
-      each.highlight = $prefs.cols.highlight;
-      added++;
-    }
-  }
-
-  if (added) return;
-
-  for (let each of current.lattice.selected) {
-    each.highlight = null;
   }
 }
 

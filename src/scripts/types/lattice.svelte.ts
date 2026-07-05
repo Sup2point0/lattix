@@ -14,8 +14,6 @@ const MAX_SIZE: int = 32;
 
 /**
  * A grid of cells.
- * 
- * The grid has a minimum size of 3x3.
  */
 export class Lattice
 {
@@ -197,6 +195,29 @@ export class Lattice
   }
 
 
+  // == INTERACTING == //
+
+  highlight_selected()
+  {
+    const default_highlight = get(prefs).cols.highlight;
+
+    let added = 0;
+
+    for (let each of this.selected) {
+      if (each.highlight !== default_highlight) {
+        each.highlight = default_highlight;
+        added++;
+      }
+    }
+
+    if (added) return;
+
+    for (let each of this.selected) {
+      each.highlight = null;
+    }
+  }
+
+
   // == RESIZING == //
 
   /**
@@ -332,7 +353,9 @@ export class Lattice
 
   clear_work()
   {
-    if (window.confirm("Clear all entered and pencilmarked digits?")) {
+    if (window.confirm(
+      `Clear all entered and pencilmarked digits?\n\n(Fixed digits will not be cleared.)`
+    )) {
       this.for_each_cell(cell => {
         cell.entered = null;
         cell.marks.clear();
@@ -344,7 +367,9 @@ export class Lattice
 
   clear_marks()
   {
-    if (window.confirm("Clear all pencilmarks? (fixed and entered digits will not be cleared.)")) {
+    if (window.confirm(
+      `Clear all pencilmarks?\n\n(Fixed and entered digits will not be cleared.)`
+    )) {
       this.for_each_cell(cell => {
         cell.marks.clear();
       });
@@ -355,7 +380,7 @@ export class Lattice
 
   clear_highlights()
   {
-    if (window.confirm("Clear all highlights?")) {
+    if (window.confirm(`Clear all highlights?`)) {
       this.for_each_cell(cell => {
         cell.highlight = null;
       });
@@ -364,16 +389,12 @@ export class Lattice
     }
   }
 
-  clear_all()
+  reset_grid()
   {
-    if (window.confirm("Clear all digits in the grid?")) {
-      this.for_each_cell(cell => {
-        cell.fixed = null;
-        cell.entered = null;
-        cell.marks.clear();
-      });
-
-      this.#toasts?.push("Cleared all");
+    if (window.confirm(`Reset back to an empty grid?`)) {
+      let { width, height } = get(prefs).lattice;
+      this.init(width, height);
+      this.#toasts?.push("Reset grid");
     }
   }
 }
