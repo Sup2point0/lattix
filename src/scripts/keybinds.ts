@@ -101,7 +101,11 @@ export const keybinds = [
   },
   {
     keys: ["ALT", "R"],
-    desc: "clear grid"
+    desc: [`clear grid`, `(entered and pencilmarks)`]
+  },
+  {
+    keys: ["ALT", "SHIFT", "R"],
+    desc: "reset grid"
   },
   {
     keys: ["ALT", "N"],
@@ -206,7 +210,11 @@ export function keydown(e: KeyboardEvent): boolean
       return true;
 
     case "R":
-      current.lattice.clear_work();
+      if (e.shiftKey) {
+        current.lattice.reset_grid();
+      } else {
+        current.lattice.clear_work();
+      }
       e.stopPropagation();
       return true;
 

@@ -1,6 +1,6 @@
 <script lang="ts">
 
-import { current, prefs, MarkMode } from "#scripts/stores";
+import { current, MarkMode } from "#scripts/stores";
 import { HighlightCols } from "#scripts/config";
 
 import Tool from "#parts/ui/tool.svelte";
@@ -37,6 +37,43 @@ import ColourOptions from "#parts/ui/options.cols.svelte";
     />
   </div>
 
+  <div class="clickies">
+    <Clicky square
+      hover-text="Rotate Grid (Clockwise)"
+      action={() => current.lattice.rotate_clockwise()}
+    >
+      <span class="material-symbols-rounded"> rotate_right </span>
+    </Clicky>
+    
+    <Clicky square
+      hover-text="Rotate Grid (Counter-Clockwise)"
+      action={() => current.lattice.rotate_counter_clockwise()}
+    >
+      <span class="material-symbols-rounded"> rotate_left </span>
+    </Clicky>
+
+    <Clicky square
+      hover-text="Flip Grid (Horizontal)"
+      action={() => current.lattice.flip_horizontal()}
+    >
+      <span class="material-symbols-rounded"> swap_horiz </span>
+    </Clicky>
+    
+    <Clicky square
+      hover-text="Flip Grid (Vertical)"
+      action={() => current.lattice.flip_vertical()}
+    >
+      <span class="material-symbols-rounded"> swap_vert </span>
+    </Clicky>
+    
+    <Clicky square
+      hover-text="Transpose Grid"
+      action={() => current.lattice.transpose()}
+    >
+      <span class="material-symbols-rounded"> open_in_full </span>
+    </Clicky>
+  </div>
+
   <label style:flex-wrap="wrap">
     <section>
       <h4> Pencilmarking </h4>
@@ -44,7 +81,6 @@ import ColourOptions from "#parts/ui/options.cols.svelte";
 
     <Options bind:value={current.mark_mode} options={Object.values(MarkMode)} />
   </label>
-
   
   <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
   <!-- svelte-ignore a11y_click_events_have_key_events -->
@@ -98,6 +134,12 @@ div > div {
   justify-content: stretch;
   gap: 0.5rem;
   border-top: 1px solid $col-grey-light;
+}
+
+.clickies {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
 }
 
 </style>
