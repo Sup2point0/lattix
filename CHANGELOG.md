@@ -38,6 +38,9 @@ New keybinds: `ALT` `-` and `ALT` `_` to downsize the grid.
 ### **Feat**
 Added all sorts of transformations on the grid – flipping, rotating, transposing. Enjoy!
 
+### **Feat**
+Also long overdue, the **Control Pane** tabs now use icons instead of text, for a much cleaner UI.
+
 
 ## 4 July 2026
 

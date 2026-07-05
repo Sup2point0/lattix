@@ -41,7 +41,7 @@ import { expoOut } from "svelte/easing";
             <GridTab />
           {:else if current.control_tab === ControlTab.CELLS}
             <CellsTab />
-          {:else if current.control_tab === ControlTab.STATS}
+          {:else if current.control_tab === ControlTab.EXTRA}
             <StatsTab />
           {/if}
         </form>
@@ -84,7 +84,7 @@ nav {
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
-  gap: 1rem;
+  gap: 0.5rem;
 }
 
 form {

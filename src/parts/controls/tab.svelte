@@ -36,14 +36,15 @@ let { tab, text, action }: Props = $props();
 
 
 button.tab {
-  padding: 0.25rem 1.5rem;
-  margin-right: -2px;
-  font-size: 150%;
+  padding: 0.4rem 1rem 0.4rem 1.5rem;
+  display: flex;
+  align-items: center;
   color: $col-grey-dark;
   text-align: right;
   background: white;
   border: none;
   border-right: 2px solid transparent;
+  outline: none;
   transition: all 0.1s ease-out;
 
   &.live {

@@ -31,9 +31,9 @@ export enum ControlTab
   COLS  = `<span class="material-symbols-rounded">colors</span>`,
   TEXT  = `<span class="material-symbols-rounded">text_fields</span>`,
   MARKS = `<span class="material-symbols-rounded">stylus_note</span>`,
-  GRID  = `<span class="material-symbols-rounded">grid_3x3</span>`,
   CELLS = `<span class="material-symbols-rounded">looks_one</span>`,
-  STATS = `<span class="material-symbols-rounded">more</span>`,
+  GRID  = `<span class="material-symbols-rounded">grid_3x3</span>`,
+  EXTRA = `<span class="material-symbols-rounded">more</span>`,
 }
 
 

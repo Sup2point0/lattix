@@ -24,7 +24,7 @@ import Options from "#parts/ui/options.svelte";
   <label style:flex-wrap="wrap">
     <section>
       <h4> Size </h4>
-      <p> Scale the size of entered digits in the grid. </p>
+      <p> Scale the size of text in the grid. </p>
     </section>
 
     <Slider bind:value={$prefs.text.size} />
