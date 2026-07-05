@@ -1,5 +1,5 @@
 import { current, MarkMode } from "#scripts/stores";
-import { Overlay } from "#scripts/config";
+import { Overlay, ControlTab } from "#scripts/config";
 
 
 export const keybinds = [
@@ -9,7 +9,7 @@ export const keybinds = [
   },
   {
     keys: ["ALT", "P"],
-    desc: "open/close Control Pane"
+    desc: `open/close <strong>Control Pane</strong>`
   },
   {},
   {
@@ -66,11 +66,6 @@ export const keybinds = [
     keys: ["CTRL", "arrow"],
     desc: "select multiple cells while moving"
   },
-  {},
-  {
-    keys: ["SPACE", null, "BACKSPACE", null, "DELETE"],
-    desc: "clear cell"
-  },
   {
     keys: ["ALT", "digit"],
     desc: "make mark"
@@ -80,32 +75,37 @@ export const keybinds = [
     desc: "highlight cell"
   },
   {
+    keys: ["SPACE", null, "BACKSPACE", null, "DELETE"],
+    desc: "clear cell"
+  },
+  {},
+  {
     keys: ["ALT", "G"],
     desc: "edit grid"
   },
   {
     keys: ["ALT", "="],
-    desc: `upsize grid right`
+    desc: `add new column to right`
   },
   {
     keys: ["ALT", "SHIFT", "="],
-    desc: `upsize grid down`
+    desc: `add new row to below`
   },
   {
     keys: ["ALT", "-"],
-    desc: `downsize grid from right`
+    desc: `remove column from right`
   },
   {
     keys: ["ALT", "SHIFT", "-"],
-    desc: `downsize grid from below`
+    desc: `remove row from below`
   },
   {
     keys: ["ALT", "R"],
-    desc: [`clear grid`, `(entered and pencilmarks)`]
+    desc: [`restart`, `(clears entered + pencilmarks)`]
   },
   {
     keys: ["ALT", "SHIFT", "R"],
-    desc: "reset grid"
+    desc: [`reset`, `(clears entered + pencilmarks + fixed)`]
   },
   {
     keys: ["ALT", "N"],
@@ -125,8 +125,12 @@ export const keybinds = [
   // },
   {},
   {
+    keys: ["PAGE UP", null, "PAGE DOWN"],
+    desc: `switch Control Pane tabs`
+  },
+  {
     keys: ["ALT", "Q"],
-    desc: "view changelog"
+    desc: `view <strong>Changelog</strong>`
   },
   {
     keys: ["ALT", "K"],
@@ -169,6 +173,31 @@ export function keydown(e: KeyboardEvent): boolean
         e.stopPropagation();
       }
       return true;
+
+    case "PAGEUP": {
+      let tabs = Object.values(ControlTab);
+
+      let idx = tabs.indexOf(current.control_tab) - 1;
+      if (idx < 0) {
+        idx = tabs.length - 1;
+      }
+      current.control_tab = tabs[idx];
+
+      e.stopPropagation();
+      return true;
+    }
+    case "PAGEDOWN": {
+      let tabs = Object.values(ControlTab);
+
+      let idx = tabs.indexOf(current.control_tab) + 1;
+      if (idx >= tabs.length) {
+        idx = 0;
+      }
+      current.control_tab = tabs[idx];
+
+      e.stopPropagation();
+      return true;
+    }
   }
 
   if (!e.altKey) return false;
