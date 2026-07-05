@@ -90,6 +90,7 @@ button {
   padding: 0.5em 1em;
   position: absolute;
   top: 3rem;
+  z-index: 5;
   text-align: center;
   color: white;
   background: rgb(black, 75%);

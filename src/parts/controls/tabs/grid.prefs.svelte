@@ -7,7 +7,7 @@ import Toggle from "#parts/ui/toggle.svelte";
 </script>
 
 
-<h2> Cells </h2>
+<h2> Grid </h2>
 
 <div>
   <label>

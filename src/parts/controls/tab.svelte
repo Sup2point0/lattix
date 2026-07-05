@@ -11,19 +11,20 @@ import type { ControlTab } from "#scripts/config";
 interface Props {
   tab: ControlTab;
   text: string;
+  action?: () => void;
 }
 
-let { tab, text }: Props = $props();
+let { tab, text, action }: Props = $props();
 
 </script>
 
 
 <button class="tab"
   class:live={current.control_tab === tab}
-  onclick={() => {
+  onclick={action ?? (() => {
     current.control_tab = tab;
     current.show_controls = true;
-  }}
+  })}
 >
   {@html text}
 </button>

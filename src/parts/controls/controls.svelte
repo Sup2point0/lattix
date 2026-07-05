@@ -9,7 +9,7 @@ import { current } from "#scripts/stores";
 import { ControlTab } from "#scripts/config";
 
 import Tab from "./tab.svelte";
-import CoreTab  from "./tabs/core.prefs.svelte";
+import CoreTab  from "./tabs/controls.core.svelte";
 import ColsTab  from "./tabs/cols.prefs.svelte";
 import TextTab  from "./tabs/text.prefs.svelte";
 import MarksTab from "./tabs/marks.prefs.svelte";
@@ -54,6 +54,18 @@ import { expoOut } from "svelte/easing";
     {#each Object.values(ControlTab) as tab}
       <Tab tab={tab} text={tab} />
     {/each}
+
+    <div style:height="1rem"></div>
+
+    <Tab
+      tab={null}
+      text={
+        current.show_controls ?
+          `<span class="material-symbols-rounded">keyboard_double_arrow_right</span>`
+        : `<span class="material-symbols-rounded">keyboard_double_arrow_left</span>`
+      }
+      action={() => { current.show_controls = !current.show_controls; }}
+    />
   </nav>
 </div>
 
