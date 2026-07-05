@@ -9,7 +9,6 @@
 <!--
 Quick
 - auto-highlight lane peaks
-- copying the grid to Markdown
 - highlight all cells with same digit
 - Only allow outer navigation if cell has contents (arrow, alt+arrow)
 - auto-highlight conflicts
@@ -39,6 +38,9 @@ Added all sorts of transformations on the grid – flipping, rotating, transposi
 
 ### **Feat**
 Also long overdue, the **Control Pane** tabs now use icons instead of text, for a much cleaner UI.
+
+### **Feat**
+You can now copy the grid as Markdown.
 
 ### *Fix*
 Grid size is now saved to localStorage.

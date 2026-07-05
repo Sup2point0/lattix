@@ -1,4 +1,5 @@
 import { prefs } from "#scripts/stores";
+import { ThemeCol } from "#scripts/config";
 
 import { Cell } from "./cell.svelte.ts";
 import type { int, Direction } from "./root";
@@ -422,6 +423,63 @@ export class Lattice
     }
 
     return true;
+  }
+
+  /**
+   * Copy a Markdown table representation of the grid to the clipboard.
+   */
+  async export_markdown()
+  {
+    let lines = [];
+    lines.push("|".repeat(this.full_width + 1));
+
+    // find column widths
+    let column_widths = new Array(this.full_width).fill(3);
+
+    let cell_reprs: string[][] = this.cells.map(
+      row => row.entries().map(
+        ([x, cell]) => {
+          let repr =
+              cell.marks.size ? `*${[...cell.marks].join("")}*`
+            : cell.fixed      ? `${cell.fixed}`
+            : cell.entered    ? `${cell.entered}`
+            : ""
+          ;
+
+          if (cell.highlight === ThemeCol.RED) {
+            repr = `~~${repr}~~`;
+          } else if (cell.highlight) {
+            repr = `**${repr}**`;
+          }
+
+          column_widths[x] = Math.max(column_widths[x], repr.length);
+
+          return repr;
+        }
+      ).toArray()
+    );
+
+    // separator
+    let content = Array.from({ length: this.full_width }).map(
+      (_, x) => ":".padEnd(column_widths[x], "-")
+    );
+
+    lines.push(`| ${content.join(" | ")} |`);
+
+    // rows
+    for (let row of cell_reprs) {
+      let content = row.entries().map(
+        ([x, repr]) => repr.padStart(column_widths[x])
+      ).toArray();
+
+      lines.push(`| ${content.join(" | ")} |`);
+    }
+
+    // copy
+    let markdown = lines.join("\n");
+
+    let item = new ClipboardItem({ "text/plain": markdown });
+    await navigator.clipboard.write([item]);
   }
 
 

@@ -113,6 +113,8 @@ function display_time(t: int | null): string
       }}
       disabled={!current.lattice.is_square}
     />
+    
+    <Clicky text="Copy Grid as Markdown" action={() => current.lattice.export_markdown()} />
   </section>
 
   <section>
