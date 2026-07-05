@@ -25,7 +25,7 @@ let { tab, text }: Props = $props();
     current.show_controls = true;
   }}
 >
-  {text}
+  {@html text}
 </button>
 
 
