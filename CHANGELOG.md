@@ -8,11 +8,9 @@
 
 <!--
 Quick
-- mark alignment broken
 - PAGE for Control Panel pages
 - auto-highlight lane peaks
 - copying the grid to Markdown
-- transposing and rotating the grid
 - highlight all cells with same digit
 - Only allow outer navigation if cell has contents (arrow, alt+arrow)
 - auto-highlight conflicts
@@ -36,6 +34,9 @@ Long overdue, you can now downsize the grid (from all directions) :]
 
 ### **Feat**
 New keybinds: `ALT` `-` and `ALT` `_` to downsize the grid.
+
+### **Feat**
+Added all sorts of transformations on the grid – flipping, rotating, transposing. Enjoy!
 
 
 ## 4 July 2026

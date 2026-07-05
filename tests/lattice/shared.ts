@@ -24,3 +24,25 @@ export function for_square_sizes(lattice: Lattice, test: (size: int) => void)
     test(size);
   }
 }
+
+/** Check that 2 grids `left` and `right` have the same `.entered` values in their cells. */
+export function expect_equal(left: Lattice, right: Lattice)
+{
+  left.for_each_cell(cell => {
+    expect(right.at(cell.x, cell.y)).toBeDefined();
+    expect(right.at(cell.x, cell.y)!.entered).toBe(cell.entered);
+  });
+}
+
+/** Create a deep copy of `lattice` with all `.entered` values copied over. */
+export function copy_lattice(lattice: Lattice): Lattice
+{
+  let out = new Lattice();
+  out.init(lattice.inner_width, lattice.inner_height);
+
+  out.for_each_cell(cell => {
+    cell.entered = lattice.at(cell.x, cell.y)!.entered;
+  });
+
+  return out;
+}

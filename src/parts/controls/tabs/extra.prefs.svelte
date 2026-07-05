@@ -99,6 +99,14 @@ function display_time(t: int | null): string
       disabled={!current.lattice.is_square}
     />
 
+    <Clicky text="Flip Horizontal" action={() => current.lattice.flip_horizontal()} />
+    <Clicky text="Flip Vertical" action={() => current.lattice.flip_vertical()} />
+    <Clicky text="Transpose Grid" action={() => current.lattice.transpose()} />
+    <Clicky text="Rotate Grid Clockwise" action={() => current.lattice.rotate_clockwise()} />
+    <Clicky text="Rotate Grid Counter-Clockwise" action={() => current.lattice.rotate_counter_clockwise()} />
+  </section>
+
+  <section>
     <Clicky text="Reset All Preferences"
       action={() => {
         if (window.confirm("Reset all preferences back to their defaults?")) {
