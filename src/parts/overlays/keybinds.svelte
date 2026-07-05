@@ -25,7 +25,18 @@ import { keybinds } from "#scripts/keybinds";
           {/if}
         {/each}
       </th>
-      <td> {@html keybind.desc} </td>
+
+      <td>
+        <div class="container">
+          {#if Array.isArray(keybind.desc)}
+            {#each keybind.desc as desc}
+              <p> {@html desc} </p>
+            {/each}
+          {:else}
+            <p> {@html keybind.desc} </p>
+          {/if}
+        </div>
+      </td>
     </tr>
   {/each}
 </tbody></table>
@@ -51,7 +62,22 @@ table {
   }
 
   td {
-    padding-right: 4em;
+    height: 100%;
+    padding: 0.5em 0;
+  }
+
+  .container {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 8em;
+    row-gap: 0.5em;
+
+    p ~ p {
+      color: $col-grey-dark;
+    }
   }
 }
 
@@ -72,7 +98,7 @@ code {
 }
 
 span.separator {
-  padding: 0 0.5em;
+  padding: 0 0.75em;
   color: $col-grey-dark;
 }
 

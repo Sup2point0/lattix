@@ -29,6 +29,15 @@ Features
 Clicking on a cell then pressing `TAB` doesn’t jump to the next cell – it only does so on the second press.
 
 
+## 5 July 2026
+
+### **Feat**
+Long overdue, you can now downsize the grid (from all directions) :]
+
+### **Feat**
+New keybinds: `ALT` `-` and `ALT` `_` to downsize the grid.
+
+
 ## 4 July 2026
 
 ### **Feat**
@@ -39,6 +48,9 @@ One of those new preferences is `W` `A` `S` `D` navigation. I bet you’ll love 
 
 ### **Feat**
 New keybinds: `ALT` `=` and `ALT` `+` to upsize the grid.
+
+### **Feat**
+New utility: **Randomise Grid** to fill the grid with random numbers, adhering to the classic no-2-numbers-in-the-same-lane rule in Sudoku-like puzzles.
 
 ### *Fix*
 It’s taken ages, but resizing the grid on both end now works properly.

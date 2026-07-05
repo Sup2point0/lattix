@@ -28,35 +28,35 @@ export const keybinds = [
       "S", null,
       "D"
     ],
-    desc: `move in grid (must be enabled in <strong>Grid</strong> settings)`
+    desc: [`move in grid`, `(must be enabled in <strong>Grid</strong> settings)`]
   },
   {
     keys: [
       "HOME", null,
       "ALT", "←"
     ],
-    desc: "jump to left edge of grid"
+    desc: "jump to left edge"
   },
   {
     keys: [
       "END", null,
       "ALT", "→"
     ],
-    desc: "jump to cell furthest right"
+    desc: "jump to right edge"
   },
   {
     keys: [
       "⇧", "HOME", null,
       "ALT", "↑"
     ],
-    desc: "jump to cell furthest up"
+    desc: "jump to top edge"
   },
   {
     keys: [
       "⇧", "END", null,
       "ALT", "↓"
     ],
-    desc: "jump to cell furthest down"
+    desc: "jump to bottom edge"
   },
   {
     keys: ["CTRL", "click"],
@@ -85,11 +85,19 @@ export const keybinds = [
   },
   {
     keys: ["ALT", "="],
-    desc: `upsize grid (rightwards)`
+    desc: `upsize grid right`
   },
   {
     keys: ["ALT", "SHIFT", "="],
-    desc: `upsize grid (downwards)`
+    desc: `upsize grid down`
+  },
+  {
+    keys: ["ALT", "-"],
+    desc: `downsize grid from right`
+  },
+  {
+    keys: ["ALT", "SHIFT", "-"],
+    desc: `downsize grid from below`
   },
   {
     keys: ["ALT", "R"],
@@ -184,6 +192,16 @@ export function keydown(e: KeyboardEvent): boolean
 
     case "+":
       current.lattice.upsize("down");
+      e.stopPropagation();
+      return true;
+
+    case "-":
+      current.lattice.downsize("right");
+      e.stopPropagation();
+      return true;
+
+    case "_":
+      current.lattice.downsize("down");
       e.stopPropagation();
       return true;
 
