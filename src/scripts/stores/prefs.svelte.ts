@@ -93,6 +93,9 @@ class GridPrefs
 
   /** If enabled, navigating the grid with arrow keys will also move to outer cells. */
   nav_outer: boolean = false
+
+  /** Can the grid grow to an infinite size? */
+  unlimited: boolean = false
 }
 
 class CellPrefs

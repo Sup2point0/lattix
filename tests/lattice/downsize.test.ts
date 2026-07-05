@@ -1,4 +1,4 @@
-import { Cell, Lattice } from "#scripts/types";
+import { Lattice } from "#scripts/types";
 
 import { for_square_sizes } from "./shared";
 

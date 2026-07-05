@@ -36,6 +36,15 @@ import Toggle from "#parts/ui/toggle.svelte";
 
     <Toggle bind:value={$prefs.grid.nav_outer} />
   </label>
+
+  <label>
+    <section>
+      <h4> Unlimited Size (unstable) </h4>
+      <p> Remove limits on how many rows/columns can be added to the grid. Performance will depend on your device – proceed at your own peril! </p>
+    </section>
+
+    <Toggle bind:value={$prefs.grid.unlimited} />
+  </label>
 </div>
 
 
