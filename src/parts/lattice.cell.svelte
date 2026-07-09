@@ -40,6 +40,14 @@ let auto_highlight_peak: ThemeCol | null = $derived(
     $prefs.cols.highlight_inner
   : null
 );
+
+let auto_highlight_conflict: ThemeCol | null = $derived(
+  (
+    $prefs.cols.highlight_conflicts && current.lattice.has_conflicts(cell)
+  ) ?
+    ThemeCol.RED
+  : null
+);
  
 
 function onmouseenter(e: MouseEvent)
@@ -392,10 +400,10 @@ function get_needed_highlight(): ThemeCol
     Object.entries(MarkAlignment).find(([key, val]) => val === $prefs.marks.align)?.[0].toLowerCase(),
     {
       fixed:     cell.fixed !== null,
-      highlight: cell.highlight || auto_highlight_peak,
+      highlight: cell.highlight || auto_highlight_conflict || auto_highlight_peak,
       editing:   current.editing,
       selected:  cell.selected,
-      invert:    $prefs.text.invert,
+      invert:    $prefs.cols.invert,
     }
   ]}
   disabled={
@@ -412,7 +420,7 @@ function get_needed_highlight(): ThemeCol
   {onmousedown}
   {onclick}
   {onkeydown}
-  style:--col="var(--col-{cell.highlight || auto_highlight_peak})"
+  style:--col="var(--col-{cell.highlight || auto_highlight_conflict || auto_highlight_peak})"
   style:--cell-size={     interp3($prefs.cells.size,     { lower: 0.75, preset: 1.00, upper: 1.50 }) }
   style:--cell-rounding={ interp3($prefs.cells.rounding, { lower: 0.00, preset: 1.00, upper: 2.50 }) }
   style:--cell-opacity={  interp3($prefs.cells.opacity,  { lower: 1.00, preset: 0.75, upper: 0.00 }) }

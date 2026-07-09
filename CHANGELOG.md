@@ -8,9 +8,7 @@
 
 <!--
 Quick
-- auto-highlight lane peaks
 - Only allow outer navigation if cell has contents (arrow, alt+arrow)
-- auto-highlight conflicts
 
 Features
 - right-click for note
@@ -34,6 +32,9 @@ New setting: You can now pick different default highlight colours for *inner* ce
 
 ### **Feat**
 New setting: For an N×N grid, automatically highlight cells with an N entered.
+
+### **Feat**
+New setting: Automatically highlight conflicting cells (those in the same column/row with the same entered digit).
 
 
 ## 6 July 2026

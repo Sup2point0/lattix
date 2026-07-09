@@ -40,6 +40,10 @@ section {
   p {
     font-size: 90%;
     color: $col-grey-dark;
+
+    span {
+      color: $col-blue-dark;
+    }
   }
 
   code {

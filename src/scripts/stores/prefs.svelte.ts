@@ -65,6 +65,12 @@ class ColPrefs
 
   /** Should lane peaks be automatically highlighted? */
   highlight_peaks: boolean = false
+
+  /** Should conflicting digits in a lane be automatically highlighted? */
+  highlight_conflicts: boolean = false
+
+  /** Should the colours of fixed and entered digits be swapped? */
+  invert: boolean = false
 }
 
 class TextPrefs
@@ -72,8 +78,6 @@ class TextPrefs
   font: Font = Font.SORA
 
   size: scalar = 0.5
-
-  invert: boolean = false
 }
 
 class MarkPrefs

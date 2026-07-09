@@ -29,15 +29,6 @@ import Options from "#parts/ui/options.svelte";
 
     <Slider bind:value={$prefs.text.size} />
   </label>
-
-  <label>
-    <section>
-      <h4> Invert Contrast </h4>
-      <p> Make fixed digits coloured and entered digits black. </p>
-    </section>
-
-    <Toggle bind:value={$prefs.text.invert} />
-  </label>
 </div>
 
 

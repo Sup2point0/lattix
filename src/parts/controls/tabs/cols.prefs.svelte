@@ -33,10 +33,28 @@ import ColourOptions from "#parts/ui/options.cols.svelte";
   <label>
     <section>
       <h4> Auto-Highlight Lane Peaks </h4>
-      <p> Automatically highlight cells containing an N digit in an N×N square grid. </p>
+      <p> Automatically highlight cells containing an N digit in an N×N square grid. This uses the colour set by <span>Default Highlight Colour (inner)</span>. </p>
     </section>
 
     <Toggle bind:value={$prefs.cols.highlight_peaks} />
+  </label>
+  
+  <label>
+    <section>
+      <h4> Auto-Highlight Conflicts </h4>
+      <p> Automatically flag cells in the same column or row that have the same digit (which violates the rules of Sudoku-like puzzles). </p>
+    </section>
+
+    <Toggle bind:value={$prefs.cols.highlight_conflicts} />
+  </label>
+
+  <label>
+    <section>
+      <h4> Invert Contrast </h4>
+      <p> Make fixed digits coloured and entered digits black. </p>
+    </section>
+
+    <Toggle bind:value={$prefs.cols.invert} />
   </label>
 </div>
 

@@ -78,6 +78,17 @@ export class Lattice
     return this.cells.at(y)?.at(x);
   }
 
+  row(y: int): Cell[]
+  {
+    return this.cells[y];
+  }
+
+  column(x: int): Cell[]
+  {
+    return this.cells.map(row => row[x]);
+    
+  }
+
   *iter_cells(): Generator<Cell>
   {
     for (let row of this.cells) {
@@ -147,6 +158,25 @@ export class Lattice
       for (let cell of row.slice(1, -1)) {
         action(cell);
       }
+    }
+  }
+
+  /** Does the entered digit (if any) of `cell` conflict with other cells in the same column and row as it? */
+  has_conflicts(cell: Cell): boolean
+  {
+    return (
+      cell.entered !== null
+      && (
+        this.column(cell.x).some(c => conflicts(c))
+        || this.row(cell.y).some(c => conflicts(c))
+      )
+    );
+
+    function conflicts(other: Cell): boolean {
+      return (
+        other.entered === cell.entered
+        && other !== cell
+      );
     }
   }
 
