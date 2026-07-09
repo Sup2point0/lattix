@@ -2,7 +2,7 @@ import { SvelteSet as Set } from "svelte/reactivity";
 
 import { current } from "#scripts/stores/current.svelte.ts";
 import type { ThemeCol } from "../config";
-import type { int, Key } from "./root";
+import type { int, key } from "./root";
 
 
 export class Cell
@@ -62,14 +62,14 @@ export class Cell
     }, 30);
   }
 
-  enter(digit: Key | null)
+  enter(digit: key | null)
   {
     this.fixed = null;
     this.entered = digit;
     this.marks.clear();
   }
 
-  fix(digit: Key | null)
+  fix(digit: key | null)
   {
     this.fixed = digit;
     this.entered = null;

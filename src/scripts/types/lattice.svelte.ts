@@ -557,7 +557,6 @@ export class Lattice
     let { width, height } = get(prefs).lattice;
     this.init(width, height);
 
-    console.log(`this.#current =`, this.#current);
     this.#current?.toasts.push("Reset grid");
   }
 }

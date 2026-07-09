@@ -1,7 +1,7 @@
 import { SvelteSet as Set } from "svelte/reactivity";
 
 import { ControlTab, Overlay } from "#scripts/config";
-import type { int, Key } from "#scripts/types";
+import type { int, key } from "#scripts/types";
 
 // NOTE: Separate imports required to avoid circular imports in unit testing
 import { Lattice } from "#scripts/types/lattice.svelte.ts";
@@ -31,7 +31,7 @@ export class CurrentState
   timer:   Timer   = new Timer();
   toasts:  Toasts  = new Toasts();
 
-  held_keys: Set<Key> = new Set();
+  held_keys: Set<key> = new Set();
   any_modkeys: boolean = $derived(
     this.held_keys.has("CONTROL")
     || this.held_keys.has("ALT")

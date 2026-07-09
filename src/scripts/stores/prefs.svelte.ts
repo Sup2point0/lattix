@@ -1,7 +1,7 @@
 import { persisted } from "svelte-persisted-store";
 
 import { ThemeCol } from "#scripts/config";
-import type { int, Scalar } from "#scripts/types";
+import type { int, scalar } from "#scripts/types";
 
 import { get, writable } from "svelte/store";
 
@@ -65,7 +65,7 @@ class TextPrefs
 {
   font: Font = Font.SORA
 
-  size: Scalar = 0.5
+  size: scalar = 0.5
 
   invert: boolean = false
 }
@@ -81,26 +81,26 @@ class MarkPrefs
 
   align: MarkAlignment = MarkAlignment.CENTRE
 
-  size: Scalar = 0.5
+  size: scalar = 0.5
 
-  opacity: Scalar = 1
+  opacity: scalar = 1
 }
 
 class CellPrefs
 {
-  size: Scalar = 0.5
+  size: scalar = 0.5
 
   /** Space between cells. */
-  gap: Scalar = 0.5
+  gap: scalar = 0.5
 
   /** Gap between main grid and outer lanes. */
-  outer_gap: Scalar = 0.5  // TODO
+  outer_gap: scalar = 0.5  // TODO
 
   /** `border-radius:` of cells. */
-  rounding: Scalar = 0.5
+  rounding: scalar = 0.5
 
   /** Opacity of cell outlines. */
-  opacity: Scalar = 0.25
+  opacity: scalar = 0.25
 }
 
 class GridPrefs

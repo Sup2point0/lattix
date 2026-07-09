@@ -10,7 +10,7 @@ import * as keybinds from "#scripts/keybinds";
 import { Keys } from "#scripts/config";
 import { interp3 } from "#scripts/utils";
 import { Cell } from "#scripts/types";
-import type { Key } from "#scripts/types";
+import type { key } from "#scripts/types";
 
 import { SvelteSet } from "svelte/reactivity";
 
@@ -153,7 +153,7 @@ function onkeydown(e: KeyboardEvent)
 }
 
 /** Handle moving in the grid with the arrow keys. */
-function arrow_move(key: Key): Cell
+function arrow_move(key: key): Cell
 {
   let x = cell.x;
   let y = cell.y;
@@ -201,7 +201,7 @@ function arrow_move(key: Key): Cell
 }
 
 /** Handle jump moving in the grid with the arrow keys. */
-function arrow_jump(key: Key): Cell
+function arrow_jump(key: key): Cell
 {  
   let x = cell.x, y = cell.y;
   let jump_outer = (current.editing || $prefs.grid.nav_outer) ? 1 : 0;
@@ -232,7 +232,7 @@ function arrow_jump(key: Key): Cell
 }
 
 /** Handle entering or marking digits in the cell. */
-function process_digit(key: Key)
+function process_digit(key: key)
 {
   if (current.editing) {    
     fix_multi(key);
@@ -265,7 +265,7 @@ function process_digit(key: Key)
   }
 }
 
-function alt_single(key: Key)
+function alt_single(key: key)
 {
   /* NOTE: `alt`+alpha is reserved for shortcuts */
   if (Keys.Alpha.has(key)) return;
@@ -278,7 +278,7 @@ function alt_single(key: Key)
 }
 
 /** Handle ambiguous digit input when a *single* cell is selected and auto-marking is enabled. */
-function noalt_auto_single(key: Key)
+function noalt_auto_single(key: key)
 {
   /* If pencilmarks have been made, add or remove from the candidates */
   if (cell.marks.size) {
@@ -310,7 +310,7 @@ function noalt_auto_single(key: Key)
 }
 
 /** Handle ambiguous digit input when *multiple* cells are selected and auto-marking is enabled. */
-function mark_multi(key: Key)
+function mark_multi(key: key)
 {
   let added = 0;
 
@@ -332,7 +332,7 @@ function mark_multi(key: Key)
 }
 
 /** Handle ambiguous digit input when auto-marking is disabled. */
-function noalt_manual(key: Key)
+function noalt_manual(key: key)
 {
   for (let each of current.lattice.selected) {
     each.enter(key);
@@ -340,7 +340,7 @@ function noalt_manual(key: Key)
 }
 
 /** Handle digit input while editing the fixed grid. */
-function fix_multi(key: Key)
+function fix_multi(key: key)
 {
   let added = 0;
 

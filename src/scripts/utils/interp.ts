@@ -1,4 +1,4 @@
-import type { Scalar } from "../types";
+import type { scalar } from "../types";
 
 
 /**
@@ -7,7 +7,7 @@ import type { Scalar } from "../types";
  * NOTE: Points must be chosen appropriately to avoid the curve going out of bounds (`< lower` or `> upper`) – if the desired values don’t allow for this, using a nonlinearity such as `sqrt()` may help!
 */
 export function interp3(
-  t: Scalar,
+  t: scalar,
   points: {
     lower: number,
     preset: number,

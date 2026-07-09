@@ -5,11 +5,11 @@ A draggable slider for setting a numerical value.
 
 <script lang="ts">
 
-import type { Scalar } from "#scripts/types";
+import type { scalar } from "#scripts/types";
 
 
 interface Props {
-  value: Scalar;
+  value: scalar;
   min?: number;
   max?: number,
 }

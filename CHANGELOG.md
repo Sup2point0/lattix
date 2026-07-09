@@ -23,6 +23,9 @@ Features
 ### *Fix*
 Clicking on a cell then pressing `TAB` doesn’t jump to the next cell – it only does so on the second press.
 
+### *Fix*
+No way to enter multi-digit numbers for larger grid sizes(!)
+
 
 ## 6 July 2026
 
