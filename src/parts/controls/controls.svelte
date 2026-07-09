@@ -6,7 +6,7 @@ The right controls pane for configuring options.
 <script lang="ts">
 
 import { current } from "#scripts/stores";
-import { ControlTab } from "#scripts/config";
+import { ControlTab, CONTROL_TAB_ICONS } from "#scripts/config";
 
 import Tab from "./tab.svelte";
 import CoreTab  from "./tabs/controls.core.svelte";
@@ -47,8 +47,14 @@ import { expoOut } from "svelte/easing";
   {/if}
   
   <nav>
-    {#each Object.values(ControlTab) as tab}
-      <Tab tab={tab} text={tab} />
+    {#each Object.values(ControlTab) as tab, i}
+      <Tab tab={tab}
+        text={`<span class="material-symbols-rounded">${CONTROL_TAB_ICONS[tab]}</span>`}
+      />
+
+      {#if i === 0}
+        <div style:height="1rem"></div>
+      {/if}
     {/each}
 
     <div style:height="1rem"></div>

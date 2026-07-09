@@ -7,7 +7,7 @@ A button which runs a callback when clicked.
 
 interface Props {
   text?: string;
-  "hover-text"?: string;
+  hover?: string;
   action: () => void;
   square?: boolean;
   disabled?: boolean;
@@ -17,7 +17,7 @@ interface Props {
 let {
   text,
   action,
-  "hover-text": hover_text,
+  hover,
   square = false,
   disabled,
   children,
@@ -39,9 +39,9 @@ let {
   {/if}
 </button>
 
-  {#if hover_text}
+  {#if hover}
     <div class="hover-text">
-      {@html hover_text}
+      {@html hover}
     </div>
   {/if}
   </div>

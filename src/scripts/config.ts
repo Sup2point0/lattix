@@ -27,14 +27,24 @@ export enum Overlay
 
 export enum ControlTab
 {
-  CORE  = `<span class="material-symbols-rounded">left_click</span>`,
-  COLS  = `<span class="material-symbols-rounded">colors</span>`,
-  TEXT  = `<span class="material-symbols-rounded">text_fields</span>`,
-  MARKS = `<span class="material-symbols-rounded">stylus_note</span>`,
-  CELLS = `<span class="material-symbols-rounded">looks_one</span>`,
-  GRID  = `<span class="material-symbols-rounded">grid_3x3</span>`,
-  EXTRA = `<span class="material-symbols-rounded">more</span>`,
+  CORE  = `Controls`,
+  COLS  = `Colours`,
+  TEXT  = `Text`,
+  MARKS = `Pencilmarks`,
+  CELLS = `Cells`,
+  GRID  = `Grid`,
+  EXTRA = `Extras`,
 }
+
+export const CONTROL_TAB_ICONS = {
+  [ControlTab.CORE]:  `left_click`,
+  [ControlTab.COLS]:  `colors`,
+  [ControlTab.TEXT]:  `text_fields`,
+  [ControlTab.MARKS]: `stylus_note`,
+  [ControlTab.CELLS]: `looks_one`,
+  [ControlTab.GRID]:  `grid_3x3`,
+  [ControlTab.EXTRA]: `more`,
+};
 
 
 export enum ThemeCol

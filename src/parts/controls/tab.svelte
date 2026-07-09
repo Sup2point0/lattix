@@ -21,6 +21,7 @@ let { tab, text, action }: Props = $props();
 
 <button class="tab"
   class:live={current.control_tab === tab}
+  title={tab}
   onclick={action ?? (() => {
     current.control_tab = tab;
     current.show_controls = true;

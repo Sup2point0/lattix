@@ -40,68 +40,41 @@ import ColourOptions from "#parts/ui/options.cols.svelte";
 
     <div class="clickies">
       <section>
-        <Clicky square
-          hover-text="Rotate Grid (Clockwise)"
-          action={() => current.lattice.rotate_clockwise()}
-        >
+        <Clicky square hover="Rotate Grid (Clockwise)" action={() => current.lattice.rotate_clockwise()}>
           <span class="material-symbols-rounded"> rotate_right </span>
         </Clicky>
         
-        <Clicky square
-          hover-text="Rotate Grid (Counter-Clockwise)"
-          action={() => current.lattice.rotate_counter_clockwise()}
-        >
+        <Clicky square hover="Rotate Grid (Counter-Clockwise)" action={() => current.lattice.rotate_counter_clockwise()}>
           <span class="material-symbols-rounded"> rotate_left </span>
         </Clicky>
 
-        <Clicky square
-          hover-text="Flip Grid (Horizontal)"
-          action={() => current.lattice.flip_horizontal()}
-        >
+        <Clicky square hover="Flip Grid (Horizontal)" action={() => current.lattice.flip_horizontal()}>
           <span class="material-symbols-rounded"> swap_horiz </span>
         </Clicky>
         
-        <Clicky square
-          hover-text="Flip Grid (Vertical)"
-          action={() => current.lattice.flip_vertical()}
-        >
+        <Clicky square hover="Flip Grid (Vertical)" action={() => current.lattice.flip_vertical()}>
           <span class="material-symbols-rounded"> swap_vert </span>
         </Clicky>
         
-        <Clicky square
-          hover-text="Transpose Grid"
-          action={() => current.lattice.transpose()}
-        >
+        <Clicky square hover="Transpose Grid" action={() => current.lattice.transpose()}>
           <span class="material-symbols-rounded"> open_in_full </span>
         </Clicky>
       </section>
       
       <section>
-        <Clicky square
-          hover-text="Restart"
-          action={() => current.lattice.clear_work()}
-        >
+        <Clicky square hover="Restart" action={() => current.lattice.restart()}>
           <span class="material-symbols-rounded"> refresh </span>
         </Clicky>
         
-        <Clicky square
-          hover-text="Clear Pencilmarks"
-          action={() => current.lattice.clear_marks()}
-        >
+        <Clicky square hover="Clear Pencilmarks" action={() => current.lattice.clear_marks()}>
           <span class="material-symbols-rounded"> reset_wrench </span>
         </Clicky>
         
-        <Clicky square
-          hover-text="Clear Highlights"
-          action={() => current.lattice.clear_highlights()}
-        >
+        <Clicky square hover="Clear Highlights" action={() => current.lattice.clear_highlights()}>
           <span class="material-symbols-rounded"> reset_colors </span>
         </Clicky>
         
-        <Clicky square
-          hover-text="Reset Grid"
-          action={() => current.lattice.reset_grid()}
-        >
+        <Clicky square hover="Reset Grid" action={() => current.lattice.reset_grid()}>
           <span class="material-symbols-rounded"> reset_focus </span>
         </Clicky>
       </section>
