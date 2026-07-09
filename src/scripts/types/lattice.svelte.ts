@@ -3,7 +3,7 @@ import { ThemeCol } from "#scripts/config";
 
 import { Cell } from "./cell.svelte.ts";
 import type { int, Direction } from "./root";
-import type { Toasts } from "./toasts.svelte.ts";
+import type { CurrentState } from "#scripts/stores/current.svelte.ts";
 
 import { get } from "svelte/store";
 import { SvelteSet } from "svelte/reactivity";
@@ -28,7 +28,7 @@ export class Lattice
   /** Currently selected cells. */
   selected = new SvelteSet<Cell>();
 
-  #toasts?: Toasts;
+  #current?: CurrentState;
 
 
   // == PROPERTIES == //
@@ -51,6 +51,23 @@ export class Lattice
   /** y-height of the grid, excluding outer cells. */
   get inner_height(): int {
     return this.full_height ? (this.full_height - 2) : 0;
+  }
+
+
+  // == CONSTRUCTORS == //
+
+  init(width: int, height: int, current?: CurrentState)
+  {
+    if (width < MIN_SIZE)  width = MIN_SIZE;
+    if (height < MIN_SIZE) height = MIN_SIZE;
+
+    this.cells = Array.from({ length: height + 2 },
+      (_, y) => Array.from({ length: width + 2 },
+        (_, x) => new Cell(x, y)
+      )
+    );
+
+    this.#current = current;
   }
 
 
@@ -87,23 +104,6 @@ export class Lattice
         (_, y) => this.at(x, y)!
       );
     }
-  }
-
-
-  // == CONSTRUCTORS == //
-
-  init(width: int, height: int, toasts?: Toasts)
-  {
-    if (width < MIN_SIZE)  width = MIN_SIZE;
-    if (height < MIN_SIZE) height = MIN_SIZE;
-
-    this.cells = Array.from({ length: height + 2 },
-      (_, y) => Array.from({ length: width + 2 },
-        (_, x) => new Cell(x, y)
-      )
-    );
-
-    this.#toasts = toasts;
   }
 
 
@@ -153,6 +153,22 @@ export class Lattice
 
   // == INTERACTING == //
 
+  select_same_as_current()
+  {
+    let digits = [...this.selected].map(cell => cell.entered);
+
+    let before = this.#current!.multiselecting;
+    this.#current!.multiselecting = true;
+    
+    this.for_each_inner_cell(cell => {
+      if (digits.includes(cell.entered)) {
+        cell.select();
+      }
+    });
+
+    this.#current!.multiselecting = before;
+  }
+
   highlight_selected()
   {
     const default_highlight = get(prefs).cols.highlight;
@@ -171,6 +187,13 @@ export class Lattice
     for (let each of this.selected) {
       each.highlight = null;
     }
+  }
+
+  highlight_same_as_current()
+  {
+    this.select_same_as_current();
+    this.highlight_selected();
+    this.selected.clear();
   }
 
 
@@ -328,6 +351,8 @@ export class Lattice
         cell.x = this.full_width - cell.x - 1;
       }
     }
+
+    this.#current?.toasts.push("Flipped horizontally");
   }
 
   flip_vertical()
@@ -480,55 +505,59 @@ export class Lattice
 
     let item = new ClipboardItem({ "text/plain": markdown });
     await navigator.clipboard.write([item]);
+
+    this.#current?.toasts.push("Copied Markdown");
   }
 
 
   // == CLEAR == //
 
-  clear_work()
+  restart()
   {
-    if (window.confirm(
+    if (!window.confirm(
       `Clear all entered and pencilmarked digits?\n\n(Fixed digits will not be cleared.)`
-    )) {
-      this.for_each_cell(cell => {
-        cell.entered = null;
-        cell.marks.clear();
-      });
+    )) return;
 
-      this.#toasts?.push("Cleared work");
-    }
+    this.for_each_cell(cell => {
+      cell.entered = null;
+      cell.marks.clear();
+    });
+
+    this.#current?.toasts.push("Restarted puzzle");
   }
 
   clear_marks()
   {
-    if (window.confirm(
+    if (!window.confirm(
       `Clear all pencilmarks?\n\n(Fixed and entered digits will not be cleared.)`
-    )) {
-      this.for_each_cell(cell => {
-        cell.marks.clear();
-      });
+    )) return;
 
-      this.#toasts?.push("Cleared pencilmarks");
-    }
+    this.for_each_cell(cell => {
+      cell.marks.clear();
+    });
+
+    this.#current?.toasts.push("Cleared pencilmarks");
   }
 
   clear_highlights()
   {
-    if (window.confirm(`Clear all highlights?`)) {
-      this.for_each_cell(cell => {
-        cell.highlight = null;
-      });
+    if (!window.confirm(`Clear all highlights?`)) return;
 
-      this.#toasts?.push("Cleared highlights");
-    }
+    this.for_each_cell(cell => {
+      cell.highlight = null;
+    });
+
+    this.#current?.toasts.push("Cleared highlights");
   }
 
   reset_grid()
   {
-    if (window.confirm(`Reset back to an empty grid?`)) {
-      let { width, height } = get(prefs).lattice;
-      this.init(width, height);
-      this.#toasts?.push("Reset grid");
-    }
+    if (!window.confirm(`Reset back to an empty grid?`)) return;
+
+    let { width, height } = get(prefs).lattice;
+    this.init(width, height);
+
+    console.log(`this.#current =`, this.#current);
+    this.#current?.toasts.push("Reset grid");
   }
 }

@@ -9,7 +9,7 @@ interface Toast {
 
 export class Toasts
 {
-  #data: Toast[] = $state([]);
+  data: Toast[] = $state([]);
 
   toast_count: int = 0;
 
@@ -20,7 +20,8 @@ export class Toasts
   push(toast: string)
   {
     this.toast_count++;
-    this.#data.push({
+
+    this.data.push({
       id: this.toast_count,
       text: toast,
     });
@@ -30,7 +31,12 @@ export class Toasts
     }
 
     this.#clear_toasts_timeout = setTimeout(() => {
-      this.#data.splice(0);
+      this.data.splice(0);
     }, 5000);
+  }
+
+  delete(toast: Toast)
+  {
+    this.data.splice(this.data.indexOf(toast), 1);
   }
 }

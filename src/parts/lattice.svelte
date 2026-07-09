@@ -18,7 +18,7 @@ let y = $derived(current.lattice.inner_height + 2);
 
 onMount(() => {
   let { width = 5, height = 5 } = $prefs.lattice;
-  current.lattice.init(width, height, current.toasts);
+  current.lattice.init(width, height, current);
 });
 
 </script>

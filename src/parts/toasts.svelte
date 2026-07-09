@@ -14,15 +14,13 @@ import { expoOut } from "svelte/easing";
 
 
 <aside>
-  {#each current.toasts as toast (toast.id)}
+  {#each current.toasts.data as toast (toast.id)}
     <div class="toast-container"
       in:slide={{ duration: 500, easing: expoOut }}
       out:slide={{ duration: 500, easing: expoOut, delay: 250 }}
     >
       <button
-        onclick={() => {
-          current.toasts.splice(current.toasts.indexOf(toast), 1);
-        }}
+        onclick={() => current.toasts.delete(toast)}
         in:scale={{ duration: 500, easing: expoOut, start: 0.5, delay: 200 }}
         out:scale={{ duration: 500, easing: expoOut, start: 0.9 }}
       >
