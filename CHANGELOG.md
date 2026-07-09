@@ -27,6 +27,15 @@ Clicking on a cell then pressing `TAB` doesn’t jump to the next cell – it on
 No way to enter multi-digit numbers for larger grid sizes(!)
 
 
+## 9 July 2026
+
+### **Feat**
+New setting: You can now pick different default highlight colours for *inner* cells (which you’re probably flagging) and *outer* cells (which you’re probably checking off).
+
+### **Feat**
+New setting: For an N×N grid, automatically highlight cells with an N entered.
+
+
 ## 6 July 2026
 
 ### **Feat**

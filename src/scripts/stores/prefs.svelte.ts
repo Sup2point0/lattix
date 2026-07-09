@@ -57,8 +57,14 @@ class ColPrefs
 {
   theme: Theme = Theme.LIGHT
 
-  /** Default colour for highlighting a cell. */
-  highlight: ThemeCol = ThemeCol.PINK
+  /** Default colour for highlighting an inner cell. */
+  highlight_inner: ThemeCol = ThemeCol.PINK
+
+  /** Default colour for highlighting an outer cell. */
+  highlight_outer: ThemeCol = ThemeCol.GREEN
+
+  /** Should lane peaks be automatically highlighted? */
+  highlight_peaks: boolean = false
 }
 
 class TextPrefs

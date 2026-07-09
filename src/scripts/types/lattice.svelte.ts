@@ -171,7 +171,10 @@ export class Lattice
 
   highlight_selected()
   {
-    const default_highlight = get(prefs).cols.highlight;
+    let is_outer = [...this.selected].every(each => this.is_outer_cell(each));
+    
+    const col_prefs = get(prefs).cols;
+    const default_highlight = is_outer ? col_prefs.highlight_outer : col_prefs.highlight_inner;
 
     let added = 0;
 

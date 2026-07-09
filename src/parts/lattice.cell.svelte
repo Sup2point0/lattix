@@ -7,7 +7,7 @@ A cell in the grid.
 
 import { current, prefs, DragMode, MarkMode, MarkAlignment } from "#scripts/stores";
 import * as keybinds from "#scripts/keybinds";
-import { Keys } from "#scripts/config";
+import { Keys, ThemeCol } from "#scripts/config";
 import { interp3 } from "#scripts/utils";
 import { Cell } from "#scripts/types";
 import type { key } from "#scripts/types";
@@ -24,11 +24,22 @@ let { cell }: Props = $props();
 let self: HTMLButtonElement;
 let input: HTMLTextAreaElement;
 
-
 $effect(() => {
   cell.button = self;
   cell.input = input;
 });
+
+
+let auto_highlight_peak: ThemeCol | null = $derived(
+  (
+    $prefs.cols.highlight_peaks
+    && current.lattice.is_square
+    && !current.lattice.is_outer_cell(cell)
+    && cell.entered === String(current.lattice.inner_width)
+  ) ?
+    $prefs.cols.highlight_inner
+  : null
+);
  
 
 function onmouseenter(e: MouseEvent)
@@ -46,7 +57,7 @@ function onmouseenter(e: MouseEvent)
       current.lattice.selected.delete(cell);
       break;
     case DragMode.Highlighting:
-      cell.highlight = $prefs.cols.highlight;
+      cell.highlight = get_needed_highlight();
       break;
     case DragMode.Unhighlighting:
       cell.highlight = null;
@@ -70,7 +81,7 @@ function onmousedown(e: MouseEvent)
       current.drag_mode = DragMode.Unhighlighting;
     }
     else {
-      cell.highlight = $prefs.cols.highlight;
+      cell.highlight = get_needed_highlight();
       current.drag_mode = DragMode.Highlighting;
     }
   }
@@ -356,6 +367,15 @@ function fix_multi(key: key)
   }
 }
 
+function get_needed_highlight(): ThemeCol
+{
+  return (
+    current.lattice.is_outer_cell(cell) ?
+      $prefs.cols.highlight_outer
+    : $prefs.cols.highlight_inner
+  );
+}
+
 </script>
 
 
@@ -371,23 +391,28 @@ function fix_multi(key: key)
     current.lattice.is_outer_cell(cell) ? "outer" : "inner",
     Object.entries(MarkAlignment).find(([key, val]) => val === $prefs.marks.align)?.[0].toLowerCase(),
     {
-      fixed: cell.fixed !== null,
-      highlight: cell.highlight,
-      editing: current.editing,
-      selected: cell.selected,
-      invert: $prefs.text.invert,
+      fixed:     cell.fixed !== null,
+      highlight: cell.highlight || auto_highlight_peak,
+      editing:   current.editing,
+      selected:  cell.selected,
+      invert:    $prefs.text.invert,
     }
   ]}
   disabled={
-    (current.lattice.is_outer_cell(cell) && !current.editing && !cell.entered && !cell.marks.size && !cell.fixed) ?
-      true
-    : undefined
+    (
+      current.lattice.is_outer_cell(cell)
+      && !current.editing
+      && !cell.entered
+      && !cell.marks.size
+      && !cell.fixed
+    )
+    || undefined
   }
   {onmouseenter}
   {onmousedown}
   {onclick}
   {onkeydown}
-  style:--col="var(--col-{cell.highlight})"
+  style:--col="var(--col-{cell.highlight || auto_highlight_peak})"
   style:--cell-size={     interp3($prefs.cells.size,     { lower: 0.75, preset: 1.00, upper: 1.50 }) }
   style:--cell-rounding={ interp3($prefs.cells.rounding, { lower: 0.00, preset: 1.00, upper: 2.50 }) }
   style:--cell-opacity={  interp3($prefs.cells.opacity,  { lower: 1.00, preset: 0.75, upper: 0.00 }) }
