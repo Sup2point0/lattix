@@ -9,7 +9,6 @@
 <!--
 Quick
 - auto-highlight lane peaks
-- highlight all cells with same digit
 - Only allow outer navigation if cell has contents (arrow, alt+arrow)
 - auto-highlight conflicts
 
@@ -23,6 +22,12 @@ Features
 
 ### *Fix*
 Clicking on a cell then pressing `TAB` doesn’t jump to the next cell – it only does so on the second press.
+
+
+## 6 July 2026
+
+### **Feat**
+New keybinds: `ALT`+`F` to select all cells with the same digit as your currently selected cell(s), and `ALT`+`SHIFT`+`F` to also highlight.
 
 
 ## 5 July 2026

@@ -11,6 +11,10 @@ export const keybinds = [
     keys: ["ALT", "P"],
     desc: `open/close <strong>Control Pane</strong>`
   },
+  {
+    keys: ["ALT", "G"],
+    desc: "edit grid"
+  },
   {},
   {
     keys: [
@@ -80,26 +84,6 @@ export const keybinds = [
   },
   {},
   {
-    keys: ["ALT", "G"],
-    desc: "edit grid"
-  },
-  {
-    keys: ["ALT", "="],
-    desc: `add new column to right`
-  },
-  {
-    keys: ["ALT", "SHIFT", "="],
-    desc: `add new row to below`
-  },
-  {
-    keys: ["ALT", "-"],
-    desc: `remove column from right`
-  },
-  {
-    keys: ["ALT", "SHIFT", "-"],
-    desc: `remove row from below`
-  },
-  {
     keys: ["ALT", "R"],
     desc: [`restart`, `(clears entered + pencilmarks)`]
   },
@@ -119,10 +103,31 @@ export const keybinds = [
     keys: ["ALT", "SHIFT", "M"],
     desc: "always disable marking"
   },
-  // {
-  //   keys: [],
-  //   desc: "highlight all cells with same digit" TODO
-  // },
+  {
+    keys: ["ALT", "F"],
+    desc: "select all cells with same digit"
+  },
+  {
+    keys: ["ALT", "SHIFT", "F"],
+    desc: "highlight all cells with same digit"
+  },
+  {},
+  {
+    keys: ["ALT", "="],
+    desc: `add new column to right`
+  },
+  {
+    keys: ["ALT", "SHIFT", "="],
+    desc: `add new row to below`
+  },
+  {
+    keys: ["ALT", "-"],
+    desc: `remove column from right`
+  },
+  {
+    keys: ["ALT", "SHIFT", "-"],
+    desc: `remove row from below`
+  },
   {},
   {
     keys: ["PAGE UP", null, "PAGE DOWN"],
@@ -203,54 +208,12 @@ export function keydown(e: KeyboardEvent): boolean
   if (!e.altKey) return false;
 
   switch (key) {
-    case "/":      
-      current.overlay = (current.overlay === Overlay.KEYBINDS) ? null : Overlay.KEYBINDS;
-      e.stopPropagation();
-      return true;
-
-    case "P":
-      current.show_controls = !current.show_controls;
-      e.stopPropagation();
-      return true;
-    
-    case "G":
-      current.editing = !current.editing;
-      e.stopPropagation();
-      return true;
-
-    case "=":
-      current.lattice.upsize("right");
-      e.stopPropagation();
-      return true;
-
-    case "+":
-      current.lattice.upsize("down");
-      e.stopPropagation();
-      return true;
-
-    case "-":
-      current.lattice.downsize("right");
-      e.stopPropagation();
-      return true;
-
-    case "_":
-      current.lattice.downsize("down");
-      e.stopPropagation();
-      return true;
-
-    case "R":
-      if (e.shiftKey) {
-        current.lattice.reset_grid();
-      } else {
-        current.lattice.clear_work();
-      }
-      e.stopPropagation();
-      return true;
-
-    case "N":
-      current.show_marks = false;
-      e.stopPropagation();
-      return true;
+    case "/": current.overlay = (current.overlay === Overlay.KEYBINDS) ? null : Overlay.KEYBINDS; return true;
+    case "P": current.show_controls = !current.show_controls; return true;
+    case "G": current.editing = !current.editing; return true;
+    case "R": if (e.shiftKey) { current.lattice.reset_grid(); }
+              else            { current.lattice.clear_work(); } return true;
+    case "N": current.show_marks = false; return true;
 
     case "M":
       /* NOTE: Not idempotent, we want retriggering to reset to default */
@@ -259,18 +222,16 @@ export function keydown(e: KeyboardEvent): boolean
       } else {
         current.mark_mode = (current.mark_mode === MarkMode.ALWAYS) ? MarkMode.DEFAULT : MarkMode.ALWAYS;
       }
-      e.stopPropagation();
       return true;
 
-    case "Q":
-      current.overlay = (current.overlay === Overlay.CHANGELOG) ? null : Overlay.CHANGELOG;
-      e.stopPropagation();
-      return true;
-
-    case "K":
-      current.DEBUG = !current.DEBUG;
-      e.stopPropagation();
-      return true;
+    case "F": if (e.shiftKey) { current.lattice.highlight_same_as_current(); }
+              else            { current.lattice.select_same_as_current() } return true;
+    case "=": current.lattice.upsize("right"); return true;
+    case "+": current.lattice.upsize("down"); return true;
+    case "-": current.lattice.downsize("right"); return true;
+    case "_": current.lattice.downsize("down"); return true;
+    case "Q": current.overlay = (current.overlay === Overlay.CHANGELOG) ? null : Overlay.CHANGELOG; return true;
+    case "K": current.DEBUG = !current.DEBUG; return true;
   }
 
   return false;
