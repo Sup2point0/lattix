@@ -52,16 +52,4 @@ import Toggle from "#parts/ui/toggle.svelte";
 
 @use './tab-view' as *;
 
-code {
-  padding: 0.4em 0.6em;
-  margin: 0 0.1em;
-  display: inline-block;
-  @include font-code;
-  font-size: 80%;
-  background: white;
-  border: 1px solid $col-grey-light;
-  border-radius: 0.5em;
-  box-shadow: 0 0.5px 1px $col-grey-light;
-}
-
 </style>
