@@ -185,13 +185,20 @@ export class Lattice
 
   select_same_as_current()
   {
-    let digits = [...this.selected].map(cell => cell.entered);
+    let digits = [...this.selected].map(cell => cell.fixed || cell.entered);
+
+    // handling a selected empty cell is a little fiddly...
+    let is_selecting_empty = digits.includes(null);
+    digits = digits.filter(each => each !== null);
 
     let before = this.#current!.multiselecting;
     this.#current!.multiselecting = true;
     
     this.for_each_inner_cell(cell => {
-      if (digits.includes(cell.entered)) {
+      if (
+        digits.includes(cell.fixed) || digits.includes(cell.entered)
+        || (is_selecting_empty && cell.fixed === null && cell.entered === null)
+      ) {
         cell.select();
       }
     });
