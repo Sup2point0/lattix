@@ -7,7 +7,7 @@ A button which runs a callback when clicked.
 
 interface Props {
   text?: string;
-  hover?: string;
+  hover?: string | [string, string];
   action: () => void;
   square?: boolean;
   disabled?: boolean;
@@ -41,7 +41,12 @@ let {
 
   {#if hover}
     <div class="hover-text">
-      {@html hover}
+      {#if Array.isArray(hover)}
+        <div> {@html hover[0]} </div>
+        <div class="keybind"> {@html hover[1]} </div>
+      {:else}
+        {@html hover}
+      {/if}
     </div>
   {/if}
   </div>
@@ -96,6 +101,11 @@ button {
   position: absolute;
   top: $square-size + 0.5rem;
   z-index: 5;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  gap: 0.2rem;
+
   font-size: 90%;
   color: white;
   text-align: center;
@@ -107,10 +117,14 @@ button {
   transition: opacity 0.2s ease-out;
 
   button:not([disabled]):where(:hover, :focus) ~ & {
-    display: block;
     visibility: visible;
     opacity: 1;
     transition-delay: 0.4s;
+  }
+
+  .keybind {
+    font-size: 60%;
+    color: $col-grey-dark;
   }
 }
 

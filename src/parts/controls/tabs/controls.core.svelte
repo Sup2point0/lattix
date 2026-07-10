@@ -62,7 +62,7 @@ import ColourOptions from "#parts/ui/options.cols.svelte";
       </section>
       
       <section>
-        <Clicky square hover="Restart" action={() => current.lattice.restart()}>
+        <Clicky square hover={["Restart", "ALT R"]} action={() => current.lattice.restart()}>
           <span class="material-symbols-rounded"> refresh </span>
         </Clicky>
         
@@ -74,7 +74,7 @@ import ColourOptions from "#parts/ui/options.cols.svelte";
           <span class="material-symbols-rounded"> reset_colors </span>
         </Clicky>
         
-        <Clicky square hover="Reset Grid" action={() => current.lattice.reset_grid()}>
+        <Clicky square hover={["Reset Grid", "ALT SHIFT R"]} action={() => current.lattice.reset_grid()}>
           <span class="material-symbols-rounded"> reset_focus </span>
         </Clicky>
       </section>

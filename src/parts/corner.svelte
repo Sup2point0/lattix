@@ -14,11 +14,11 @@ import Clicky from "#parts/ui/clicky.svelte";
 
 
 <aside>
-  <Clicky square text="?" action={() => { current.overlay = Overlay.SYNOPSIS; }}>
+  <Clicky square text="?" hover="Help" action={() => { current.overlay = Overlay.SYNOPSIS; }}>
     <div style:transform="scale(125%) translateY(0.02em)">?</div>
   </Clicky>
 
-  <Clicky square action={() => { current.overlay = Overlay.KEYBINDS; }}>
+  <Clicky square hover={["Keybinds", "ALT /"]} action={() => { current.overlay = Overlay.KEYBINDS; }}>
     <span class="material-symbols-rounded" style="
       position: absolute;
       top: 50%;
@@ -32,7 +32,7 @@ import Clicky from "#parts/ui/clicky.svelte";
     <div style:padding="0.75em 0.25em"></div>
   </Clicky>
 
-  <Clicky square action={() => { current.overlay = Overlay.CHANGELOG; }}>
+  <Clicky square hover={["Changelog", "ALT Q"]} action={() => { current.overlay = Overlay.CHANGELOG; }}>
     <span class="material-symbols-rounded" style="
       position: absolute;
       top: 50%;

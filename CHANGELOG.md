@@ -10,6 +10,9 @@
 Quick
 - Only allow outer navigation if cell has contents (arrow, alt+arrow)
 
+Fixes
+- No way to enter multi-digit numbers for larger grid sizes(!)
+
 Features
 - right-click for note
 - Lane sums
@@ -23,6 +26,9 @@ Hover tips now also show the associated keybind!
 
 ### *Fix*
 Clicking on a cell then pressing `TAB` doesn’t jump to the next cell – it only does so on the second press.
+
+
+## 10 July 2026
 
 ### *Fix*
 “Selecting same as current” now also selects fixed cells.
