@@ -21,14 +21,14 @@ Features
 - storing grids
 -->
 
-### **Feat**
-Hover tips now also show the associated keybind!
-
 ### *Fix*
 Clicking on a cell then pressing `TAB` doesn’t jump to the next cell – it only does so on the second press.
 
 
 ## 10 July 2026
+
+### **Feat**
+Hover tips now also show the associated keybind!
 
 ### *Fix*
 “Selecting same as current” now also selects fixed cells.
