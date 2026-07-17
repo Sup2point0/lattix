@@ -75,4 +75,21 @@ export class Cell
     this.entered = null;
     this.marks.clear();
   }
+
+  /** Does this cell's entered or fixed digit conflict with `other`? */
+  conflicts_with(other: Cell): boolean
+  {
+    if (other === this) return false;
+
+    if (this.entered !== null) {
+      return this.entered === other.entered
+          || this.entered === other.fixed;
+    }
+    else if (this.fixed !== null) {
+      return this.fixed === other.entered
+          || this.fixed === other.entered;
+    }
+
+    return false;
+  }
 }

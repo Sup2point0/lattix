@@ -29,6 +29,9 @@ Clicking on a cell then pressing `TAB` doesn’t jump to the next cell – it on
 ## 17 July 2026
 
 ### *Fix*
+“Auto-highlight conflicts” now works for fixed cells too.
+
+### *Fix*
 Fixed `ALT`+`R` to restart.
 
 

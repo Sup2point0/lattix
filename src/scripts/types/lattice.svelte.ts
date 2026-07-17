@@ -164,20 +164,12 @@ export class Lattice
   /** Does the entered digit (if any) of `cell` conflict with other cells in the same column and row as it? */
   has_conflicts(cell: Cell): boolean
   {
-    return (
-      cell.entered !== null
-      && (
-        this.column(cell.x).some(c => conflicts(c))
-        || this.row(cell.y).some(c => conflicts(c))
-      )
-    );
+    if (cell.entered === null && cell.fixed === null) return false;
 
-    function conflicts(other: Cell): boolean {
-      return (
-        other.entered === cell.entered
-        && other !== cell
-      );
-    }
+    return (
+      this.column(cell.x).some(c => c.conflicts_with(cell))
+      || this.row(cell.y).some(c => c.conflicts_with(cell))
+    );
   }
 
 
