@@ -8,6 +8,7 @@
 
 <!--
 Quick
+- Highlight current not displayed correctly
 - Only allow outer navigation if cell has contents (arrow, alt+arrow)
 
 Fixes
@@ -23,6 +24,12 @@ Features
 
 ### *Fix*
 Clicking on a cell then pressing `TAB` doesn’t jump to the next cell – it only does so on the second press.
+
+
+## 17 July 2026
+
+### *Fix*
+Fixed `ALT`+`R` to restart.
 
 
 ## 10 July 2026

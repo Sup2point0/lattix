@@ -212,7 +212,7 @@ export function keydown(e: KeyboardEvent): boolean
     case "P": current.show_controls = !current.show_controls; return true;
     case "G": current.editing = !current.editing; return true;
     case "R": if (e.shiftKey) { current.lattice.reset_grid(); }
-              else            { current.lattice.clear_work(); } return true;
+              else            { current.lattice.restart(); } return true;
     case "N": current.show_marks = false; return true;
 
     case "M":
