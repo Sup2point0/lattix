@@ -26,6 +26,12 @@ Features
 Clicking on a cell then pressing `TAB` doesn’t jump to the next cell – it only does so on the second press.
 
 
+## 20 July 2026
+
+### *Fix*
+“Auto-highlight conflicts” now correctly excludes outer cells.
+
+
 ## 17 July 2026
 
 ### *Fix*
