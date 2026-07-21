@@ -277,7 +277,7 @@ export function onblur()
  */
 export function onbeforeunload(e: Event): boolean
 {
-  for (let cell of Object.values(current.lattice.cells)) {
+  for (let cell of current.lattice.iter_cells()) {
     if (cell.fixed || cell.entered || cell.marks.size) {
       e.preventDefault();
       return true;
