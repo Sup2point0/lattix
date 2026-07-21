@@ -29,7 +29,7 @@ test("fill-random()", () =>
     for (let column of lattice.iter_inner_cols()) {
       let seen_digits = new Set();
 
-      for (let cell of column.slice(1, -1)) {
+      for (let cell of column) {
         let digit = Number(cell.entered);
         expect(digit).toBeGreaterThan(0);
         expect(digit).toBeLessThanOrEqual(size);

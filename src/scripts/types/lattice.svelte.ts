@@ -111,8 +111,8 @@ export class Lattice
   *iter_inner_cols(): Generator<Cell[]>
   {
     for (let x = 1; x < this.inner_width + 1; x++) {
-      yield Array.from({ length: this.inner_height + 2 },
-        (_, y) => this.at(x, y)!
+      yield Array.from({ length: this.inner_height },
+        (_, y) => this.at(x, y + 1)!
       );
     }
   }
