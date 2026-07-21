@@ -45,8 +45,8 @@ function onmousemove(e: MouseEvent)
   let shift = delta / width_snap;
 
   value = value_snap + shift;
-  if (value < 0) value = 0;
-  if (value > 1) value = 1;  
+  if (value < min) value = min;
+  if (value > max) value = max;
 }
 
 </script>
@@ -68,7 +68,7 @@ function onmousemove(e: MouseEvent)
     class="knob"
     aria-label="slider-knob"
     {onmousedown}
-    style:--scale={value / (max - min)}
+    style:--scale={(value - min) / (max - min)}
   ></button>
 </div>
 
