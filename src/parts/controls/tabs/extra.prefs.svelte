@@ -73,7 +73,7 @@ function display_time(t: int | null): string
       <h4> Outer Cells </h4>
       <p>
         {[...current.lattice.iter_cells().filter(
-          cell => current.lattice.is_outer_cell(cell) && cell.fixed
+          cell => current.lattice.is_outer_cell(cell) && cell.fixed !== null
         )].length}
       </p>
     </div>
@@ -81,9 +81,7 @@ function display_time(t: int | null): string
     <div class="row">
       <h4> Fixed Cells </h4>
       <p>
-        {[...current.lattice.iter_cells().filter(
-          cell => current.lattice.is_outer_cell(cell) && cell.fixed
-        )].length}
+        {[...current.lattice.iter_cells().filter(cell => cell.fixed !== null)].length}
       </p>
     </div>
 
