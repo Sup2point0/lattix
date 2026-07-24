@@ -177,23 +177,54 @@ export class Lattice
 
   // == INTERACTING == //
 
+  /**
+   * Expand the current selection to include all *similar* cells.
+   * 
+   * There are many cases of different complexity. The general rules are (in order of precedence):
+   * 
+   * - If 1 of the selected cells has pencilmarks, only select other pencilmarked cells.
+   * - If only blank cells are selected, only select other blank cells.
+   */
   select_same_as_current()
   {
-    let digits = [...this.selected].map(cell => cell.fixed || cell.entered);
+    let digits = [...this.selected].map(cell => cell.fixed ?? cell.entered);
 
-    // handling a selected empty cell is a little fiddly...
-    let is_selecting_empty = digits.includes(null);
-    digits = digits.filter(each => each !== null);
+    let had_unsolved = digits.includes(null);
+    let is_selecting_unsolved = false;
+
+    if (had_unsolved) {
+      let replacement = new Set(
+        [...this.selected]
+        .flatMap(cell => cell.fixed ?? cell.entered ?? [...cell.marks])
+        .filter(each => each !== null)
+      );
+
+      if (replacement.size > 0) {
+        digits = [...replacement];
+        is_selecting_unsolved = true;
+      }
+
+      digits = digits.filter(each => each !== null);
+    }
 
     let before = this.#current!.multiselecting;
     this.#current!.multiselecting = true;
     
     this.for_each_inner_cell(cell => {
-      if (
-        digits.includes(cell.fixed) || digits.includes(cell.entered)
-        || (is_selecting_empty && cell.fixed === null && cell.entered === null)
-      ) {
-        cell.select();
+      if (is_selecting_unsolved) {
+        if (cell.marks.values().some(mark => digits.includes(mark))) {
+          cell.select();
+        }
+      }
+      else if (digits.length > 0) {
+        if (digits.includes(cell.fixed) || digits.includes(cell.entered)) {
+          cell.select();
+        }
+      }
+      else {
+        if (cell.fixed === null && cell.entered === null && cell.marks.size === 0) {
+          cell.select();
+        }
       }
     });
 

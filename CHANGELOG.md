@@ -29,6 +29,12 @@ Clicking on a cell then pressing `TAB` doesn’t jump to the next cell – it on
 ## 24 July 2026
 
 ### *Fix*
+Fixed a nasty bug where fixed cells could get cleared if a digit is entered while a mix of fixed and non-fixed cells are selected.
+
+### *Fix*
+Tweaked “Select same as current” mechanics to handle pencilmarked and blank cells more consistently.
+
+### *Fix*
 “Auto-highlight lane peaks” now correctly includes fixed cells too.
 
 ### *Fix*
@@ -62,7 +68,7 @@ Fixed `ALT`+`R` to restart.
 Hover tips now also show the associated keybind!
 
 ### *Fix*
-“Selecting same as current” now also selects fixed cells.
+“Select same as current” now also selects fixed cells.
 
 
 ## 9 July 2026
