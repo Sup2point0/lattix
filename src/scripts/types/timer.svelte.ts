@@ -46,5 +46,6 @@ export class Timer
     this.init = this.init ? Date.now() : null;
     this.stamp = null;
     this.elapsed = null;
+    clearInterval(this.interval);
   }
 }

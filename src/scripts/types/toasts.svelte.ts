@@ -37,6 +37,10 @@ export class Toasts
 
   delete(toast: Toast)
   {
-    this.data.splice(this.data.indexOf(toast), 1);
+    let idx = this.data.indexOf(toast);
+    
+    if (idx !== -1) {
+      this.data.splice(idx, 1);
+    }
   }
 }

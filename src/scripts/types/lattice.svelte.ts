@@ -412,7 +412,7 @@ export class Lattice
     let columns: Cell[][] = Array.from({ length: this.full_width }).map(_ => []);
 
     for (let row of this.cells) {
-      for (let [x, cell] of row.entries()) {
+      for (let cell of row) {
         let [x, y] = [cell.x, cell.y];
         cell.x = y;
         cell.y = x;
@@ -449,7 +449,7 @@ export class Lattice
     this.for_each_inner_cell(cell => {
       let xy = cell.x + cell.y;
       let digit = 1 + (xy % this.inner_width);
-      cell.entered = digit.toString();
+      cell.enter(digit.toString());
     });
 
     const SHUFFLE_ITERATIONS: int = 20 + this.full_width + this.full_height;

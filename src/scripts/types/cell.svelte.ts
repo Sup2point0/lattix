@@ -47,7 +47,6 @@ export class Cell
     }
 
     current.lattice.selected.add(this);
-    current.lattice.selected = current.lattice.selected;
 
     this.input?.focus();
   }
