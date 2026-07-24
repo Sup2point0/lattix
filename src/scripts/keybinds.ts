@@ -154,6 +154,7 @@ export function set_keybinds(window: Window)
 export function keydown(e: KeyboardEvent): boolean
 {
   let key = e.key.toUpperCase();
+
   if (current.held_keys.has(key)) {
     e.stopPropagation();
     return false;
@@ -208,30 +209,52 @@ export function keydown(e: KeyboardEvent): boolean
   if (!e.altKey) return false;
 
   switch (key) {
-    case "/": current.overlay = (current.overlay === Overlay.KEYBINDS) ? null : Overlay.KEYBINDS; return true;
-    case "P": current.show_controls = !current.show_controls; return true;
-    case "G": current.editing = !current.editing; return true;
-    case "R": if (e.shiftKey) { current.lattice.reset_grid(); }
-              else            { current.lattice.restart(); } return true;
-    case "N": current.show_marks = false; return true;
+    case "/": current.overlay = (current.overlay === Overlay.KEYBINDS) ? null : Overlay.KEYBINDS;
+      return true;
+
+    case "P": current.show_controls = !current.show_controls;
+      return true;
+
+    case "G": current.editing = !current.editing;
+      return true;
+
+    case "R": (e.shiftKey ?
+              current.lattice.reset_grid()
+            : current.lattice.restart());
+      return true;
+
+    case "N": current.show_marks = false;
+      return true;
 
     case "M":
       /* NOTE: Not idempotent, we want retriggering to reset to default */
-      if (e.shiftKey) {
-        current.mark_mode = (current.mark_mode === MarkMode.NEVER) ? MarkMode.DEFAULT : MarkMode.NEVER;
-      } else {
-        current.mark_mode = (current.mark_mode === MarkMode.ALWAYS) ? MarkMode.DEFAULT : MarkMode.ALWAYS;
-      }
+      (e.shiftKey ?
+        current.mark_mode = (current.mark_mode === MarkMode.NEVER) ? MarkMode.DEFAULT : MarkMode.NEVER
+      : current.mark_mode = (current.mark_mode === MarkMode.ALWAYS) ? MarkMode.DEFAULT : MarkMode.ALWAYS
+      );
       return true;
 
-    case "F": if (e.shiftKey) { current.lattice.highlight_same_as_current(); }
-              else            { current.lattice.select_same_as_current() } return true;
-    case "=": current.lattice.upsize("right"); return true;
-    case "+": current.lattice.upsize("down"); return true;
-    case "-": current.lattice.downsize("right"); return true;
-    case "_": current.lattice.downsize("down"); return true;
-    case "Q": current.overlay = (current.overlay === Overlay.CHANGELOG) ? null : Overlay.CHANGELOG; return true;
-    case "K": current.DEBUG = !current.DEBUG; return true;
+    case "F": (e.shiftKey ?
+              current.lattice.highlight_same_as_current()
+            : current.lattice.select_same_as_current());
+      return true;
+
+    case "=": (e.shiftKey ?
+              current.lattice.upsize("down")
+            : current.lattice.upsize("right"));
+      return true;
+
+    case "-": (e.shiftKey ?
+              current.lattice.downsize("down")
+            : current.lattice.downsize("right"));
+      return true;
+
+    case "Q": current.overlay = (current.overlay === Overlay.CHANGELOG) ? null : Overlay.CHANGELOG;
+      return true;
+
+    case "K": current.DEBUG = !current.DEBUG;
+      return true;
+
   }
 
   return false;
@@ -246,17 +269,11 @@ function keyup(e: KeyboardEvent)
   switch (key) {
     case "CONTROL":
       current.multiselecting = false;
-      e.stopPropagation();
-      return true;
-
-    case "ALT":
-      e.stopPropagation();
-      return true;
-    
+      break;
+      
     case "N":
-      current.show_marks = true;
-      e.stopPropagation();
-      return true;
+      if (e.altKey) current.show_marks = true;
+      break;
   }
 }
 
@@ -281,6 +298,7 @@ export function onbeforeunload(e: Event): boolean
     if (cell.fixed || cell.entered || cell.marks.size) {
       e.preventDefault();
       return true;
+
     }
   }
 
