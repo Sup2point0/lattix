@@ -29,6 +29,9 @@ Clicking on a cell then pressing `TAB` doesn’t jump to the next cell – it on
 ## 24 July 2026
 
 ### *Fix*
+“Auto-highlight lane peaks” now correctly includes fixed cells too.
+
+### *Fix*
 “Auto-highlight conflicts” now correctly checks fixed cells too.
 
 

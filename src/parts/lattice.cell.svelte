@@ -35,7 +35,10 @@ let auto_highlight_peak: ThemeCol | null = $derived(
     $prefs.cols.highlight_peaks
     && current.lattice.is_square
     && !current.lattice.is_outer_cell(cell)
-    && cell.entered === String(current.lattice.inner_width)
+    && (
+      cell.entered === String(current.lattice.inner_width)
+      || cell.fixed === String(current.lattice.inner_width)
+    )
   ) ?
     $prefs.cols.highlight_inner
   : null
@@ -335,18 +338,22 @@ function mark_multi(key: key)
 
   for (let each of current.lattice.selected) {
     if (each.fixed) continue;
+
     each.entered = null;
+    
     if (!each.marks.has(key)) {
       each.marks.add(key);
       added++;
     }
   }
 
-  /** If all of the selected cells already had the input digit, delete it from them instead */
-  if (added) return;
+  /* If all of the selected cells already had the input digit, delete it from them instead */
+  if (added === 0) {
+    for (let each of current.lattice.selected) {
+      if (each.fixed) continue;
 
-  for (let each of current.lattice.selected) {
-    each.marks.delete(key);
+      each.marks.delete(key);
+    }
   }
 }
 
