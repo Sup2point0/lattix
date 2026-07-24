@@ -87,7 +87,7 @@ export class Cell
     }
     else if (this.fixed !== null) {
       return this.fixed === other.entered
-          || this.fixed === other.entered;
+          || this.fixed === other.fixed;
     }
 
     return false;

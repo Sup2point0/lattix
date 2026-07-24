@@ -26,10 +26,16 @@ Features
 Clicking on a cell then pressing `TAB` doesn’t jump to the next cell – it only does so on the second press.
 
 
-##21 July 2026
+## 24 July 2026
 
 ### *Fix*
-Fixed confirmation before closing window when grid is non-empty.
+“Auto-highlight conflicts” now correctly checks fixed cells too.
+
+
+## 21 July 2026
+
+### *Fix*
+Fixed confirmation before closing tab when grid is non-empty.
 
 
 ## 20 July 2026
