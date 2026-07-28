@@ -16,6 +16,9 @@ export default defineConfig({
     fs: {
       allow: [".."],
     },
+    watch: {
+      ignored: ["**/src-tauri/**"]
+    },
   },
   test: {
     globals: true,
