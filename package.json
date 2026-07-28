@@ -13,7 +13,10 @@
 		"preview": "vite preview",
 
     "test": "vitest run",
-      "testw": "vitest"
+      "testw": "vitest",
+
+    "devt": "cargo tauri dev",
+    "built": "cargo tauri build"
 	},
 
 	"devDependencies":
