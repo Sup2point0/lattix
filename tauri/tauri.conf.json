@@ -2,9 +2,9 @@
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "lattix",
   "version": "0.1.0",
-  "identifier": "com.tauri.dev",
+  "identifier": "lattix.local",
   "build": {
-    "frontendDist": "../",
+    "frontendDist": "../build/",
     "devUrl": "http://localhost:5173",
     "beforeDevCommand": "npm run dev",
     "beforeBuildCommand": "npm run build"
@@ -15,8 +15,12 @@
         "title": "lattix",
         "width": 1600,
         "height": 900,
+        "minWidth": 800,
+        "minHeight": 450,
         "resizable": true,
-        "fullscreen": false
+        "maximized": true,
+        "fullscreen": false,
+        "center": true
       }
     ],
     "security": {
