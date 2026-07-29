@@ -17,7 +17,7 @@ let timeout: number | null = null;
 let tip = $state("");
 
 onMount(() => {
-  tip = lattix.tips.sample_value()!;
+  tip = lattix.sample_value()!;
 
   let reveal_window  = () => { current.landing = 0; };
   let hide_overlay   = () => { current.landing = 1; timeout = setTimeout(reveal_window,  200); };
