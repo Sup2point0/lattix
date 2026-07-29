@@ -1,6 +1,6 @@
 [package]
-name = "lattix-local"
-version = "0.1.0"
+name = "lattix"
+version = "2.0.0"
 edition = "2024"
 description = "More beautiful puzzle solving"
 authors = ["Sup#2.0"]

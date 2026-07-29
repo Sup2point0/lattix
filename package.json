@@ -1,22 +1,24 @@
 {
 	"name": "lattix",
-	"version": "1.0",
+	"version": "2.0.0",
 	"private": true,
 	"type": "module",
 
 	"scripts":
   {
-		"dev": "vite",
+		"dev":    "vite",
       "devx": "vite --open",
-		
-    "build": "vite build",
+
+    "build":   "vite build",
 		"preview": "vite preview",
 
-    "test": "vitest run",
+    "test":    "vitest run",
       "testw": "vitest",
 
     "devt": "cargo tauri dev",
-    "built": "cargo tauri build"
+
+    "built":    "cargo tauri build",
+      "builtx": "cargo tauri icon static/lattix-icon.svg && cargo tauri build"
 	},
 
 	"devDependencies":
